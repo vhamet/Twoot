@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 import { AUTH_TOKEN, SERVER_ERROR_MESSAGE } from '../../constants';
 
-import './Authentication.css';
+import '../../Styles/css/authentication.css';
 
 const LOGIN_MUTATION = gql`
   mutation LoginMutation($email: String!, $password: String!) {

@@ -8,7 +8,7 @@ import FormInputValidation from '../../components/FormInputValidation/FormInputV
 import { AUTH_TOKEN, SERVER_ERROR_MESSAGE } from '../../constants';
 import { validateEmail, validateUsername, validatePassword, isEmpty } from '../../utils';
 
-import './Authentication.css';
+import '../../Styles/css/authentication.css';
 
 const SIGNUP_MUTATION = gql`
   mutation SignupMutation(

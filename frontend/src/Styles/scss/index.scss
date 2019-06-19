@@ -1,8 +1,10 @@
+@import 'utilities/variables.scss';
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: #e9ebee;
+  background-color: $background-color;
 }
 
 .form-control label,
@@ -22,22 +24,20 @@ body {
 
 .form-actions button,
 .btn {
-  background: #4267b2;
+  background: $main-color;
   font: inherit;
-  border: 1px solid #4267b2;
+  border: 1px solid $main-color;
   border-radius: 3px;
   padding: 0.25rem 1rem;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
   color: white;
   cursor: pointer;
-}
 
-.form-actions button:hover,
-.form-actions button:active,
-.btn:hover,
-.btn:active {
-  background: #5383e2;
-  border-color: #5383e2;
+  &:hover,
+  &:active {
+    background: #5383e2;
+    border-color: #5383e2;
+  }
 }
 
 .hr {
@@ -48,9 +48,9 @@ body {
 }
 
 .error {
-  color: #a94442;
-  background: #f2dede;
-  border: 1px solid #ebccd1;
+  color: $invalid-color;
+  background: $invalid-background-color;
+  border: 1px solid $invalid-border-color;
   border-radius: 5px;
-  padding: 0 0.5rem;
+  padding: 0.5rem;
 }

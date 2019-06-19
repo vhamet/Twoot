@@ -1,0 +1,52 @@
+@import 'utilities/variables.scss';
+
+.auth-form {
+  width: 25rem;
+  max-width: 80%;
+  margin: 5rem auto;
+  padding: 2rem 1.5rem;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
+
+  h1 {
+    margin: 1rem 0;
+    text-align: center;
+  }
+
+  input {
+    background: $background-color;
+    border-radius: 5px;
+    padding: 0.2rem 0.5rem;
+    box-sizing: border-box;
+    outline: none;
+
+    .invalid {
+      background: $invalid-background-color;
+    }
+  }
+
+  button {
+    width: 60%;
+    margin: 2rem auto;
+    display: block;
+
+    &:disabled,
+    &:disabled:hover {
+      cursor: not-allowed;
+      background: $main-color-dark;
+      color: #999999;
+    }
+  }
+
+  a {
+    color: $main-color;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover,
+    &:active {
+      color: $main-color-light;
+    }
+  }
+}

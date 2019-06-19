@@ -5,7 +5,7 @@ import MainNavigation from './components/navigation/MainNavigation';
 import LoginPage from './pages/Authentication/Login';
 import SignupPage from './pages/Authentication/Signup';
 
-import './App.css';
+import './Styles/css/app.css';
 
 class App extends Component {
   render() {

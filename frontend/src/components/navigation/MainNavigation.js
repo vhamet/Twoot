@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import { AUTH_TOKEN } from '../../constants';
 
-import './MainNavigation.css';
+import '../../Styles/css/mainNavigation.css';
 
 class MainNavigation extends Component {
   render() {

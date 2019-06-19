@@ -12,7 +12,7 @@ import { getMainDefinition } from 'apollo-utilities';
 
 import App from './App';
 import { AUTH_TOKEN } from './constants';
-import './index.css';
+import './Styles/css/index.css';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000'
