@@ -104,8 +104,8 @@ export interface ClientConstructor<T> {
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
+  | "username_ASC"
+  | "username_DESC"
   | "email_ASC"
   | "email_DESC"
   | "password_ASC"
@@ -115,19 +115,19 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  username: String;
   email: String;
   password: String;
 }
 
 export interface UserUpdateInput {
-  name?: Maybe<String>;
+  username?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
 }
 
 export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
+  username?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
 }
@@ -147,20 +147,20 @@ export interface UserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
   email?: Maybe<String>;
   email_not?: Maybe<String>;
   email_in?: Maybe<String[] | String>;
@@ -207,7 +207,7 @@ export interface UserSubscriptionWhereInput {
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-  name?: Maybe<String>;
+  username?: Maybe<String>;
   email?: Maybe<String>;
 }>;
 
@@ -249,7 +249,7 @@ export interface BatchPayloadSubscription
 
 export interface UserPreviousValues {
   id: ID_Output;
-  name: String;
+  username: String;
   email: String;
   password: String;
 }
@@ -258,7 +258,7 @@ export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  username: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
 }
@@ -267,7 +267,7 @@ export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
 }
@@ -316,14 +316,14 @@ export interface UserSubscriptionPayloadSubscription
 
 export interface User {
   id: ID_Output;
-  name: String;
+  username: String;
   email: String;
   password: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  username: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
 }
@@ -332,7 +332,7 @@ export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
 }
@@ -341,7 +341,7 @@ export interface UserNullablePromise
   extends Promise<User | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  username: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
 }
