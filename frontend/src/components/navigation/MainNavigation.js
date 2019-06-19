@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router";
 import { NavLink } from 'react-router-dom';
 
 import { AUTH_TOKEN } from '../../constants';
@@ -8,7 +9,6 @@ import './MainNavigation.css';
 class MainNavigation extends Component {
   render() {
     const authToken = localStorage.getItem(AUTH_TOKEN);
-    
     return (
       <header className="main-navigation">
         <div className="main-navigation__logo">
@@ -21,7 +21,7 @@ class MainNavigation extends Component {
             {authToken ? (
               <button onClick={() => { 
                 localStorage.removeItem(AUTH_TOKEN);
-                {/* this.props.history.push(`/`); */}
+                this.props.history.push(`/`);
               }}
               >
                 Logout
@@ -43,4 +43,4 @@ class MainNavigation extends Component {
   }
 }
 
-export default MainNavigation;
+export default withRouter(MainNavigation);
