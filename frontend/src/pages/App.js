@@ -15,6 +15,7 @@ class App extends Component {
         <MainNavigation />
         <main className="main-content">
           <Switch>
+            <Redirect from="/" to="/home" exact/>
             <Route path="/home" component={Feed} />
             <Route path="/login" component={LoginPage} />
             <Route path="/signup" component={SignupPage} />

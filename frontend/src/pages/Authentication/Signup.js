@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 import FormInputValidation from 'components/form/FormInputValidation';
 
-import { AUTH_TOKEN, SERVER_ERROR_MESSAGE } from 'utilities/constants';
+import { AUTH_TOKEN } from 'utilities/constants';
 import { validateEmail, validateUsername, validatePassword, isEmpty } from 'utilities/utils';
 
 import 'Styles/css/authentication.css';
@@ -163,9 +163,7 @@ class Signup extends Component {
   }
 
   _handleError = async err => {
-    if (err.graphQLErrors)
-      this.setState({ error: err.graphQLErrors[0].message });
-    else this.setState({ error: SERVER_ERROR_MESSAGE });
+    this.setState({ error: err.graphQLErrors[0].message });
   };
 
   _confirm = async data => {

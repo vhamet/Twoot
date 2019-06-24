@@ -15,7 +15,10 @@ import { AUTH_TOKEN } from 'utilities/constants';
 import 'Styles/css/index.css';
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000'
+  uri: 'http://localhost:4000',
+  opts: {
+    credentials: 'include',
+  }
 });
 
 const authLink = setContext((_, { headers }) => {

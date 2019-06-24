@@ -1,8 +1,15 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 const { APP_SECRET } = require('../config');
-const { getUserId } = require('../utils');
-const { SERVER_ERROR_MESSAGE } = require('../constants');
+
+const {
+  WrongCredentialsError,
+  UsernameAlreadyTakenError,
+  EmailAlreadyTakenError,
+  UnauthenticatedError
+} = require('./ErrorHandling/Errors');
+const { ErrorHandlerWrapper } = require('./ErrorHandling/ErrorHandlerWrapper');
 
 async function signup(parent, args, context) {
   try {
@@ -16,23 +23,23 @@ async function signup(parent, args, context) {
     };
   } catch (err) {
     if (err.toString().includes('Field name = email'))
-      throw new Error('Email address already used, please choose another one.');
+      throw new EmailAlreadyTakenError();
     else if (err.toString().includes('Field name = username'))
-      throw new Error('Username already used, please choose another one.');
+      throw new UsernameAlreadyTakenError();
 
-    throw new Error(SERVER_ERROR_MESSAGE);
+    throw err;
   }
 }
 
 async function login(parent, args, context) {
   const user = await context.prisma.user({ email: args.email });
   if (!user) {
-    throw new Error('Invalid credentials');
+    throw new WrongCredentialsError();
   }
 
   const valid = await bcrypt.compare(args.password, user.password);
   if (!valid) {
-    throw new Error('Invalid credentials');
+    throw new WrongCredentialsError();
   }
 
   return {
@@ -42,7 +49,10 @@ async function login(parent, args, context) {
 }
 
 async function createPost(parent, args, context) {
-  const userId = getUserId(context);
+  const userId = context.request.isAuthenticated && context.request.userId;
+  if (!userId)
+    throw new UnauthenticatedError();
+
   return await context.prisma.createPost({
     content: args.content,
     postedBy: { connect: { id: userId } }
@@ -50,7 +60,7 @@ async function createPost(parent, args, context) {
 }
 
 module.exports = {
-  signup,
-  login,
-  createPost,
+  signup: ErrorHandlerWrapper(signup),
+  login: ErrorHandlerWrapper(login),
+  createPost: ErrorHandlerWrapper(createPost)
 };

@@ -57,6 +57,7 @@ class CreatePost extends Component {
             <Mutation
               mutation={CREATEPOST_MUTATION}
               variables={{ content }}
+              onError={err => this._handleError(err)}
               onCompleted={() => {
                 this.contentRef.current.value = '';
                 this.handleChange();
@@ -88,6 +89,10 @@ class CreatePost extends Component {
         )}
       </ApolloConsumer>
     );
+  }
+
+  _handleError = (err) => {
+    alert(err.graphQLErrors[0].message)
   }
 }
 

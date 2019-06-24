@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import { AUTH_TOKEN, SERVER_ERROR_MESSAGE } from 'utilities/constants';
+import { AUTH_TOKEN } from 'utilities/constants';
 
 import 'Styles/css/authentication.css';
 
@@ -68,10 +68,7 @@ class Login extends Component {
   }
 
   _handleError = async err => {
-    if (err.graphQLErrors)
       this.setState({ error: err.graphQLErrors[0].message });
-    else
-      this.setState({ error: SERVER_ERROR_MESSAGE });
   }
 
   _confirm = async data => {
