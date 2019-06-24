@@ -30,13 +30,6 @@
     width: 60%;
     margin: 2rem auto;
     display: block;
-
-    &:disabled,
-    &:disabled:hover {
-      cursor: not-allowed;
-      background: $main-color-dark;
-      color: #999999;
-    }
   }
 
   a {

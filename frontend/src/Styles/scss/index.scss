@@ -35,8 +35,16 @@ body {
 
   &:hover,
   &:active {
-    background: #5383e2;
-    border-color: #5383e2;
+    background: $main-color-light;
+    border-color: $main-color-light;
+  }
+
+  &:disabled,
+  &:disabled:hover {
+    cursor: default;
+    background: $main-color-disabled;
+    border-color: $main-color-disabled;
+    color: #eeeeee;
   }
 }
 
@@ -44,7 +52,7 @@ body {
   height: 0;
   width: 80%;
   margin: 2rem auto;
-  border-top: 1px solid black;
+  border-top: 1px solid #a7a7a7;
 }
 
 .error {

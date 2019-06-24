@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import FormInputValidation from '../../components/FormInputValidation/FormInputValidation';
+import FormInputValidation from '../../components/form/FormInputValidation';
 
 import { AUTH_TOKEN, SERVER_ERROR_MESSAGE } from '../../constants';
 import { validateEmail, validateUsername, validatePassword, isEmpty } from '../../utils';
@@ -73,7 +73,6 @@ class Signup extends Component {
 
   handleChangeConfirm(e) {
     const confirm = e.target.value;
-    console.log(confirm, this.state.password)
     const confirmValid = confirm === this.state.password;
     const valid = this.validation({ ...this.state, confirmValid });
     this.setState({ valid, confirmValid, confirm });
@@ -164,7 +163,6 @@ class Signup extends Component {
   }
 
   _handleError = async err => {
-    console.log(err)
     if (err.graphQLErrors)
       this.setState({ error: err.graphQLErrors[0].message });
     else this.setState({ error: SERVER_ERROR_MESSAGE });
@@ -193,7 +191,7 @@ const confirmErrorContent = (
   <span>Password missmatch. Please check your input.</span>
 );
 const passwordErrorContent = (
-  <React.Fragment>
+  <Fragment>
     <label>Please enter a valid password.</label>
     <label>A valid password should have :</label>
     <ul>
@@ -203,5 +201,5 @@ const passwordErrorContent = (
       <li>At least on numeric character</li>
       <li>At least one special character (!@#$%&)</li>
     </ul>
-  </React.Fragment>
+  </Fragment>
 );

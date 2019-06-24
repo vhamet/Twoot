@@ -3,4 +3,12 @@ type User {
   username: String! @unique
   email: String! @unique
   password: String!
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID! @id
+  content: String!
+  postedBy: User!
+  createdAt: DateTime! @createdAt
 }

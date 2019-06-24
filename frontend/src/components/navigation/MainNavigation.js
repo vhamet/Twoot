@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withRouter } from "react-router";
 import { NavLink } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ class MainNavigation extends Component {
     return (
       <header className="main-navigation">
         <div className="main-navigation__logo">
-          <NavLink to="/">
+          <NavLink to="/home">
             <h1>Twoot</h1>
           </NavLink>
         </div>
@@ -27,14 +27,14 @@ class MainNavigation extends Component {
                 Logout
               </button>
             ) : (
-              <React.Fragment>
+              <Fragment>
                 <li>
                   <NavLink to="/login">Login</NavLink>
                 </li>
                 <li>
                   <NavLink to="/signup">Signup</NavLink>
                 </li>
-              </React.Fragment>
+              </Fragment>
             )}
           </ul>
         </nav>
