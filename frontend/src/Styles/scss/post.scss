@@ -48,6 +48,7 @@
   .post-info__container{ 
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     a {
       color: $main-color;
       font-weight: 600;

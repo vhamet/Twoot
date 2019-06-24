@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { timeDifferenceForDate } from 'utilities/utils';
+import { timeDifferenceForDate } from 'utils';
 
 class Post extends Component {
   render() {

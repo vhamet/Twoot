@@ -3,17 +3,21 @@ import React, { Component } from 'react';
 import CreatePost from 'components/post/CreatePost';
 import PostList from 'components/post/PostList';
 
+import AuthenticationContext from 'context/AuthenticationContext';
+
 import 'Styles/css/feed.css';
 
-class Feed extends Component {
-  render() {
-    return (
-      <div className="feed">
-        <CreatePost />
-        <PostList />
-      </div>
-    );
-  }
-}
+const Feed = props => (
+  <AuthenticationContext.Consumer>
+    {context => {
+      return (
+        <div className="feed">
+          {context.token && <CreatePost />}
+          <PostList />
+        </div>
+      );
+    }}
+  </AuthenticationContext.Consumer>
+);
 
 export default Feed;

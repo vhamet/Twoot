@@ -42,16 +42,17 @@ async function login(parent, args, context) {
     throw new WrongCredentialsError();
   }
 
+  const token = jwt.sign({ userId: user.id }, APP_SECRET);
+  context.response.cookie('token', token, { httpOnly: true });
   return {
-    token: jwt.sign({ userId: user.id }, APP_SECRET),
+    token,
     user
   };
 }
 
 async function createPost(parent, args, context) {
   const userId = context.request.isAuthenticated && context.request.userId;
-  if (!userId)
-    throw new UnauthenticatedError();
+  if (!userId) throw new UnauthenticatedError();
 
   return await context.prisma.createPost({
     content: args.content,

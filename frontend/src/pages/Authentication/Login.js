@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import { AUTH_TOKEN } from 'utilities/constants';
+import AuthenticationContext from 'context/AuthenticationContext';
 
 import 'Styles/css/authentication.css';
 
@@ -11,6 +11,9 @@ const LOGIN_MUTATION = gql`
   mutation LoginMutation($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
+      user {
+        id
+      }
     }
   }
 `;
@@ -21,6 +24,8 @@ class Login extends Component {
     password: '',
     error: ''
   };
+
+  static contextType = AuthenticationContext;
 
   render() {
     const { email, password } = this.state;
@@ -50,7 +55,7 @@ class Login extends Component {
           <Mutation
             mutation={LOGIN_MUTATION}
             variables={{ email, password }}
-            onCompleted={data => this._confirm(data)}
+            onCompleted={data => this._login(data)}
             onError={err => this._handleError(err)}
           >
             {mutation => <button onClick={mutation}>Login</button>}
@@ -68,17 +73,13 @@ class Login extends Component {
   }
 
   _handleError = async err => {
-      this.setState({ error: err.graphQLErrors[0].message });
-  }
-
-  _confirm = async data => {
-    const { token } = data.login;
-    this._saveUserData(token);
-    this.props.history.push(`/`);
+    this.setState({ error: err.graphQLErrors[0].message });
   };
 
-  _saveUserData = token => {
-    localStorage.setItem(AUTH_TOKEN, token);
+  _login = async data => {
+    const { token, user: { id } } = data.login;
+    this.context.login(token, id);
+    this.props.history.push(`/`);
   };
 }
 
