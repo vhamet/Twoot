@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import { AUTH_TOKEN, SERVER_ERROR_MESSAGE } from '../../constants';
+import { AUTH_TOKEN, SERVER_ERROR_MESSAGE } from 'utilities/constants';
 
-import '../../Styles/css/authentication.css';
+import 'Styles/css/authentication.css';
 
 const LOGIN_MUTATION = gql`
   mutation LoginMutation($email: String!, $password: String!) {

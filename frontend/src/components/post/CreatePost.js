@@ -3,9 +3,9 @@ import { withRouter } from 'react-router-dom';
 import { Mutation, ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import { FEED_QUERY } from './PostList';
+import { FEED_QUERY } from 'components/post/PostList';
 
-import '../../Styles/css/post.css';
+import 'Styles/css/post.css';
 
 const CREATEPOST_MUTATION = gql`
   mutation CreatePostMutation($content: String!) {

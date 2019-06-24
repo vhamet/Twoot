@@ -10,9 +10,9 @@ import { split } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 
-import App from './App';
-import { AUTH_TOKEN } from './constants';
-import './Styles/css/index.css';
+import App from 'pages/App';
+import { AUTH_TOKEN } from 'utilities/constants';
+import 'Styles/css/index.css';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000'

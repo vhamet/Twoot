@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { withRouter } from "react-router";
 import { NavLink } from 'react-router-dom';
 
-import { AUTH_TOKEN } from '../../constants';
+import { AUTH_TOKEN } from 'utilities/constants';
 
-import '../../Styles/css/mainNavigation.css';
+import 'Styles/css/mainNavigation.css';
 
 class MainNavigation extends Component {
   render() {

@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import Spinner from '../spinner/Spinner';
-import Post from './Post';
+import Spinner from 'components/spinner/Spinner';
+import Post from 'components/post/Post';
 
 export const FEED_QUERY = gql`
   query FeedQuery($first: Int, $skip: Int, $orderBy: PostOrderByInput) {

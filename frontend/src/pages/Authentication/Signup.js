@@ -3,12 +3,12 @@ import { NavLink } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import FormInputValidation from '../../components/form/FormInputValidation';
+import FormInputValidation from 'components/form/FormInputValidation';
 
-import { AUTH_TOKEN, SERVER_ERROR_MESSAGE } from '../../constants';
-import { validateEmail, validateUsername, validatePassword, isEmpty } from '../../utils';
+import { AUTH_TOKEN, SERVER_ERROR_MESSAGE } from 'utilities/constants';
+import { validateEmail, validateUsername, validatePassword, isEmpty } from 'utilities/utils';
 
-import '../../Styles/css/authentication.css';
+import 'Styles/css/authentication.css';
 
 const SIGNUP_MUTATION = gql`
   mutation SignupMutation(
