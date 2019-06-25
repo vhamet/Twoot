@@ -10,28 +10,30 @@ const MainNavigation = props => (
   <AuthenticationContext.Consumer>
     {context => {
       return (
-        <header className="main-navigation">
-          <div className="main-navigation__logo">
-            <NavLink to="/home">
-              <h1>Twoot</h1>
-            </NavLink>
+        <header className="main-navigation__header">
+          <div className="main-navigation__container">
+            <div className="main-navigation__logo">
+              <NavLink to="/home">
+                <h1>Twoot</h1>
+              </NavLink>
+            </div>
+            <nav className="main-navigation__items">
+              <ul>
+                {context.token ? (
+                  <button onClick={context.logout}>Logout</button>
+                ) : (
+                  <Fragment>
+                    <li>
+                      <NavLink to="/login">Login</NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/signup">Signup</NavLink>
+                    </li>
+                  </Fragment>
+                )}
+              </ul>
+            </nav>
           </div>
-          <nav className="main-navigation__items">
-            <ul>
-              {context.token ? (
-                <button onClick={context.logout}>Logout</button>
-              ) : (
-                <Fragment>
-                  <li>
-                    <NavLink to="/login">Login</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/signup">Signup</NavLink>
-                  </li>
-                </Fragment>
-              )}
-            </ul>
-          </nav>
         </header>
       );
     }}

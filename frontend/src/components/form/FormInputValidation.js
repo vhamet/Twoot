@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 
-const FormInputValidation = (props) => (
+const FormInputValidation = props => (
   <div className="form-control">
     <label htmlFor={props.id}>{props.label}</label>
     <input

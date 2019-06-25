@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { Mutation, ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import Avatar from 'components/avatar/Avatar';
+
 import { FEED_QUERY } from 'components/post/PostList';
 
 import 'Styles/css/post.css';
@@ -47,10 +49,11 @@ class CreatePost extends Component {
           <div className="create-post__container">
             <div className="create-post__title">Create Post</div>
             <div className="create-post__content">
+              <Avatar size="3rem"/>
               <textarea
                 ref={this.contentRef}
                 onChange={this.handleChange}
-                rows="4"
+                rows="3"
                 placeholder="What's on your mind ?"
               />
             </div>

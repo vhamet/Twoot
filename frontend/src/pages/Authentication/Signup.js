@@ -184,7 +184,7 @@ export default Signup;
 const emailErrorContent = <span>Please enter a valid email address.</span>;
 const usernameErrorContent = (
   <span>
-    A valid username should contain at least 3 characters (alphanumerics).
+    A valid username should contain between 3 and 20 characters (alphanumeric, hyphen or underscore).
   </span>
 );
 const confirmErrorContent = (

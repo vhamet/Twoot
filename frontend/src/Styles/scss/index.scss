@@ -20,6 +20,10 @@ body {
 
 .form-control {
   margin-bottom: 1rem;
+
+  input.invalid {
+    background: $invalid-background-color;
+  }
 }
 
 .form-actions button,

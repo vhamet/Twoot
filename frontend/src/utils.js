@@ -4,7 +4,7 @@ export const validateEmail = (email) => {
 }
 
 export const validateUsername = (username) => {
-  var re = /[0-9a-zA-z]{3,}/g;
+  var re = /^[0-9a-zA-z_-]{3,20}$/g;
   return re.test(username);
 }
 
