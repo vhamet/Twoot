@@ -1,8 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Query } from 'react-apollo';
 
 import AuthenticationContext from 'context/AuthenticationContext';
+
+import DropDown from 'components/form/DropDown';
+
+import { IS_LOGGED_IN } from 'apollo/queries';
 
 import 'Styles/css/mainNavigation.css';
 
@@ -13,25 +18,44 @@ const MainNavigation = props => (
         <header className="main-navigation__header">
           <div className="main-navigation__container">
             <div className="main-navigation__logo">
-              <NavLink to="/home">
+              <Link to="/home">
                 <h1>Twoot</h1>
-              </NavLink>
+              </Link>
             </div>
             <nav className="main-navigation__items">
-              <ul>
-                {context.token ? (
-                  <button onClick={context.logout}>Logout</button>
-                ) : (
-                  <Fragment>
-                    <li>
-                      <NavLink to="/login">Login</NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/signup">Signup</NavLink>
-                    </li>
-                  </Fragment>
-                )}
-              </ul>
+              {context.token ? (
+                <ul>
+                  <li className="main-navigation__item">
+                    <Link to="/home">Home</Link>
+                  </li>
+                  <div className="separator" />
+                  <DropDown
+                    menu={
+                      <li className="main-navigation__item">
+                        <label>Menu</label>
+                      </li>
+                    }
+                  >
+                    <ul className="main-navigation__dropdownmenu">
+                      <li>
+                        <Link to="/profile">Profile</Link>
+                      </li>
+                      <li>
+                        <button onClick={context.logout}>Log Out</button>
+                      </li>
+                    </ul>
+                  </DropDown>
+                </ul>
+              ) : (
+                <ul>
+                  <li className="main-navigation__item">
+                    <Link to="/login">Login</Link>
+                  </li>
+                  <li className="main-navigation__item">
+                    <Link to="/signup">Signup</Link>
+                  </li>
+                </ul>
+              )}
             </nav>
           </div>
         </header>

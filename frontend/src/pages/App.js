@@ -11,11 +11,13 @@ import { getMainDefinition } from 'apollo-utilities';
 import cookie from 'react-cookies';
 
 import AuthenticationContext from 'context/AuthenticationContext';
+import { resolvers, typeDefs } from 'apollo/resolvers';
 
+import MainNavigation from 'components/navigation/MainNavigation';
 import LoginPage from 'pages/Authentication/Login';
 import SignupPage from 'pages/Authentication/Signup';
 import Feed from 'pages/Feed';
-import MainNavigation from 'components/navigation/MainNavigation';
+import Profile from 'pages/Profile';
 
 import 'Styles/css/app.css';
 
@@ -81,7 +83,9 @@ class App extends Component {
 
   client = new ApolloClient({
     link: this.link,
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
+    typeDefs,
+    resolvers,
   });
 
   render() {
@@ -100,6 +104,7 @@ class App extends Component {
             <Switch>
               <Redirect from="/" to="/home" exact />
               <Route path="/home" component={Feed} />
+              <Route path="/profile" component={Profile} />
               <Route path="/login" component={LoginPage} />
               <Route path="/signup" component={SignupPage} />
             </Switch>

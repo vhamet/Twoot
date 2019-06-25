@@ -1,0 +1,15 @@
+@import 'utilities/variables.scss';
+
+.dropdown__container {
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu__container {
+  position: absolute;
+  background: white;
+  color: black;
+  top: 2.6rem;
+  border-radius: 1px;
+  border: 1px solid $border-color-light;
+}

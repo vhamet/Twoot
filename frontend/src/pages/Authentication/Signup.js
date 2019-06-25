@@ -1,30 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import AuthenticationContext from 'context/AuthenticationContext';
 
 import FormInputValidation from 'components/form/FormInputValidation';
 
 import { validateEmail, validateUsername, validatePassword, isEmpty } from 'utils';
+import { SIGNUP_MUTATION } from 'apollo/queries';
 
 import 'Styles/css/authentication.css';
-
-const SIGNUP_MUTATION = gql`
-  mutation SignupMutation(
-    $email: String!
-    $password: String!
-    $username: String!
-  ) {
-    signup(email: $email, password: $password, username: $username) {
-      token
-      user {
-        id
-      }
-    }
-  }
-`;
 
 class Signup extends Component {
   state = {

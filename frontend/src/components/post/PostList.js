@@ -1,26 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import Spinner from 'components/spinner/Spinner';
 import Post from 'components/post/Post';
 
-export const FEED_QUERY = gql`
-  query FeedQuery($first: Int, $skip: Int, $orderBy: PostOrderByInput) {
-    feed(first: $first, skip: $skip, orderBy: $orderBy) {
-      posts {
-        id
-        createdAt
-        content
-        postedBy {
-          id
-          username
-        }
-      }
-      count
-    }
-  }
-`;
+import { FEED_QUERY } from 'apollo/queries';
 
 class PostList extends Component {
   render() {

@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import AuthenticationContext from 'context/AuthenticationContext';
 
-import 'Styles/css/authentication.css';
+import { LOGIN_MUTATION } from 'apollo/queries';
 
-const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-      user {
-        id
-      }
-    }
-  }
-`;
+import 'Styles/css/authentication.css';
 
 class Login extends Component {
   state = {
@@ -77,7 +67,10 @@ class Login extends Component {
   };
 
   _login = async data => {
-    const { token, user: { id } } = data.login;
+    const {
+      token,
+      user: { id }
+    } = data.login;
     this.context.login(token, id);
     this.props.history.push(`/`);
   };

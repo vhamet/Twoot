@@ -1,27 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Mutation, ApolloConsumer } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import Avatar from 'components/avatar/Avatar';
 
-import { FEED_QUERY } from 'components/post/PostList';
+import { FEED_QUERY, CREATEPOST_MUTATION } from 'apollo/queries';
 
 import 'Styles/css/post.css';
-
-const CREATEPOST_MUTATION = gql`
-  mutation CreatePostMutation($content: String!) {
-    createPost(content: $content) {
-      id
-      content
-      createdAt
-      postedBy {
-        id
-        username
-      }
-    }
-  }
-`;
 
 class CreatePost extends Component {
   state = {
