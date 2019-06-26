@@ -6,6 +6,7 @@ import { Query, ApolloConsumer } from 'react-apollo';
 import AuthenticationContext from 'context/AuthenticationContext';
 
 import DropDown from 'components/form/DropDown';
+import Avatar from 'components/avatar/Avatar';
 import { LOGGED_USER } from 'apollo/queries';
 
 import 'Styles/css/mainNavigation.css';
@@ -26,14 +27,16 @@ const MainNavigation = props => (
                 <nav className="main-navigation__items">
                   {context.token ? (
                     <ul>
-                      <div className="separator" />
                       {context.loggedUserFetched && (
                         <Query query={LOGGED_USER}>
                           {({ data }) => (
                             <DropDown
                               menu={
-                                <li className="main-navigation__item">
-                                  <label>{data.loggedUser.username}</label>
+                                <li className="main-navigation__item main-navigation__linkmenu">
+                                  <label>
+                                    <Avatar size="1.3rem" />
+                                    {data.loggedUser.username}
+                                  </label>
                                 </li>
                               }
                             >
@@ -49,6 +52,7 @@ const MainNavigation = props => (
                           )}
                         </Query>
                       )}
+                      <div className="separator" />
                       <li className="main-navigation__item">
                         <Link to="/home">Home</Link>
                       </li>

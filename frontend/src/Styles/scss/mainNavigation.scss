@@ -59,7 +59,8 @@
       > label {
         padding: 0.45rem 1.3rem;
         margin: 0;
-        display: block;
+        display: flex;
+        align-items: center;
         border: none;
         background: transparent;
         color: white;
@@ -71,6 +72,10 @@
         cursor: pointer;
       }
     }
+  }
+
+  .main-navigation__linkmenu label{
+    padding: .18rem 1.3rem !important;
   }
 
   .main-navigation__dropdownmenu {
