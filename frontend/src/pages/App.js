@@ -12,6 +12,7 @@ import cookie from 'react-cookies';
 
 import AuthenticationContext from 'context/AuthenticationContext';
 import { resolvers, typeDefs } from 'apollo/resolvers';
+import { USER_QUERY } from 'apollo/queries';
 
 import MainNavigation from 'components/navigation/MainNavigation';
 import LoginPage from 'pages/Authentication/Login';
@@ -24,26 +25,19 @@ import 'Styles/css/app.css';
 class App extends Component {
   state = {
     token: null,
-    userId: null
+    userId: null,
+    loggedUserFetched: false
   };
 
   login = (token, userId) => {
-    cookie.save('auth-cookie', { token, userId }, { path: '/' })
-    this.setState({ token, userId });
+    cookie.save('auth-cookie', { token, userId }, { path: '/' });
+    this.setState({ token, userId, loggedUserFetched: true });
   };
 
   logout = () => {
-    cookie.remove('auth-cookie', { path: '/' })
+    cookie.remove('auth-cookie', { path: '/' });
     this.setState({ token: null, userId: null });
   };
- 
-  componentWillMount() {
-    const authCookie = cookie.load('auth-cookie');
-    if (authCookie) {
-      const { token, userId } = authCookie;
-      this.setState({ token, userId });
-    }
-  }
 
   httpLink = createHttpLink({
     uri: 'http://localhost:4000',
@@ -67,7 +61,7 @@ class App extends Component {
     options: {
       reconnect: true,
       connectionParams: {
-        authToken: localStorage.getItem(this.state.token)
+        authToken: this.state.token
       }
     }
   });
@@ -85,8 +79,30 @@ class App extends Component {
     link: this.link,
     cache: new InMemoryCache(),
     typeDefs,
-    resolvers,
+    resolvers
   });
+
+  async fetchLoggedUser(userId) {
+    const { data } = await this.client.query({
+      query: USER_QUERY,
+      variables: { id: userId }
+    });
+    this.client.writeData({
+      data: {
+        loggedUser: data.user
+      }
+    });
+    this.setState({ loggedUserFetched: true });
+  }
+
+  componentDidMount() {
+    const authCookie = cookie.load('auth-cookie');
+    if (authCookie) {
+      const { token, userId } = authCookie;
+      this.fetchLoggedUser(userId);
+      this.setState({ token, userId });
+    }
+  }
 
   render() {
     return (
@@ -94,6 +110,7 @@ class App extends Component {
         value={{
           token: this.state.token,
           userId: this.state.userId,
+          loggedUserFetched: this.state.loggedUserFetched,
           login: this.login,
           logout: this.logout
         }}

@@ -61,17 +61,20 @@ export const SIGNUP_MUTATION = gql`
 
 export const LOGGED_USER = gql`
   query GetLoggedUser {
-    loggedUser @client {
-      user @client {
-        id
-        username
-      }
+    loggedUser {
+      id
+      username
+      email
     }
   }
 `;
 
-export const IS_LOGGED_IN = gql`  query IsUserLoggedIn {
-  isLoggedIn @client
-}
-`
-;
+export const USER_QUERY = gql`
+  query UserQUery($id: ID!) {
+    user(id: $id) {
+      id
+      username
+      email
+    }
+  }
+`;

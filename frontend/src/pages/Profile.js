@@ -1,15 +1,33 @@
 import React from 'react';
-import { Query } from 'react-apollo';
+import { Query, ApolloConsumer } from 'react-apollo';
 
-import { IS_LOGGED_IN } from 'apollo/queries';
+import { LOGGED_USER } from 'apollo/queries';
 
 const Profile = props => {
   return (
-    <Query query={IS_LOGGED_IN}>
-      {({ data }) =>
-        data.isLoggedIn ? <div>{data.isLoggedIn}</div> : <div>NOT</div>
-      }
-    </Query>
+    <ApolloConsumer>
+      {client => (
+        <>
+          <Query query={LOGGED_USER}>
+            {({ data }) => <div>{data.isLoggedIn}</div>}
+          </Query>
+          <button
+            onClick={() => {
+              client.writeData({
+                data: {
+                  loggedUser: {
+                    username: 'valelujah',
+                    __typename: 'User'
+                  }
+                }
+              });
+            }}
+          >
+            loggeduser
+          </button>
+        </>
+      )}
+    </ApolloConsumer>
   );
 };
 

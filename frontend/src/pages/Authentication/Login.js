@@ -47,6 +47,13 @@ class Login extends Component {
             variables={{ email, password }}
             onCompleted={data => this._login(data)}
             onError={err => this._handleError(err)}
+            update={(cache, { data: { login } }) => {
+              cache.writeData({
+                data: {
+                  loggedUser: login.user
+                }
+              });
+            }}
           >
             {mutation => <button onClick={mutation}>Login</button>}
           </Mutation>

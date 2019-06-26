@@ -12,13 +12,22 @@ async function feed(parent, args, context) {
     })
     .aggregate()
     .count();
-    
+
   return {
     posts,
     count
   };
 }
+async function user(parent, args, context) {
+  const user = await context.prisma.user({
+    id: args.id
+  });
+  delete user.password;
+
+  return { ...user, id: args.id };
+}
 
 module.exports = {
-  feed
+  feed,
+  user
 };
