@@ -1,13 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Query } from 'react-apollo';
 
 import AuthenticationContext from 'context/AuthenticationContext';
 
 import DropDown from 'components/form/DropDown';
-
-import { IS_LOGGED_IN } from 'apollo/queries';
 
 import 'Styles/css/mainNavigation.css';
 
@@ -40,8 +37,8 @@ const MainNavigation = props => (
                       <li>
                         <Link to="/profile">Profile</Link>
                       </li>
-                      <li>
-                        <button onClick={context.logout}>Log Out</button>
+                      <li onClick={context.logout}>
+                        <label>Log Out</label>
                       </li>
                     </ul>
                   </DropDown>

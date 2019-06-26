@@ -1,29 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import 'Styles/css/dropdown.css';
 
 const DropDown = props => {
   const [show, setShow] = useState(false);
 
-  const showMenu = e => {
-    e.preventDefault();
-    if (show) closeMenu();
-    else {
-      document.addEventListener('click', closeMenu);
-      setShow(true);
-    }
+  const closeMenu = e => {
+    !e.target.closest('.dropdown_keep') && setShow(false);
   };
 
-  const closeMenu = e => {
-    if(!e.target.closest('.dropdown_keep')) {
+  useEffect(() => {
+    if (show) document.addEventListener('click', closeMenu);
+    else document.removeEventListener('click', closeMenu);
+
+    return () => {
       document.removeEventListener('click', closeMenu);
-      setShow(false);
-    }
-  };
+    };
+  });
 
   return (
     <div className="dropdown__container">
-      <div onClick={showMenu}>{props.menu}</div>
+      <div onClick={() => setShow(true)}>{props.menu}</div>
       {show && <div className="dropdown-menu__container">{props.children}</div>}
     </div>
   );

@@ -48,7 +48,6 @@
 
     .main-navigation__item {
       margin: 0;
-      padding: 0.2rem 0.8rem;
 
       &:hover {
         background: $main-color-dark;
@@ -58,14 +57,14 @@
       > a,
       > button,
       > label {
-        padding: 0.25rem 0.5rem;
+        padding: 0.45rem 1.3rem;
         margin: 0;
+        display: block;
         border: none;
         background: transparent;
         color: white;
         text-decoration: none;
         outline: none;
-        vertical-align: middle;
         font: inherit;
         font-size: 0.8rem;
         font-weight: 700;
@@ -87,7 +86,7 @@
       box-sizing: border-box;
 
       a,
-      button {
+      label {
         color: $darkgrey-label;
         background: transparent;
         border: none;
@@ -106,7 +105,7 @@
         border-bottom: 1px solid $border-color-dark;
 
         a,
-        button {
+        label {
           color: white;
         }
       }
