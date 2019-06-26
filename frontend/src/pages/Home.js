@@ -5,13 +5,13 @@ import PostList from 'components/post/PostList';
 
 import AuthenticationContext from 'context/AuthenticationContext';
 
-import 'Styles/css/feed.css';
+import 'Styles/css/home.css';
 
-const Feed = props => (
+const Home = props => (
   <AuthenticationContext.Consumer>
     {context => {
       return (
-        <div className="feed">
+        <div className="home">
           {context.token && <CreatePost />}
           <PostList />
         </div>
@@ -20,4 +20,4 @@ const Feed = props => (
   </AuthenticationContext.Consumer>
 );
 
-export default Feed;
+export default Home;
