@@ -13,6 +13,7 @@ class PostList extends Component {
     window.removeEventListener('scroll', this.handleOnScroll);
 
   componentDidMount() {
+    this.props.loadFeed();
     this.addScrollDownListener();
   }
 
@@ -46,7 +47,7 @@ class PostList extends Component {
     if (!this.props.posts && this.props.loading) return <Spinner />;
     return (
       <Fragment>
-        {this.props.posts.map(post => (
+        {this.props.posts && this.props.posts.map(post => (
           <Post key={post.id} post={{...post, date: timeDifferenceForDate(post.createdAt) }} />
         ))}
         {this.props.loading && <Loader />}

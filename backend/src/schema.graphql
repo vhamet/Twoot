@@ -1,13 +1,8 @@
 scalar DateTime
 
-enum PostOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-}
-
 type Query {
   info: String!
-  feed(filter: String, skip: Int, first: Int, orderBy: PostOrderByInput): Feed!
+  feed(first: Int, after: ID): [Post!]!
   user(id: ID!): User
 }
 
@@ -15,11 +10,6 @@ type Mutation {
   signup(email: String!, password: String!, username: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   createPost(content: String!): Post!
-}
-
-type Feed {
-  posts: [Post!]!
-  count: Int!
 }
 
 type AuthPayload {

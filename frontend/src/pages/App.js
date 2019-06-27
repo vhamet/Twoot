@@ -13,6 +13,7 @@ import cookie from 'react-cookies';
 import AuthenticationContext from 'context/AuthenticationContext';
 import { resolvers, typeDefs } from 'apollo/resolvers';
 import { USER_QUERY } from 'apollo/queries';
+import { AUTH_COOKIE } from 'constants.js';
 
 import MainNavigation from 'components/navigation/MainNavigation';
 import LoginPage from 'pages/Authentication/Login';
@@ -29,12 +30,12 @@ class App extends Component {
   };
 
   login = (token, { id, username }) => {
-    cookie.save('auth-cookie', { token, userId: id }, { path: '/' });
+    cookie.save(AUTH_COOKIE, { token, userId: id }, { path: '/' });
     this.setState({ token, loggedUser: { id, username } });
   };
 
   logout = () => {
-    cookie.remove('auth-cookie', { path: '/' });
+    cookie.remove(AUTH_COOKIE, { path: '/' });
     this.setState({ token: null, loggedUser: null });
   };
 
@@ -96,7 +97,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const authCookie = cookie.load('auth-cookie');
+    const authCookie = cookie.load(AUTH_COOKIE);
     if (authCookie) {
       const { token, userId } = authCookie;
       this.fetchLoggedUser(userId);

@@ -1,18 +1,29 @@
 import gql from 'graphql-tag';
 
 export const FEED_QUERY = gql`
-  query FeedQuery($first: Int, $skip: Int, $orderBy: PostOrderByInput) {
-    feed(first: $first, skip: $skip, orderBy: $orderBy) {
-      posts {
+  query FeedQuery($first: Int, $after: ID) {
+    feed(first: $first, after: $after) {
+      id
+      createdAt
+      content
+      postedBy {
         id
-        createdAt
-        content
-        postedBy {
-          id
-          username
-        }
+        username
       }
-      count
+    }
+  }
+`;
+
+export const CACHED_FEED_QUERY = gql`
+  query CachedFeedQuery {
+    feed {
+      id
+      createdAt
+      content
+      postedBy {
+        id
+        username
+      }
     }
   }
 `;
