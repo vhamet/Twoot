@@ -4,7 +4,7 @@ import Spinner from 'components/loaders/Spinner';
 import Loader from 'components/loaders/Loader';
 import Post from 'components/post/Post';
 
-import { debounce } from 'utils';
+import { timeDifferenceForDate } from 'utils';
 
 class PostList extends Component {
   addScrollDownListener = () =>
@@ -47,7 +47,7 @@ class PostList extends Component {
     return (
       <Fragment>
         {this.props.posts.map(post => (
-          <Post key={post.id} post={post} />
+          <Post key={post.id} post={{...post, date: timeDifferenceForDate(post.createdAt) }} />
         ))}
         {this.props.loading && <Loader />}
       </Fragment>

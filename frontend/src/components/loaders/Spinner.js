@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import 'styles/css/loaders.css';
 
-const Spinner = () => <div className="spinner"><div className="lds-dual-ring"></div></div>;
+const Spinner = () => (
+  <div className="spinner">
+    <div className="lds-dual-ring" />
+  </div>
+);
 
-export default Spinner;
+export default memo(Spinner);

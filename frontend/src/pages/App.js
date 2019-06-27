@@ -25,18 +25,17 @@ import 'styles/css/app.css';
 class App extends Component {
   state = {
     token: null,
-    userId: null,
-    loggedUserFetched: false
+    loggedUser: null
   };
 
-  login = (token, userId) => {
-    cookie.save('auth-cookie', { token, userId }, { path: '/' });
-    this.setState({ token, userId, loggedUserFetched: true });
+  login = (token, { id, username }) => {
+    cookie.save('auth-cookie', { token, userId: id }, { path: '/' });
+    this.setState({ token, loggedUser: { id, username } });
   };
 
   logout = () => {
     cookie.remove('auth-cookie', { path: '/' });
-    this.setState({ token: null, userId: null });
+    this.setState({ token: null, loggedUser: null });
   };
 
   httpLink = createHttpLink({
@@ -92,7 +91,8 @@ class App extends Component {
         loggedUser: data.user
       }
     });
-    this.setState({ loggedUserFetched: true });
+    
+    this.setState({ loggedUser: { id: userId, username: data.user.username } });
   }
 
   componentDidMount() {
@@ -100,7 +100,7 @@ class App extends Component {
     if (authCookie) {
       const { token, userId } = authCookie;
       this.fetchLoggedUser(userId);
-      this.setState({ token, userId });
+      this.setState({ token, loggedUser: { id: userId } });
     }
   }
 
@@ -109,14 +109,17 @@ class App extends Component {
       <AuthenticationContext.Provider
         value={{
           token: this.state.token,
-          userId: this.state.userId,
-          loggedUserFetched: this.state.loggedUserFetched,
+          loggedUser: this.state.loggedUser,
           login: this.login,
           logout: this.logout
         }}
       >
         <ApolloProvider client={this.client}>
-          <MainNavigation />
+          <MainNavigation
+            token={this.state.token}
+            loggedUser={this.state.loggedUser}
+            logout={this.logout}
+          />
           <main className="main-content">
             <Switch>
               <Redirect from="/" to="/home" exact />

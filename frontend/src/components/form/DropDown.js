@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 
 import 'styles/css/dropdown.css';
 
@@ -26,4 +26,4 @@ const DropDown = props => {
   );
 };
 
-export default DropDown;
+export default memo(DropDown);

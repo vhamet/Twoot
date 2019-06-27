@@ -1,32 +1,29 @@
-import React, { Component } from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import Avatar from 'components/avatar/Avatar';
 
-import { timeDifferenceForDate } from 'utils';
+const Post = props => {
+  const {
+    content,
+    date,
+    postedBy: { id, username }
+  } = props.post;
 
-class Post extends Component {
-  render() {
-    const {
-      content,
-      createdAt,
-      postedBy: { id, username }
-    } = this.props.post;
-    return (
-      <div className="post__container">
-        <div className="post-info__container">
-          <Avatar id={id} size="2.5rem" />
-          <div>
-            <Link to={`/user/:${id}`}>{username}</Link>
-            <label>{timeDifferenceForDate(createdAt)}</label>
-          </div>
-        </div>
-        <div className="post__content">
-          <pre>{content}</pre>
+  return (
+    <div className="post__container">
+      <div className="post-info__container">
+        <Avatar id={id} size="2.5rem" />
+        <div>
+          <Link to={`/user/:${id}`}>{username}</Link>
+          <label>{date}</label>
         </div>
       </div>
-    );
-  }
-}
+      <div className="post__content">
+        <pre>{content}</pre>
+      </div>
+    </div>
+  );
+};
 
-export default Post;
+export default memo(Post);

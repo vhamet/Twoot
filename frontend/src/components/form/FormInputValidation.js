@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ReactTooltip from 'react-tooltip';
 
 const FormInputValidation = props => (
@@ -15,11 +15,16 @@ const FormInputValidation = props => (
       data-for={props.tooltipId}
     />
     {!props.isValid && (
-      <ReactTooltip id={props.tooltipId} type="error"  effect='solid'  place="right">
+      <ReactTooltip
+        id={props.tooltipId}
+        type="error"
+        effect="solid"
+        place="right"
+      >
         {props.content}
-      </ReactTooltip>)
-    }
+      </ReactTooltip>
+    )}
   </div>
 );
 
-export default FormInputValidation;
+export default memo(FormInputValidation);
