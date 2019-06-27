@@ -6,7 +6,7 @@ import Avatar from 'components/avatar/Avatar';
 const Post = props => {
   const {
     content,
-    date,
+    timespan,
     postedBy: { id, username }
   } = props.post;
 
@@ -16,7 +16,7 @@ const Post = props => {
         <Avatar id={id} size="2.5rem" />
         <div>
           <Link to={`/user/:${id}`}>{username}</Link>
-          <label>{date}</label>
+          <label>{timespan}</label>
         </div>
       </div>
       <div className="post__content">

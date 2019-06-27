@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {  ApolloConsumer } from 'react-apollo';
+import { ApolloConsumer } from 'react-apollo';
 
 import CreatePost from 'components/post/CreatePost';
 import PostList from 'components/post/PostList';
@@ -7,8 +7,8 @@ import PostList from 'components/post/PostList';
 import AuthenticationContext from 'context/AuthenticationContext';
 
 import { FEED_PAGINATION } from 'constants.js';
-
 import { FEED_QUERY, CACHED_FEED_QUERY } from 'apollo/queries';
+import { timeDifferenceForDate } from 'utils';
 
 import 'styles/css/home.css';
 
@@ -53,12 +53,16 @@ const Home = props => {
   };
 
   const setCachedData = (client, data) => {
+    const feed = data.feed.map(post => ({
+      ...post,
+      timespan: timeDifferenceForDate(post.createdAt)
+    }));
     client.writeData({
       query: CACHED_FEED_QUERY,
-      data
+      data: { feed }
     });
-    setAfter(data.feed[data.feed.length - 1].id);
-    setPosts(data.feed);
+    setAfter(feed[feed.length - 1].id);
+    setPosts(feed);
     setLoading(false);
   };
 
