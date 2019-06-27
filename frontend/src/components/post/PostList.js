@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, memo } from 'react';
 
 import Spinner from 'components/loaders/Spinner';
 import Loader from 'components/loaders/Loader';
@@ -44,14 +44,14 @@ class PostList extends Component {
   render() {
     if (!this.props.posts && this.props.loading) return <Spinner />;
     return (
-      <Fragment>
+      <>
         {this.props.posts && this.props.posts.map(post => (
           <Post key={post.id} post={post} />
         ))}
         {this.props.loading && <Loader />}
-      </Fragment>
+      </>
     );
   }
 }
 
-export default PostList;
+export default memo(PostList);

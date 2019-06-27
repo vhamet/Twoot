@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 
@@ -6,7 +6,12 @@ import AuthenticationContext from 'context/AuthenticationContext';
 
 import FormInputValidation from 'components/form/FormInputValidation';
 
-import { validateEmail, validateUsername, validatePassword, isEmpty } from 'utils';
+import {
+  validateEmail,
+  validateUsername,
+  validatePassword,
+  isEmpty
+} from 'utils';
 import { SIGNUP_MUTATION } from 'apollo/queries';
 
 import 'styles/css/authentication.css';
@@ -36,9 +41,26 @@ class Signup extends Component {
     this.handleChangeConfirm = this.handleChangeConfirm.bind(this);
   }
 
-  validation = ({ email, username, password, confirm, emailValid, usernameValid, passwordValid, confirmValid }) => {
-    return emailValid && usernameValid && passwordValid && confirmValid
-    && !isEmpty(email) && !isEmpty(username) && !isEmpty(password) && !isEmpty(confirm);
+  validation = ({
+    email,
+    username,
+    password,
+    confirm,
+    emailValid,
+    usernameValid,
+    passwordValid,
+    confirmValid
+  }) => {
+    return (
+      emailValid &&
+      usernameValid &&
+      passwordValid &&
+      confirmValid &&
+      !isEmpty(email) &&
+      !isEmpty(username) &&
+      !isEmpty(password) &&
+      !isEmpty(confirm)
+    );
   };
 
   handleChangeEmail(e) {
@@ -146,7 +168,8 @@ class Signup extends Component {
         <div className="hr" />
         <div className="form-actions">
           <p>
-            Already have an account ? Switch to <NavLink to="/login">Login</NavLink>.
+            Already have an account ? Switch to{' '}
+            <NavLink to="/login">Login</NavLink>.
           </p>
         </div>
       </div>
@@ -158,7 +181,10 @@ class Signup extends Component {
   };
 
   _signup = async data => {
-    const { token, user: { id } } = data.login;
+    const {
+      token,
+      user: { id }
+    } = data.login;
     this.context.login(token, id);
     this.props.history.push(`/`);
   };
@@ -169,14 +195,15 @@ export default Signup;
 const emailErrorContent = <span>Please enter a valid email address.</span>;
 const usernameErrorContent = (
   <span>
-    A valid username should contain between 3 and 20 characters (alphanumeric, hyphen or underscore).
+    A valid username should contain between 3 and 20 characters (alphanumeric,
+    hyphen or underscore).
   </span>
 );
 const confirmErrorContent = (
   <span>Password missmatch. Please check your input.</span>
 );
 const passwordErrorContent = (
-  <Fragment>
+  <>
     <label>Please enter a valid password.</label>
     <label>A valid password should have :</label>
     <ul>
@@ -186,5 +213,5 @@ const passwordErrorContent = (
       <li>At least on numeric character</li>
       <li>At least one special character (!@#$%&)</li>
     </ul>
-  </Fragment>
+  </>
 );
