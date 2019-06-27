@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 
@@ -11,10 +11,6 @@ import 'styles/css/post.css';
 const CreatePost = props => {
   const [content, setContent] = useState('');
 
-  const handleChange = e => {
-    setContent(e.target.value);
-  };
-
   const handleError = err => {
     alert(err.graphQLErrors[0].message);
   };
@@ -26,7 +22,7 @@ const CreatePost = props => {
         <Avatar size="3rem" />
         <textarea
           value={content}
-          onChange={handleChange}
+          onChange={e => setContent(e.target.value)}
           rows="3"
           placeholder="What's on your mind ?"
         />
@@ -52,4 +48,4 @@ const CreatePost = props => {
   );
 };
 
-export default withRouter(memo(CreatePost));
+export default withRouter(CreatePost);
