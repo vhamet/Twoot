@@ -1,6 +1,6 @@
 import React from 'react';
 
-import 'Styles/css/spinner.css';
+import 'styles/css/loaders.css';
 
 const Spinner = () => <div className="spinner"><div className="lds-dual-ring"></div></div>;
 

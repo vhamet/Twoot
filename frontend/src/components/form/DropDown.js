@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import 'Styles/css/dropdown.css';
+import 'styles/css/dropdown.css';
 
 const DropDown = props => {
   const [show, setShow] = useState(false);

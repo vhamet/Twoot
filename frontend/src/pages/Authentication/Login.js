@@ -6,7 +6,7 @@ import AuthenticationContext from 'context/AuthenticationContext';
 
 import { LOGIN_MUTATION } from 'apollo/queries';
 
-import 'Styles/css/authentication.css';
+import 'styles/css/authentication.css';
 
 class Login extends Component {
   state = {

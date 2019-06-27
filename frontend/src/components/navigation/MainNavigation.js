@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Query, ApolloConsumer } from 'react-apollo';
+import { Query } from 'react-apollo';
 
 import AuthenticationContext from 'context/AuthenticationContext';
 
@@ -9,14 +9,12 @@ import DropDown from 'components/form/DropDown';
 import Avatar from 'components/avatar/Avatar';
 import { LOGGED_USER } from 'apollo/queries';
 
-import 'Styles/css/mainNavigation.css';
+import 'styles/css/mainNavigation.css';
 
 const MainNavigation = props => (
   <AuthenticationContext.Consumer>
     {context => {
       return (
-        <ApolloConsumer>
-          {client => (
             <header className="main-navigation__header">
               <div className="main-navigation__container">
                 <div className="main-navigation__logo">
@@ -70,8 +68,6 @@ const MainNavigation = props => (
                 </nav>
               </div>
             </header>
-          )}
-        </ApolloConsumer>
       );
     }}
   </AuthenticationContext.Consumer>

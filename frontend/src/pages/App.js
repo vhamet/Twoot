@@ -20,7 +20,7 @@ import SignupPage from 'pages/Authentication/Signup';
 import Home from 'pages/Home';
 import Profile from 'pages/Profile';
 
-import 'Styles/css/app.css';
+import 'styles/css/app.css';
 
 class App extends Component {
   state = {

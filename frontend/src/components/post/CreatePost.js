@@ -6,7 +6,7 @@ import Avatar from 'components/avatar/Avatar';
 
 import { FEED_QUERY, CREATEPOST_MUTATION } from 'apollo/queries';
 
-import 'Styles/css/post.css';
+import 'styles/css/post.css';
 
 class CreatePost extends Component {
   state = {

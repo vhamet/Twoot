@@ -9,7 +9,7 @@ import FormInputValidation from 'components/form/FormInputValidation';
 import { validateEmail, validateUsername, validatePassword, isEmpty } from 'utils';
 import { SIGNUP_MUTATION } from 'apollo/queries';
 
-import 'Styles/css/authentication.css';
+import 'styles/css/authentication.css';
 
 class Signup extends Component {
   state = {

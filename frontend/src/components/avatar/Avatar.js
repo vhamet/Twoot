@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import anon from 'images/anon.png';
 
-import 'Styles/css/avatar.css';
+import 'styles/css/avatar.css';
 
 const Avatar = props => {
   const size = props.size || '3rem;';

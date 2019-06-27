@@ -1,31 +1,56 @@
 import React, { Component, Fragment } from 'react';
-import { Query } from 'react-apollo';
 
-import Spinner from 'components/spinner/Spinner';
+import Spinner from 'components/loaders/Spinner';
+import Loader from 'components/loaders/Loader';
 import Post from 'components/post/Post';
 
-import { FEED_QUERY } from 'apollo/queries';
+import { debounce } from 'utils';
 
 class PostList extends Component {
+  addScrollDownListener = () =>
+    window.addEventListener('scroll', this.handleOnScroll);
+  clearScrollDownListener = () =>
+    window.removeEventListener('scroll', this.handleOnScroll);
+
+  componentDidMount() {
+    this.addScrollDownListener();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.posts && prevProps.posts.length !== this.props.posts.length) {
+      this.addScrollDownListener();
+    }
+  }
+
+  componentWillUnmount() {
+    this.clearScrollDownListener();
+  }
+
+  handleOnScroll = () => {
+    var scrollTop =
+      (document.documentElement && document.documentElement.scrollTop) ||
+      document.body.scrollTop;
+    var scrollHeight =
+      (document.documentElement && document.documentElement.scrollHeight) ||
+      document.body.scrollHeight;
+    var clientHeight =
+      document.documentElement.clientHeight || window.innerHeight;
+    var scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+    if (scrolledToBottom) {
+      this.clearScrollDownListener();
+      this.props.loadMore();
+    }
+  };
+
   render() {
-    const first = 5;
-    const skip = 0;
-    const orderBy = 'createdAt_DESC';
+    if (!this.props.posts && this.props.loading) return <Spinner />;
     return (
-      <Query query={FEED_QUERY} variables={{ first, skip, orderBy }}>
-        {({ loading, error, data }) => {
-          if (loading) return <Spinner />;
-          if (error) return <div>Error</div>;
-          const postsToRender = data.feed.posts;
-          return (
-            <Fragment>
-              {postsToRender.map((post, index) => (
-                <Post key={post.id} post={post} />
-              ))}
-            </Fragment>
-          );
-        }}
-      </Query>
+      <Fragment>
+        {this.props.posts.map(post => (
+          <Post key={post.id} post={post} />
+        ))}
+        {this.props.loading && <Loader />}
+      </Fragment>
     );
   }
 }
