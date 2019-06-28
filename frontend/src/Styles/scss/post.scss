@@ -39,7 +39,8 @@
 
 .post__container {
   border: 1px solid $border-color-light;
-  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   background: white;
   padding: 1rem;
   margin-top: 1rem;
@@ -53,9 +54,6 @@
     align-items: center;
 
     a {
-      color: $main-color;
-      font-weight: 600;
-      text-decoration: none;
       display: block;
     }
 

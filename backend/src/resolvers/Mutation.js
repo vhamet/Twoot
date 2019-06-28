@@ -60,8 +60,20 @@ async function createPost(parent, args, context) {
   });
 }
 
+async function createComment(parent, args, context) {
+  const userId = context.request.isAuthenticated && context.request.userId;
+  if (!userId) throw new UnauthenticatedError();
+
+  return await context.prisma.createComment({
+    content: args.content,
+    postedOn: { connect: { id: args.postId } },
+    postedBy: { connect: { id: userId } },
+  });
+}
+
 module.exports = {
   signup: ErrorHandlerWrapper(signup),
   login: ErrorHandlerWrapper(login),
-  createPost: ErrorHandlerWrapper(createPost)
+  createPost: ErrorHandlerWrapper(createPost),
+  createComment: ErrorHandlerWrapper(createComment),
 };

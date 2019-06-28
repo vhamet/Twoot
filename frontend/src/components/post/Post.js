@@ -7,22 +7,25 @@ const Post = props => {
   const {
     content,
     timespan,
-    postedBy: { id, username }
+    postedBy: { userId, username }
   } = props.post;
-
   return (
-    <div className="post__container">
-      <div className="post-info__container">
-        <Avatar id={id} size="2.5rem" />
-        <div>
-          <Link to={`/user/:${id}`}>{username}</Link>
-          <label>{timespan}</label>
+    <>
+      <div className="post__container">
+        <div className="post-info__container">
+          <Avatar id={userId} size="2.5rem" />
+          <div>
+            <Link className="profile-link" to={`/user/:${userId}`}>
+              {username}
+            </Link>
+            <label>{timespan}</label>
+          </div>
+        </div>
+        <div className="post__content">
+          <pre>{content}</pre>
         </div>
       </div>
-      <div className="post__content">
-        <pre>{content}</pre>
-      </div>
-    </div>
+    </>
   );
 };
 

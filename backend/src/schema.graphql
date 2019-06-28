@@ -2,7 +2,7 @@ scalar DateTime
 
 type Query {
   info: String!
-  feed(first: Int, after: ID): [Post!]!
+  feed(first: Int, after: ID): Feed!
   user(id: ID!): User
 }
 
@@ -10,6 +10,12 @@ type Mutation {
   signup(email: String!, password: String!, username: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   createPost(content: String!): Post!
+  createComment(postId: ID!, content: String!): Comment!
+}
+
+type Feed {
+  posts: [Post!]!
+  cursor: ID
 }
 
 type AuthPayload {
@@ -22,11 +28,21 @@ type User {
   username: String!
   email: String!
   posts: [Post!]!
+  comments: [Comment!]!
 }
 
 type Post {
   id: ID!
   content: String!
+  postedBy: User!
+  createdAt: DateTime!
+  comments: [Comment!]!
+}
+
+type Comment {
+  id: ID!
+  content: String!
+  postedOn: Post!
   postedBy: User!
   createdAt: DateTime!
 }

@@ -1,8 +1,12 @@
-import React, { Component, memo } from 'react';
+import React, { Component } from 'react';
 
 import Spinner from 'components/loaders/Spinner';
 import Loader from 'components/loaders/Loader';
 import Post from 'components/post/Post';
+import CreateComment from 'components/comment/CreateComment';
+import CommentList from 'components/comment/CommentList';
+
+import { timeDifferenceForDate } from 'utils';
 
 class PostList extends Component {
   addScrollDownListener = () =>
@@ -11,12 +15,11 @@ class PostList extends Component {
     window.removeEventListener('scroll', this.handleOnScroll);
 
   componentDidMount() {
-    this.props.loadFeed();
     this.addScrollDownListener();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.posts && prevProps.posts.length !== this.props.posts.length) {
+  componentDidUpdate() {
+    if (!this.props.loading) {
       this.addScrollDownListener();
     }
   }
@@ -34,10 +37,11 @@ class PostList extends Component {
       document.body.scrollHeight;
     var clientHeight =
       document.documentElement.clientHeight || window.innerHeight;
+
     var scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
     if (scrolledToBottom) {
       this.clearScrollDownListener();
-      this.props.loadMore();
+      this.props.onLoadMore();
     }
   };
 
@@ -45,13 +49,25 @@ class PostList extends Component {
     if (!this.props.posts && this.props.loading) return <Spinner />;
     return (
       <>
-        {this.props.posts && this.props.posts.map(post => (
-          <Post key={post.id} post={post} />
-        ))}
+        {this.props.posts &&
+          this.props.posts.map(post => (
+            <React.Fragment key={post.id}>
+              <Post
+                post={{
+                  ...post,
+                  timespan: timeDifferenceForDate(post.createdAt)
+                }}
+              />
+              <div className="comments__container">
+                <CreateComment postId={post.id} />
+                <CommentList comments={post.comments} />
+              </div>
+            </React.Fragment>
+          ))}
         {this.props.loading && <Loader />}
       </>
     );
   }
 }
 
-export default memo(PostList);
+export default PostList;

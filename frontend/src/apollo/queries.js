@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const FEED_QUERY = gql`
-  query FeedQuery($first: Int, $after: ID) {
-    feed(first: $first, after: $after) {
+const FEED_CONTENT_FRAGMENT = gql`
+  fragment FeedContent on Feed {
+    posts {
       id
       createdAt
       content
@@ -10,22 +10,36 @@ export const FEED_QUERY = gql`
         id
         username
       }
+      comments {
+        id
+        content
+        createdAt
+        postedBy {
+          id
+          username
+        }
+      }
     }
+    cursor
   }
 `;
 
-export const CACHED_FEED_QUERY = gql`
-  query CachedFeedQuery {
-    feed {
-      id
-      createdAt
-      content
-      postedBy {
-        id
-        username
-      }
+export const INIT_FEED_QUERY = gql`
+  query InitFeedQuery($first: Int) {
+    feed(first: $first) {
+      ...FeedContent
     }
   }
+  ${FEED_CONTENT_FRAGMENT}
+`;
+
+export const MORE_FEED_QUERY = gql`
+  query MoreFeedQuery($first: Int, $after: ID) {
+    feed(first: $first, after: $after) {
+      ...FeedContent
+    }
+  }
+  ${FEED_CONTENT_FRAGMENT}
 `;
 
 export const CREATEPOST_MUTATION = gql`
@@ -38,6 +52,41 @@ export const CREATEPOST_MUTATION = gql`
         id
         username
       }
+      comments {
+        id
+        content
+        createdAt
+        postedBy {
+          id
+          username
+        }
+      }
+    }
+  }
+`;
+
+export const CREATECOMMENT_MUTATION = gql`
+  mutation CreateCommentMutation($postId: ID!, $content: String!) {
+    createComment(postId: $postId, content: $content) {
+      id
+      content
+      createdAt
+      postedOn {
+        id
+      }
+      postedBy {
+        id
+        username
+      }
+    }
+  }
+`;
+
+export const GETPOST_FRAGMENT = gql`
+  fragment getPost on Post {
+    id
+    comments {
+      id
     }
   }
 `;

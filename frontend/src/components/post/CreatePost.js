@@ -4,7 +4,7 @@ import { Mutation } from 'react-apollo';
 
 import Avatar from 'components/avatar/Avatar';
 
-import { CREATEPOST_MUTATION } from 'apollo/queries';
+import { CREATEPOST_MUTATION, INIT_FEED_QUERY } from 'apollo/queries';
 
 import 'styles/css/post.css';
 
@@ -34,9 +34,18 @@ const CreatePost = props => {
         onCompleted={() => {
           setContent('');
         }}
-        update={(cache, { data: { createPost } }) =>
-          props.newPost(cache, createPost)
-        }
+        update={(cache, { data: { createPost } }) => {
+          const data = cache.readQuery({
+            query: INIT_FEED_QUERY,
+            variables: { first: 5 }
+          });
+          data.feed.posts.unshift(createPost);
+          cache.writeQuery({
+            query: INIT_FEED_QUERY,
+            data,
+            variables: { first: 5 }
+          });
+        }}
       >
         {mutation => (
           <button className="btn" disabled={!content.length} onClick={mutation}>

@@ -66,3 +66,18 @@ body {
   border-radius: 5px;
   padding: 0.5rem;
 }
+
+::placeholder {
+  color: $placeholder;
+}
+
+input:focus::placeholder,
+textarea:focus::placeholder {
+  color: $placeholder-focus;
+}
+
+a.profile-link {
+  color: $main-color;
+  font-weight: 600;
+  text-decoration: none;
+}

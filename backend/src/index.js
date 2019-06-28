@@ -7,6 +7,7 @@ const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
 const User = require('./resolvers/User');
 const Post = require('./resolvers/Post');
+const Comment = require('./resolvers/Comment');
 
 const isAuthenticatedMiddleware = require('./middleware/isAuthenticated');
 
@@ -14,7 +15,8 @@ const resolvers = {
   Query,
   Mutation,
   User,
-  Post
+  Post,
+  Comment
 };
 
 const server = new GraphQLServer({
