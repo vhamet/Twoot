@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 
 import Avatar from 'components/avatar/Avatar';
@@ -57,4 +56,4 @@ const CreatePost = props => {
   );
 };
 
-export default withRouter(CreatePost);
+export default CreatePost;

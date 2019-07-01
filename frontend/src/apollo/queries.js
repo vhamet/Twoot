@@ -120,16 +120,6 @@ export const SIGNUP_MUTATION = gql`
   }
 `;
 
-export const LOGGED_USER = gql`
-  query GetLoggedUser {
-    loggedUser {
-      id
-      username
-      email
-    }
-  }
-`;
-
 export const USER_QUERY = gql`
   query UserQUery($id: ID!) {
     user(id: $id) {
