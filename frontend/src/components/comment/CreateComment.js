@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import { CREATECOMMENT_MUTATION, GETPOST_FRAGMENT as fragment } from 'apollo/queries';
 
 import Avatar from 'components/avatar/Avatar';

@@ -2,11 +2,13 @@ import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import Avatar from 'components/avatar/Avatar';
+import TimeSince from 'components/form/TimeSince';
 
 const Post = props => {
   const {
     content,
     timespan,
+    date,
     postedBy: { userId, username }
   } = props.post;
   return (
@@ -18,7 +20,7 @@ const Post = props => {
             <Link className="profile-link" to={`/user/:${userId}`}>
               {username}
             </Link>
-            <label>{timespan}</label>
+            <TimeSince timespan={timespan} date={date} />
           </div>
         </div>
         <div className="post__content">

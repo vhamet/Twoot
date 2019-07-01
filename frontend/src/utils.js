@@ -35,11 +35,11 @@ const timeDifference = (current, previous) => {
   } else if (elapsed < milliSecondsPerDay) {
     return Math.round(elapsed / milliSecondsPerHour) + 'h ago';
   } else if (elapsed < milliSecondsPerMonth) {
-    return Math.round(elapsed / milliSecondsPerDay) + ' days ago';
+    return Math.round(elapsed / milliSecondsPerDay) + 'd ago';
   } else if (elapsed < milliSecondsPerYear) {
-    return Math.round(elapsed / milliSecondsPerMonth) + ' mo ago';
+    return Math.round(elapsed / milliSecondsPerMonth) + 'm ago';
   } else {
-    return Math.round(elapsed / milliSecondsPerYear) + ' years ago';
+    return Math.round(elapsed / milliSecondsPerYear) + 'y ago';
   }
 };
 
@@ -47,4 +47,19 @@ export const timeDifferenceForDate = date => {
   const now = new Date().getTime();
   const updated = new Date(date).getTime();
   return timeDifference(now, updated);
+};
+
+export const formattedDate = sDate => {
+  var options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+  };
+  const date = new Date(sDate);
+
+  return date.toLocaleString('en-US', options);
 };

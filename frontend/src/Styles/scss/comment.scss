@@ -32,15 +32,25 @@
 .comment__container {
   display: flex;
   align-items: flex-start;
+  margin-bottom: 1rem;
 
-  .comment__content {
-    background: $background-color;
-    border-radius: 20px;
-    padding: 0.4rem 0.5rem;
-    font-size: 0.9rem;
+  .comment__layout {
+    display: flex;
+    flex-direction: column;
 
-    a {
-      margin-right: 0.5rem;
+    .comment__content {
+      background: $background-color;
+      border-radius: 20px;
+      padding: 0.4rem 0.5rem;
+      font-size: 0.9rem;
+
+      a {
+        margin-right: 0.5rem;
+      }
+    }
+
+    .timesince label {
+      padding-left: 0.5rem;
     }
   }
 }

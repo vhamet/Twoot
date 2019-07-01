@@ -6,7 +6,7 @@ import Post from 'components/post/Post';
 import CreateComment from 'components/comment/CreateComment';
 import CommentList from 'components/comment/CommentList';
 
-import { timeDifferenceForDate } from 'utils';
+import { timeDifferenceForDate, formattedDate } from 'utils';
 
 class PostList extends Component {
   addScrollDownListener = () =>
@@ -55,12 +55,19 @@ class PostList extends Component {
               <Post
                 post={{
                   ...post,
-                  timespan: timeDifferenceForDate(post.createdAt)
+                  timespan: timeDifferenceForDate(post.createdAt),
+                  date: formattedDate(post.createdAt)
                 }}
               />
               <div className="comments__container">
                 <CreateComment postId={post.id} />
-                <CommentList comments={post.comments} />
+                <CommentList
+                  comments={post.comments.map(comment => ({
+                    ...comment,
+                    timespan: timeDifferenceForDate(comment.createdAt),
+                    date: formattedDate(comment.createdAt)
+                  }))}
+                />
               </div>
             </React.Fragment>
           ))}
