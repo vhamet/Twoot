@@ -6,9 +6,12 @@ import Post from 'components/post/Post';
 import CreateComment from 'components/comment/CreateComment';
 import CommentList from 'components/comment/CommentList';
 
+import AuthenticationContext from 'context/AuthenticationContext';
 import { timeDifferenceForDate, formattedDate } from 'utils';
 
 class PostList extends Component {
+  static contextType = AuthenticationContext;
+
   addScrollDownListener = () =>
     window.addEventListener('scroll', this.handleOnScroll);
   clearScrollDownListener = () =>
@@ -47,12 +50,15 @@ class PostList extends Component {
 
   render() {
     if (!this.props.posts && this.props.loading) return <Spinner />;
+
+    const userid = this.context.loggedUser && this.context.loggedUser.id;
     return (
       <>
         {this.props.posts &&
           this.props.posts.map(post => (
             <React.Fragment key={post.id}>
               <Post
+                userId={userid}
                 post={{
                   ...post,
                   timespan: timeDifferenceForDate(post.createdAt),
@@ -60,8 +66,9 @@ class PostList extends Component {
                 }}
               />
               <div className="comments__container">
-                <CreateComment postId={post.id} />
+                {userid && <CreateComment postId={post.id} />}
                 <CommentList
+                  userId={userid}
                   comments={post.comments.map(comment => ({
                     ...comment,
                     timespan: timeDifferenceForDate(comment.createdAt),

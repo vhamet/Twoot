@@ -20,8 +20,8 @@ const DropDown = props => {
 
   return (
     <div className="dropdown__container">
-      <div onClick={() => setShow(true)}>{props.menu}</div>
-      {show && <div className="dropdown-menu__container">{props.children}</div>}
+      <div className="dropdown__menu" onClick={() => setShow(true)}>{props.menu}</div>
+      {show && <div className="dropdown__content">{props.children}</div>}
     </div>
   );
 };

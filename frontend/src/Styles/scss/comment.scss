@@ -1,4 +1,5 @@
 @import 'utilities/variables.scss';
+@import 'utilities/mixins.scss';
 
 .comments__container {
   border: 1px solid $border-color-light;
@@ -32,7 +33,13 @@
 .comment__container {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 0.7rem;
+
+  &:hover {
+    .dropdown__container {
+      visibility: visible;
+    }
+  }
 
   .comment__layout {
     display: flex;
@@ -51,6 +58,41 @@
 
     .timesince label {
       padding-left: 0.5rem;
+    }
+  }
+
+  .dropdown__container {
+    align-self: flex-start;
+    margin-left: auto;
+    position: relative;
+    margin-top: .5rem;
+    margin-left: .5rem;
+    visibility: hidden; 
+  }
+
+  .dropdown__menu {
+    color: $grey-label-light;
+    cursor: pointer;
+
+    &:hover {
+      color: black;
+    }
+  }
+
+  .dropdown__content {
+    top: 1.2rem;
+    right: 0;
+
+    @include menu__listitem;
+  }
+
+  .comment__dropdownmenu {
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+
+    label {
+      font-weight: 600 !important;
     }
   }
 }

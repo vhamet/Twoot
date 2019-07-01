@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom';
 
 import Avatar from 'components/avatar/Avatar';
 import TimeSince from 'components/form/TimeSince';
+import DropDown from 'components/form/DropDown';
 
 const Post = props => {
   const {
     content,
     timespan,
     date,
-    postedBy: { userId, username }
+    postedBy: { id: userId, username }
   } = props.post;
+
   return (
     <>
       <div className="post__container">
@@ -22,6 +24,18 @@ const Post = props => {
             </Link>
             <TimeSince timespan={timespan} date={date} />
           </div>
+          {props.userId === userId && (
+            <DropDown menu={<div>•••</div>}>
+              <ul className="post__dropdownmenu">
+                <li>
+                  <label>✎ Update post</label>
+                </li>
+                <li>
+                  <label>⌦  Delete post</label>
+                </li>
+              </ul>
+            </DropDown>
+          )}
         </div>
         <div className="post__content">
           <pre>{content}</pre>

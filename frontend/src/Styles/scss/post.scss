@@ -1,4 +1,5 @@
 @import 'utilities/variables.scss';
+@import 'utilities/mixins.scss';
 
 .create-post__container {
   border: 1px solid $border-color-light;
@@ -7,12 +8,12 @@
   padding: 0;
 
   .create-post__title {
-    font-size: .75rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: #4b4f56;
     background: #f5f6f7;
     margin: 0;
-    padding: .5rem .5rem;
+    padding: 0.5rem 0.5rem;
     border-bottom: 1px solid $border-color-light;
   }
 
@@ -26,13 +27,13 @@
       resize: none;
       outline: none;
       width: calc(100% - 1rem);
-      padding: .5rem;
+      padding: 0.5rem;
     }
   }
 
   button {
     width: 80%;
-    margin: 0 auto .5rem auto;
+    margin: 0 auto 0.5rem auto;
     display: block;
   }
 }
@@ -45,11 +46,42 @@
   padding: 1rem;
   margin-top: 1rem;
 
+  .dropdown__container {
+    align-self: flex-start;
+    margin-left: auto;
+  }
+
+  .dropdown__menu {
+    color: $grey-label;
+    cursor: pointer;
+
+    &:hover {
+      color: black;
+    }
+  }
+
+  .dropdown__content {
+    top: 1.2rem;
+    right: 0;
+
+    @include menu__listitem;
+  }
+
+  .post__dropdownmenu {
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+
+    label {
+      font-weight: 600 !important;
+    }
+  }
+
   pre {
     font-family: inherit;
   }
 
-  .post-info__container{ 
+  .post-info__container {
     display: flex;
     align-items: center;
 
@@ -59,12 +91,12 @@
 
     label {
       color: $grey-label;
-      font-size: .7rem;
+      font-size: 0.7rem;
       font-weight: 200;
     }
   }
 
   .post__content {
-    margin-top: .5rem;
+    margin-top: 0.5rem;
   }
 }
