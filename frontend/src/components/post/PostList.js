@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import Spinner from 'components/loaders/Spinner';
 import Loader from 'components/loaders/Loader';
 import Post from 'components/post/Post';
-import CreateComment from 'components/comment/CreateComment';
-import CommentList from 'components/comment/CommentList';
 
 import AuthenticationContext from 'context/AuthenticationContext';
 import { timeDifferenceForDate, formattedDate } from 'utils';
@@ -62,20 +60,14 @@ class PostList extends Component {
                 post={{
                   ...post,
                   timespan: timeDifferenceForDate(post.createdAt),
-                  date: formattedDate(post.createdAt)
-                }}
-              />
-              <div className="comments__container">
-                {userid && <CreateComment postId={post.id} />}
-                <CommentList
-                  userId={userid}
-                  comments={post.comments.map(comment => ({
+                  date: formattedDate(post.createdAt),
+                  comments: post.comments.map(comment => ({
                     ...comment,
                     timespan: timeDifferenceForDate(comment.createdAt),
                     date: formattedDate(comment.createdAt)
-                  }))}
-                />
-              </div>
+                  }))
+                }}
+              />
             </React.Fragment>
           ))}
         {this.props.loading && <Loader />}

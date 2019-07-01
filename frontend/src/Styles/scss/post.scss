@@ -49,6 +49,7 @@
   .dropdown__container {
     align-self: flex-start;
     margin-left: auto;
+    position: relative;
   }
 
   .dropdown__menu {
@@ -98,5 +99,32 @@
 
   .post__content {
     margin-top: 0.5rem;
+
+    pre {
+      white-space: pre-wrap; 
+    }
+  }
+
+  .post-comments__link {
+    color: $grey-label-light;
+    font-size: .9rem;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    display: inline-block;
+
+    &:hover .tooltip {
+      display: block;
+    }
+
+    .tooltip {
+      display: none;
+      position: absolute;
+      background: $background-dark;
+      color: white;
+      padding: .4rem;
+      font-size: .8rem;
+      border-radius: 3px;
+    }
   }
 }

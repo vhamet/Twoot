@@ -1,17 +1,24 @@
-import React, { memo } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import PostCommentsLink from 'components/post/PostCommentsLink';
+import CreateComment from 'components/comment/CreateComment';
+import CommentList from 'components/comment/CommentList';
 import Avatar from 'components/avatar/Avatar';
 import TimeSince from 'components/form/TimeSince';
 import DropDown from 'components/form/DropDown';
 
 const Post = props => {
   const {
+    id: postId,
     content,
     timespan,
     date,
-    postedBy: { id: userId, username }
+    postedBy: { id: userId, username },
+    comments
   } = props.post;
+
+  const [displayComments, setDisplayComments] = useState(true);
 
   return (
     <>
@@ -31,7 +38,7 @@ const Post = props => {
                   <label>✎ Update post</label>
                 </li>
                 <li>
-                  <label>⌦  Delete post</label>
+                  <label>⌦ Delete post</label>
                 </li>
               </ul>
             </DropDown>
@@ -40,9 +47,21 @@ const Post = props => {
         <div className="post__content">
           <pre>{content}</pre>
         </div>
+        {comments.length > 0 && (
+          <PostCommentsLink
+            comments={comments}
+            onClick={() => setDisplayComments(!displayComments)}
+          />
+        )}
       </div>
+      {displayComments && comments.length > 0 && (
+        <div className="comments__container">
+          <CommentList userId={userId} comments={comments} />
+          {props.userId && <CreateComment postId={postId} />}
+        </div>
+      )}
     </>
   );
 };
 
-export default memo(Post);
+export default Post;
