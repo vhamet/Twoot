@@ -32,7 +32,11 @@ async function signup(parent, args, context) {
 }
 
 async function login(parent, args, context) {
-  const user = await context.prisma.user({ email: args.email });
+  const selector =
+    args.login.indexOf('@') < 0
+      ? { username: args.login }
+      : { email: args.login };
+  const user = await context.prisma.user(selector);
   if (!user) {
     throw new WrongCredentialsError();
   }
@@ -67,7 +71,7 @@ async function createComment(parent, args, context) {
   return await context.prisma.createComment({
     content: args.content,
     postedOn: { connect: { id: args.postId } },
-    postedBy: { connect: { id: userId } },
+    postedBy: { connect: { id: userId } }
   });
 }
 
@@ -75,5 +79,5 @@ module.exports = {
   signup: ErrorHandlerWrapper(signup),
   login: ErrorHandlerWrapper(login),
   createPost: ErrorHandlerWrapper(createPost),
-  createComment: ErrorHandlerWrapper(createComment),
+  createComment: ErrorHandlerWrapper(createComment)
 };

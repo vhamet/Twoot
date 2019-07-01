@@ -10,7 +10,7 @@ import 'styles/css/authentication.css';
 
 class Login extends Component {
   state = {
-    email: '',
+    login: '',
     password: '',
     error: ''
   };
@@ -18,17 +18,17 @@ class Login extends Component {
   static contextType = AuthenticationContext;
 
   render() {
-    const { email, password } = this.state;
+    const { login, password } = this.state;
     return (
       <div className="auth-form">
         <h1>Login to Twoot</h1>
         <div className="form-control">
           <input
-            id="email"
-            type="email"
-            value={email}
+            id="login"
+            type="login"
+            value={login}
             placeholder="Username or email address"
-            onChange={e => this.setState({ email: e.target.value })}
+            onChange={e => this.setState({ login: e.target.value })}
           />
         </div>
         <div className="form-control">
@@ -44,7 +44,7 @@ class Login extends Component {
           {this.state.error && <div className="error">{this.state.error}</div>}
           <Mutation
             mutation={LOGIN_MUTATION}
-            variables={{ email, password }}
+            variables={{ login, password }}
             onCompleted={data => this._login(data)}
             onError={err => this._handleError(err)}
             update={(cache, { data: { login } }) => {

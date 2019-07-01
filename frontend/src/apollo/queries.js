@@ -92,8 +92,8 @@ export const GETPOST_FRAGMENT = gql`
 `;
 
 export const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation LoginMutation($login: String!, $password: String!) {
+    login(login: $login, password: $password) {
       token
       user {
         id
@@ -113,7 +113,8 @@ export const SIGNUP_MUTATION = gql`
     signup(email: $email, password: $password, username: $username) {
       token
       user {
-        id
+        id,
+        username
       }
     }
   }
