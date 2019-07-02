@@ -10,24 +10,24 @@ import 'styles/css/comment.css';
 const Comment = props => {
   const {
     content,
-    postedBy: { id: userId, username },
+    postedBy: { id: commentById, username },
     date,
     timespan
   } = props.comment;
 
   return (
     <div className="comment__container">
-      <Avatar size="2.2rem" id={userId} />
+      <Avatar size="2.2rem" id={commentById} />
       <div className="comment__layout">
         <div className="comment__content">
-          <Link className="profile-link" to={`/profile/:${userId}`}>
+          <Link className="profile-link" to={`/profile/:${commentById}`}>
             {username}
           </Link>
           {content}
         </div>
         <TimeSince timespan={timespan} date={date} />
       </div>
-      {props.userId === userId && (
+      {props.loggedUserId === commentById && (
         <DropDown menu={<div>•••</div>}>
           <ul className="comment__dropdownmenu">
             <li>

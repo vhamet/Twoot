@@ -21,7 +21,7 @@ const Post = props => {
     content,
     timespan,
     date,
-    postedBy: { id: userId, username },
+    postedBy: { id: postById, username },
     comments,
     count
   } = props.post;
@@ -55,14 +55,14 @@ const Post = props => {
         <>
           <div className="post__container">
             <div className="post-info__container">
-              <Avatar id={userId} size="2.5rem" />
+              <Avatar id={postById} size="2.5rem" />
               <div>
-                <Link className="profile-link" to={`/user/:${userId}`}>
+                <Link className="profile-link" to={`/user/:${postById}`}>
                   {username}
                 </Link>
                 <TimeSince timespan={timespan} date={date} />
               </div>
-              {props.userId === userId && (
+              {props.loggedUserId === postById && (
                 <DropDown menu={<div>•••</div>}>
                   <ul className="post__dropdownmenu">
                     <li>
@@ -95,8 +95,8 @@ const Post = props => {
                   <label>{`${comments.length} of ${count}`}</label>
                 </div>
               )}
-              <CommentList userId={userId} comments={comments} />
-              {props.userId && <CreateComment postId={postId} />}
+              <CommentList loggedUserId={props.loggedUserId} postById={postById} comments={comments} />
+              {props.loggedUserId && <CreateComment postId={postId} />}
             </div>
           )}
         </>

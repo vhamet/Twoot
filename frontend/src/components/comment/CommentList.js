@@ -2,7 +2,14 @@ import React from 'react';
 
 import Comment from 'components/comment/Comment';
 
-const CommentList = ({ userId, comments }) =>
-  comments.map(comment => <Comment key={comment.id} userId={userId} comment={comment} />);
+const CommentList = ({ loggedUserId, postById, comments }) =>
+  comments.map(comment => (
+    <Comment
+      key={comment.id}
+      loggedUserId={loggedUserId}
+      postById={postById}
+      comment={comment}
+    />
+  ));
 
 export default CommentList;

@@ -49,14 +49,14 @@ class PostList extends Component {
   render() {
     if (!this.props.posts && this.props.loading) return <Spinner />;
 
-    const userid = this.context.loggedUser && this.context.loggedUser.id;
+    const loggedUserId = this.context.loggedUser && this.context.loggedUser.id;
     return (
       <>
         {this.props.posts &&
           this.props.posts.map(post => (
             <React.Fragment key={post.id}>
               <Post
-                userId={userid}
+                loggedUserId={loggedUserId}
                 post={{
                   ...post,
                   timespan: timeDifferenceForDate(post.createdAt),
