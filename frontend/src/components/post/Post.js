@@ -86,7 +86,7 @@ const Post = props => {
               />
             )}
           </div>
-          {displayComments && comments.length > 0 && (
+          {displayComments && (comments.length || props.loggedUserId) && (
             <div className="comments__container">
               {count > comments.length && (
                 <div className="loadMoreComments">
