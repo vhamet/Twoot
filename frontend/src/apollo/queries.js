@@ -1,8 +1,7 @@
 import gql from 'graphql-tag';
 
-const FEED_CONTENT_FRAGMENT = gql`
-  fragment FeedContent on Feed {
-    posts {
+const POST_CONTENT_FRAGMENT = gql`
+  fragment PostContent on Post {
       id
       createdAt
       content
@@ -23,8 +22,16 @@ const FEED_CONTENT_FRAGMENT = gql`
         count
       }
     }
+`;
+
+const FEED_CONTENT_FRAGMENT = gql`
+  fragment FeedContent on Feed {
+    posts {
+      ...PostContent
+    }
     cursor
   }
+  ${POST_CONTENT_FRAGMENT}
 `;
 
 export const INIT_FEED_QUERY = gql`
@@ -39,6 +46,24 @@ export const INIT_FEED_QUERY = gql`
 export const MORE_FEED_QUERY = gql`
   query MoreFeedQuery($first: Int, $after: ID) {
     feed(first: $first, after: $after) {
+      ...FeedContent
+    }
+  }
+  ${FEED_CONTENT_FRAGMENT}
+`;
+
+export const INIT_TIMELINE_QUERY = gql`
+  query InitTimelineQuery($user: ID, $first: Int) {
+    timeline(user: $user, first: $first) {
+      ...FeedContent
+    }
+  }
+  ${FEED_CONTENT_FRAGMENT}
+`;
+
+export const MORE_TIMELINE_QUERY = gql`
+  query MoreTimelineQuery($user: ID, $first: Int, $after: ID) {
+    timeline(user: $user, first: $first, after: $after) {
       ...FeedContent
     }
   }
@@ -74,24 +99,10 @@ export const MORE_COMMENTS_QUERY = gql`
 export const CREATEPOST_MUTATION = gql`
   mutation CreatePostMutation($content: String!) {
     createPost(content: $content) {
-      id
-      content
-      createdAt
-      postedBy {
-        id
-        username
-      }
-      comments {
-        id
-        content
-        createdAt
-        postedBy {
-          id
-          username
-        }
-      }
+      ...PostContent
     }
   }
+  ${POST_CONTENT_FRAGMENT}
 `;
 
 export const CREATECOMMENT_MUTATION = gql`

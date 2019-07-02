@@ -3,6 +3,7 @@ scalar DateTime
 type Query {
   info: String!
   feed(first: Int, after: ID): Feed!
+  timeline(user: ID, first: Int, after: ID): Feed!
   moreComments(postId: ID, last: Int, before: ID): [Comment!]!
   user(id: ID!): User
 }
