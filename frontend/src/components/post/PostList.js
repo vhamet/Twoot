@@ -61,7 +61,8 @@ class PostList extends Component {
                   ...post,
                   timespan: timeDifferenceForDate(post.createdAt),
                   date: formattedDate(post.createdAt),
-                  comments: post.comments.map(comment => ({
+                  count: post.fetchedComments.count,
+                  comments: post.fetchedComments.comments.map(comment => ({
                     ...comment,
                     timespan: timeDifferenceForDate(comment.createdAt),
                     date: formattedDate(comment.createdAt)

@@ -10,14 +10,17 @@ const FEED_CONTENT_FRAGMENT = gql`
         id
         username
       }
-      comments {
-        id
-        content
-        createdAt
-        postedBy {
+      fetchedComments {
+        comments {
           id
-          username
+          content
+          createdAt
+          postedBy {
+            id
+            username
+          }
         }
+        count
       }
     }
     cursor
@@ -40,6 +43,31 @@ export const MORE_FEED_QUERY = gql`
     }
   }
   ${FEED_CONTENT_FRAGMENT}
+`;
+
+export const GETPOST_FRAGMENT = gql`
+  fragment getPost on Post {
+    id
+    fetchedComments {
+      comments {
+        id
+      }
+    }
+  }
+`;
+
+export const MORE_COMMENTS_QUERY = gql`
+  query MoreCommentsQuery($postId: ID, $last: Int, $before: ID) {
+    moreComments(postId: $postId, last: $last, before: $before) {
+      id
+      content
+      createdAt
+      postedBy {
+        id
+        username
+      }
+    }
+  }
 `;
 
 export const CREATEPOST_MUTATION = gql`
@@ -82,15 +110,6 @@ export const CREATECOMMENT_MUTATION = gql`
   }
 `;
 
-export const GETPOST_FRAGMENT = gql`
-  fragment getPost on Post {
-    id
-    comments {
-      id
-    }
-  }
-`;
-
 export const LOGIN_MUTATION = gql`
   mutation LoginMutation($login: String!, $password: String!) {
     login(login: $login, password: $password) {
@@ -113,7 +132,7 @@ export const SIGNUP_MUTATION = gql`
     signup(email: $email, password: $password, username: $username) {
       token
       user {
-        id,
+        id
         username
       }
     }

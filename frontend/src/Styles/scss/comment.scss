@@ -8,6 +8,27 @@
   border-top: none;
   background: white;
   padding: 0.5rem;
+
+  .loadMoreComments {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    margin: 0 .3rem 1rem .3rem;
+
+    &:hover label:first-child {
+      text-decoration: underline;
+    }
+
+    label:first-child {
+      cursor: pointer;
+      color: $main-color-dark;
+    }
+
+    label:last-child {
+      cursor: pointer;
+      color: $grey-label;
+    }
+  }
 }
 
 .create-comment__container {
@@ -65,9 +86,9 @@
     align-self: flex-start;
     margin-left: auto;
     position: relative;
-    margin-top: .5rem;
-    margin-left: .5rem;
-    visibility: hidden; 
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    visibility: hidden;
   }
 
   .dropdown__menu {

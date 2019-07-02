@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ApolloConsumer } from 'react-apollo';
 
 import PostCommentsLink from 'components/post/PostCommentsLink';
 import CreateComment from 'components/comment/CreateComment';
@@ -8,6 +9,12 @@ import Avatar from 'components/avatar/Avatar';
 import TimeSince from 'components/form/TimeSince';
 import DropDown from 'components/form/DropDown';
 
+import {
+  MORE_COMMENTS_QUERY,
+  GETPOST_FRAGMENT as fragment
+} from 'apollo/queries';
+import { COMMENTS_PAGINATION } from 'constants.js';
+
 const Post = props => {
   const {
     id: postId,
@@ -15,52 +22,86 @@ const Post = props => {
     timespan,
     date,
     postedBy: { id: userId, username },
-    comments
+    comments,
+    count
   } = props.post;
 
   const [displayComments, setDisplayComments] = useState(true);
+  const [cursor, setCursor] = useState(comments.length ? comments[0].id : '');
+
+  const loadMoreComments = async client => {
+    const { data } = await client.query({
+      query: MORE_COMMENTS_QUERY,
+      variables: { postId, last: COMMENTS_PAGINATION, before: cursor }
+    });
+
+    const id = `Post:${postId}`;
+    const post = client.readFragment({ fragment, id });
+    const newPost = {
+      ...post,
+      fetchedComments: {
+        ...post.fetchedComments,
+        comments: [...data.moreComments, ...post.fetchedComments.comments]
+      }
+    };
+
+    client.writeFragment({ fragment, id, data: newPost });
+    setCursor(data.moreComments[0].id);
+  };
 
   return (
-    <>
-      <div className="post__container">
-        <div className="post-info__container">
-          <Avatar id={userId} size="2.5rem" />
-          <div>
-            <Link className="profile-link" to={`/user/:${userId}`}>
-              {username}
-            </Link>
-            <TimeSince timespan={timespan} date={date} />
+    <ApolloConsumer>
+      {client => (
+        <>
+          <div className="post__container">
+            <div className="post-info__container">
+              <Avatar id={userId} size="2.5rem" />
+              <div>
+                <Link className="profile-link" to={`/user/:${userId}`}>
+                  {username}
+                </Link>
+                <TimeSince timespan={timespan} date={date} />
+              </div>
+              {props.userId === userId && (
+                <DropDown menu={<div>•••</div>}>
+                  <ul className="post__dropdownmenu">
+                    <li>
+                      <label>✎ Update post</label>
+                    </li>
+                    <li>
+                      <label>⌦ Delete post</label>
+                    </li>
+                  </ul>
+                </DropDown>
+              )}
+            </div>
+            <div className="post__content">
+              <pre>{content}</pre>
+            </div>
+            {comments.length > 0 && (
+              <PostCommentsLink
+                comments={comments}
+                onClick={() => setDisplayComments(!displayComments)}
+              />
+            )}
           </div>
-          {props.userId === userId && (
-            <DropDown menu={<div>•••</div>}>
-              <ul className="post__dropdownmenu">
-                <li>
-                  <label>✎ Update post</label>
-                </li>
-                <li>
-                  <label>⌦ Delete post</label>
-                </li>
-              </ul>
-            </DropDown>
+          {displayComments && comments.length > 0 && (
+            <div className="comments__container">
+              {count > comments.length && (
+                <div className="loadMoreComments">
+                  <label onClick={() => loadMoreComments(client)}>
+                    View more comments
+                  </label>
+                  <label>{`${comments.length} of ${count}`}</label>
+                </div>
+              )}
+              <CommentList userId={userId} comments={comments} />
+              {props.userId && <CreateComment postId={postId} />}
+            </div>
           )}
-        </div>
-        <div className="post__content">
-          <pre>{content}</pre>
-        </div>
-        {comments.length > 0 && (
-          <PostCommentsLink
-            comments={comments}
-            onClick={() => setDisplayComments(!displayComments)}
-          />
-        )}
-      </div>
-      {displayComments && comments.length > 0 && (
-        <div className="comments__container">
-          <CommentList userId={userId} comments={comments} />
-          {props.userId && <CreateComment postId={postId} />}
-        </div>
+        </>
       )}
-    </>
+    </ApolloConsumer>
   );
 };
 

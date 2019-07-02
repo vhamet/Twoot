@@ -3,6 +3,7 @@ scalar DateTime
 type Query {
   info: String!
   feed(first: Int, after: ID): Feed!
+  moreComments(postId: ID, last: Int, before: ID): [Comment!]!
   user(id: ID!): User
 }
 
@@ -11,6 +12,11 @@ type Mutation {
   login(login: String!, password: String!): AuthPayload
   createPost(content: String!): Post!
   createComment(postId: ID!, content: String!): Comment!
+}
+
+type FetchedComments {
+  comments: [Comment!]!
+  count: Int
 }
 
 type Feed {
@@ -36,7 +42,7 @@ type Post {
   content: String!
   postedBy: User!
   createdAt: DateTime!
-  comments: [Comment!]!
+  fetchedComments: FetchedComments
 }
 
 type Comment {

@@ -4,12 +4,22 @@ async function feed(parent, args, context) {
     first: args.first,
     orderBy: 'createdAt_DESC'
   });
-  const cursor = posts.length && posts.length === args.first && posts[posts.length - 1].id;
+  const cursor =
+    posts.length && posts.length === args.first && posts[posts.length - 1].id;
 
   return {
     posts,
     cursor
   };
+}
+
+async function moreComments(parent, args, context) {
+  return await context.prisma.comments({
+    where: { postedOn: { id: args.postId } },
+    before: args.before,
+    last: args.last,
+    orderBy: 'createdAt_ASC'
+  });
 }
 
 async function user(parent, args, context) {
@@ -23,5 +33,6 @@ async function user(parent, args, context) {
 
 module.exports = {
   feed,
+  moreComments,
   user
 };
