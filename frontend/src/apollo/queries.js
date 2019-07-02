@@ -52,6 +52,7 @@ export const GETPOST_FRAGMENT = gql`
       comments {
         id
       }
+      count
     }
   }
 `;

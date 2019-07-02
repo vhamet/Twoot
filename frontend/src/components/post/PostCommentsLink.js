@@ -14,7 +14,7 @@ const PostCommentsLink = props => {
 
   return (
     <div className="post-comments__link" onClick={props.onClick}>
-      {`${props.comments.length} comments`}
+      {`${props.count} comments`}
       <pre className="tooltip">{tooltip}</pre>
     </div>
   );

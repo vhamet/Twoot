@@ -80,6 +80,7 @@ const Post = props => {
             </div>
             {comments.length > 0 && (
               <PostCommentsLink
+                count={count}
                 comments={comments}
                 onClick={() => setDisplayComments(!displayComments)}
               />
@@ -95,7 +96,11 @@ const Post = props => {
                   <label>{`${comments.length} of ${count}`}</label>
                 </div>
               )}
-              <CommentList loggedUserId={props.loggedUserId} postById={postById} comments={comments} />
+              <CommentList
+                loggedUserId={props.loggedUserId}
+                postById={postById}
+                comments={comments}
+              />
               {props.loggedUserId && <CreateComment postId={postId} />}
             </div>
           )}

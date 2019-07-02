@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Mutation } from 'react-apollo';
-import { CREATECOMMENT_MUTATION, GETPOST_FRAGMENT as fragment } from 'apollo/queries';
+import {
+  CREATECOMMENT_MUTATION,
+  GETPOST_FRAGMENT as fragment
+} from 'apollo/queries';
 
 import Avatar from 'components/avatar/Avatar';
 
@@ -26,7 +29,14 @@ const CreateComment = props => {
         update={(cache, { data: { createComment } }) => {
           const id = `Post:${createComment.postedOn.id}`;
           const post = cache.readFragment({ fragment, id });
-          const data = { ...post, comments: [...post.comments, createComment] };
+          const data = {
+            ...post,
+            fetchedComments: {
+              ...post.fetchedComments,
+              count: post.fetchedComments.count + 1,
+              comments: [...post.fetchedComments.comments, createComment]
+            }
+          };
 
           cache.writeFragment({ fragment, id, data });
         }}
