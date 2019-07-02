@@ -20,7 +20,7 @@ const Comment = props => {
       <Avatar size="2.2rem" id={commentById} />
       <div className="comment__layout">
         <div className="comment__content">
-          <Link className="profile-link" to={`/profile/:${commentById}`}>
+          <Link className="profile-link" to={`/profile/${commentById}`}>
             {username}
           </Link>
           {content}

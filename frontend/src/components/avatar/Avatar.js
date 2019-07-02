@@ -10,7 +10,7 @@ const Avatar = props => {
   const src = props.src || anon;
   return props.id ? (
     <div className="avatar__container">
-      <Link to={`/user/:${props.id}`}>
+      <Link to={`/profile/${props.id}`}>
         <img
           src={src}
           alt="avatar"

@@ -57,7 +57,7 @@ const Post = props => {
             <div className="post-info__container">
               <Avatar id={postById} size="2.5rem" />
               <div>
-                <Link className="profile-link" to={`/user/:${postById}`}>
+                <Link className="profile-link" to={`/profile/${postById}`}>
                   {username}
                 </Link>
                 <TimeSince timespan={timespan} date={date} />

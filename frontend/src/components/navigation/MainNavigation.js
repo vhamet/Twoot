@@ -31,7 +31,7 @@ const MainNavigation = ({ token, loggedUser, logout }) => (
               >
                 <ul className="main-navigation__dropdownmenu">
                   <li>
-                    <Link to="/profile">Profile</Link>
+                    <Link to={`/profile/${loggedUser.id}`}>Profile</Link>
                   </li>
                   <li onClick={logout}>
                     <label>Log Out</label>

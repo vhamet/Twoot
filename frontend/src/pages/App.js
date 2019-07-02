@@ -125,7 +125,7 @@ class App extends Component {
             <Switch>
               <Redirect from="/" to="/home" exact />
               <Route path="/home" component={Home} />
-              <Route path="/profile" component={Profile} />
+              <Route path="/profile/:userId" component={Profile} />
               <Route path="/login" component={LoginPage} />
               <Route path="/signup" component={SignupPage} />
             </Switch>
