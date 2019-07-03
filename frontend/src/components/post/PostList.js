@@ -19,8 +19,8 @@ class PostList extends Component {
     this.addScrollDownListener();
   }
 
-  componentDidUpdate() {
-    if (!this.props.loading) {
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.props.loading && (prevProps.posts || []).length < this.props.posts.length) {
       this.addScrollDownListener();
     }
   }

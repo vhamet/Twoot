@@ -5,7 +5,7 @@ async function feed(parent, args, context) {
     orderBy: 'createdAt_DESC'
   });
   const cursor =
-    posts.length && posts.length === args.first && posts[posts.length - 1].id;
+    (posts.length && posts.length === args.first && posts[posts.length - 1].id) || '';
 
   return {
     posts,
@@ -21,7 +21,7 @@ async function timeline(parent, args, context) {
     orderBy: 'createdAt_DESC'
   });
   const cursor =
-    (posts.length && posts.length > args.first && posts[posts.length - 1].id) || '';
+    (posts.length && posts.length === args.first && posts[posts.length - 1].id) || '';
 
   return {
     posts,

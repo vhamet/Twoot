@@ -13,7 +13,7 @@ const Timeline = ({ userId }) => {
   return (
     <AuthenticationContext.Consumer>
       {context => (
-        <div className="timeline">
+        <div className="timeline__container">
           {context.token && <CreatePost />}
           <Query
             query={INIT_TIMELINE_QUERY}
@@ -31,8 +31,9 @@ const Timeline = ({ userId }) => {
                       query: MORE_TIMELINE_QUERY,
                       variables: { user: userId, first: FEED_PAGINATION, after: timeline.cursor },
                       updateQuery: (previousResult, { fetchMoreResult }) => {
+                        if (!fetchMoreResult.timeline.posts.length) return previousResult;
                         return {
-                          feed: {
+                          timeline: {
                             cursor: fetchMoreResult.timeline.cursor,
                             posts: [
                               ...previousResult.timeline.posts,

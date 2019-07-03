@@ -15,11 +15,10 @@ import 'styles/css/profile.css';
 const Profile = props => {
   const [userId, setUserId] = useState(null);
   const [page, setPage] = useState(0);
-  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     setUserId(props.match.params.userId);
-  }, [props.match.params.userId]);
+  }, [props.match.params]);
 
   if (!userId) return <Spinner />;
   return (
@@ -36,9 +35,9 @@ const Profile = props => {
                     <img src={cover} alt="cover" />
                   </div>
                   <ul>
-                    <li onClick={() => setPage(0)}>Timeline</li>
-                    <li onClick={() => setPage(1)}>About</li>
-                    <li onClick={() => setPage(2)}>Friends</li>
+                    <li className={page === 0 ? 'active' : ''} onClick={() => setPage(0)}>Timeline</li>
+                    <li className={page === 1 ? 'active' : ''} onClick={() => setPage(1)}>About</li>
+                    <li className={page === 2 ? 'active' : ''} onClick={() => setPage(2)}>Friends</li>
                   </ul>
                   <div className="profile-avatar">
                     <Avatar size="10rem" />
@@ -48,7 +47,7 @@ const Profile = props => {
                   </label>
                 </div>
                 {page === 0 && <Timeline  userId={user.id}/>}
-                {page === 1 && <About />}
+                {page === 1 && <About user={user} />}
                 {page === 2 && <Friends />}
               </>
             )

@@ -10,8 +10,8 @@
   .create-post__title {
     font-size: 0.75rem;
     font-weight: 600;
-    color: #4b4f56;
-    background: #f5f6f7;
+    color: $grey-label-dark;
+    background: $background-color-light;
     margin: 0;
     padding: 0.5rem 0.5rem;
     border-bottom: 1px solid $border-color-light;
