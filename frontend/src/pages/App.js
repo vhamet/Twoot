@@ -29,9 +29,10 @@ class App extends Component {
     loggedUser: null
   };
 
-  login = (token, { id, username }) => {
+  login = (token, { id, username, avatar }) => {
+    console.log(avatar);
     cookie.save(AUTH_COOKIE, { token, userId: id }, { path: '/' });
-    this.setState({ token, loggedUser: { id, username } });
+    this.setState({ token, loggedUser: { id, username, avatar } });
   };
 
   logout = () => {
@@ -83,17 +84,19 @@ class App extends Component {
   });
 
   async fetchLoggedUser(userId) {
-    const { data } = await this.client.query({
+    const {
+      data: { user }
+    } = await this.client.query({
       query: USER_QUERY,
       variables: { id: userId }
     });
     this.client.writeData({
       data: {
-        loggedUser: data.user
+        loggedUser: user
       }
     });
-    
-    this.setState({ loggedUser: { id: userId, username: data.user.username } });
+
+    this.setState({ loggedUser: user });
   }
 
   componentDidMount() {

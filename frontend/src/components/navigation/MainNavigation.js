@@ -23,7 +23,7 @@ const MainNavigation = ({ token, loggedUser, logout }) => (
                 menu={
                   <li className="main-navigation__item main-navigation__linkmenu">
                     <label>
-                      <Avatar size="1.3rem" />
+                      <Avatar size="1.3rem" src={loggedUser.avatar}/>
                       {loggedUser.username}
                     </label>
                   </li>

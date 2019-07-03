@@ -13,6 +13,7 @@ type Mutation {
   login(login: String!, password: String!): AuthPayload
   createPost(content: String!): Post!
   createComment(postId: ID!, content: String!): Comment!
+  addFriend(friendId: ID!): Boolean
 }
 
 type FetchedComments {
@@ -34,8 +35,10 @@ type User {
   id: ID!
   username: String!
   email: String!
+  avatar: String
   posts: [Post!]!
   comments: [Comment!]!
+  friends: [User!]!
 }
 
 type Post {

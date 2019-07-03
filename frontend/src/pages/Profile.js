@@ -48,7 +48,7 @@ const Profile = props => {
                 </div>
                 {page === 0 && <Timeline  userId={user.id}/>}
                 {page === 1 && <About user={user} />}
-                {page === 2 && <Friends />}
+                {page === 2 && <Friends friends={user.friends}/>}
               </>
             )
           );

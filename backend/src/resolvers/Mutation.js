@@ -75,9 +75,26 @@ async function createComment(parent, args, context) {
   });
 }
 
+async function addFriend(parent, args, context) {
+  const userId = context.request.isAuthenticated && context.request.userId;
+  if (!userId) throw new UnauthenticatedError();
+
+  await context.prisma.updateUser({
+    where: { id: userId },
+    data: { friends: { connect: { id: args.friendId }} },
+  });
+  await context.prisma.updateUser({
+    where: { id: args.friendId },
+    data: { friends: { connect: { id: userId }} },
+  });
+
+  return true;
+}
+
 module.exports = {
   signup: ErrorHandlerWrapper(signup),
   login: ErrorHandlerWrapper(login),
   createPost: ErrorHandlerWrapper(createPost),
-  createComment: ErrorHandlerWrapper(createComment)
+  createComment: ErrorHandlerWrapper(createComment),
+  addFriend: ErrorHandlerWrapper(addFriend)
 };

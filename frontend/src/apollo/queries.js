@@ -2,26 +2,28 @@ import gql from 'graphql-tag';
 
 const POST_CONTENT_FRAGMENT = gql`
   fragment PostContent on Post {
+    id
+    createdAt
+    content
+    postedBy {
       id
-      createdAt
-      content
-      postedBy {
-        id
-        username
-      }
-      fetchedComments {
-        comments {
-          id
-          content
-          createdAt
-          postedBy {
-            id
-            username
-          }
-        }
-        count
-      }
+      username
+      avatar
     }
+    fetchedComments {
+      comments {
+        id
+        content
+        createdAt
+        postedBy {
+          id
+          username
+          avatar
+        }
+      }
+      count
+    }
+  }
 `;
 
 const FEED_CONTENT_FRAGMENT = gql`
@@ -130,6 +132,7 @@ export const LOGIN_MUTATION = gql`
         id
         username
         email
+        avatar
       }
     }
   }
@@ -146,6 +149,7 @@ export const SIGNUP_MUTATION = gql`
       user {
         id
         username
+        avatar
       }
     }
   }
@@ -157,6 +161,12 @@ export const USER_QUERY = gql`
       id
       username
       email
+      avatar
+      friends {
+        id
+        username
+        email
+      }
     }
   }
 `;

@@ -18,7 +18,7 @@ const CreateComment = props => {
 
   return (
     <div className="create-comment__container">
-      <Avatar size="2.2rem" />
+      <Avatar size="2.2rem" src={props.avatar} />
       <Mutation
         mutation={CREATECOMMENT_MUTATION}
         variables={{ content, postId: props.postId }}

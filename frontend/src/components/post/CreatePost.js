@@ -18,7 +18,7 @@ const CreatePost = props => {
     <div className="create-post__container">
       <div className="create-post__title">Create Post</div>
       <div className="create-post__content">
-        <Avatar size="3rem" />
+        <Avatar size="3rem" src={props.avatar}/>
         <textarea
           value={content}
           onChange={e => setContent(e.target.value)}

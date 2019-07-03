@@ -183,9 +183,9 @@ class Signup extends Component {
   _signup = async data => {
     const {
       token,
-      user: { id, username }
+      user: { id, username, avatar }
     } = data.signup;
-    this.context.login(token, { id, username });
+    this.context.login(token, { id, username, avatar });
     this.props.history.push(`/`);
   };
 }

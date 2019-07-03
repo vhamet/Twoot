@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     req.isAuthenticated = false;
     return next();
   }
-
+  
   const token = authHeader.split(' ')[1];
   if (!token || token === '') {
     req.isAuthenticated = false;

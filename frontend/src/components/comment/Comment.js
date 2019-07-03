@@ -10,14 +10,14 @@ import 'styles/css/comment.css';
 const Comment = props => {
   const {
     content,
-    postedBy: { id: commentById, username },
+    postedBy: { id: commentById, username, avatar },
     date,
     timespan
   } = props.comment;
 
   return (
     <div className="comment__container">
-      <Avatar size="2.2rem" id={commentById} />
+      <Avatar size="2.2rem" id={commentById} src={avatar}/>
       <div className="comment__layout">
         <div className="comment__content">
           <Link className="profile-link" to={`/profile/${commentById}`}>

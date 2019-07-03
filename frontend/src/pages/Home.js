@@ -15,7 +15,7 @@ const Home = props => {
     <AuthenticationContext.Consumer>
       {context => (
         <div className="home">
-          {context.token && <CreatePost />}
+          {context.loggedUser && <CreatePost avatar={context.loggedUser.avatar}/>}
           <Query
             query={INIT_FEED_QUERY}
             variables={{ first: FEED_PAGINATION }}
