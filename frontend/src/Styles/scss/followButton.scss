@@ -1,0 +1,19 @@
+@import 'utilities/variables.scss';
+
+.follow__button {
+  color: $grey-label-dark;
+  font-weight: 700;
+  font-size: 0.8rem;
+  background: $background-color-light;
+  border: 1px solid $grey-label-darker;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+
+  &:hover {
+    background: $background-color;
+  }
+
+  .fa-user-plus {
+    margin-right: 0.5rem;
+  }
+}

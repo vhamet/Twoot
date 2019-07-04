@@ -11,11 +11,14 @@ import { INIT_FEED_QUERY, MORE_FEED_QUERY } from 'apollo/queries';
 import 'styles/css/home.css';
 
 const Home = props => {
+  document.title = 'Twoot | Home';
   return (
     <AuthenticationContext.Consumer>
       {context => (
         <div className="home">
-          {context.loggedUser && <CreatePost avatar={context.loggedUser.avatar}/>}
+          {context.loggedUser && (
+            <CreatePost avatar={context.loggedUser.avatar} />
+          )}
           <Query
             query={INIT_FEED_QUERY}
             variables={{ first: FEED_PAGINATION }}

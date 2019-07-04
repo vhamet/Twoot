@@ -30,6 +30,10 @@ class Signup extends Component {
     error: ''
   };
 
+  componentWillMount() {
+    document.title = 'Twoot | Login';
+  }
+
   static contextType = AuthenticationContext;
 
   constructor(props) {

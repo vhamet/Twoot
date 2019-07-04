@@ -15,6 +15,10 @@ class Login extends Component {
     error: ''
   };
 
+  componentWillMount() {
+    document.title = 'Twoot | Login';
+  }
+
   static contextType = AuthenticationContext;
 
   render() {
@@ -84,10 +88,7 @@ class Login extends Component {
   };
 
   _login = async data => {
-    const {
-      token,
-      user
-    } = data.login;
+    const { token, user } = data.login;
     this.context.login(token, user);
     this.props.history.push(`/`);
   };

@@ -109,11 +109,25 @@ export const USER_QUERY = gql`
         id
         username
         email
+        avatar
+        following {
+          id
+        }
+        followers {
+          id
+        }
       }
       followers {
         id
         username
         email
+        avatar
+        following {
+          id
+        }
+        followers {
+          id
+        }
       }
     }
   }
@@ -178,13 +192,13 @@ export const SIGNUP_MUTATION = gql`
 
 export const FOLLOW_MUTATION = gql`
   mutation FollowMutation($followId: ID!) {
-    follow(followId: $followId) 
+    follow(followId: $followId)
   }
 `;
 
 export const UNFOLLOW_MUTATION = gql`
   mutation UnfollowMutation($followId: ID!) {
-    unfollow(followId: $followId) 
+    unfollow(followId: $followId)
   }
 `;
 
