@@ -98,6 +98,27 @@ export const MORE_COMMENTS_QUERY = gql`
   }
 `;
 
+export const USER_QUERY = gql`
+  query UserQUery($id: ID!) {
+    user(id: $id) {
+      id
+      username
+      email
+      avatar
+      following {
+        id
+        username
+        email
+      }
+      followers {
+        id
+        username
+        email
+      }
+    }
+  }
+`;
+
 export const CREATEPOST_MUTATION = gql`
   mutation CreatePostMutation($content: String!) {
     createPost(content: $content) {
@@ -155,18 +176,26 @@ export const SIGNUP_MUTATION = gql`
   }
 `;
 
-export const USER_QUERY = gql`
-  query UserQUery($id: ID!) {
-    user(id: $id) {
+export const FOLLOW_MUTATION = gql`
+  mutation FollowMutation($followId: ID!) {
+    follow(followId: $followId) 
+  }
+`;
+
+export const UNFOLLOW_MUTATION = gql`
+  mutation UnfollowMutation($followId: ID!) {
+    unfollow(followId: $followId) 
+  }
+`;
+
+export const UPDATE_FOLLOW_FRAGMENT = gql`
+  fragment updateFollow on User {
+    id
+    following {
       id
-      username
-      email
-      avatar
-      friends {
-        id
-        username
-        email
-      }
+    }
+    followers {
+      id
     }
   }
 `;

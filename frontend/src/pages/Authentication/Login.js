@@ -86,9 +86,9 @@ class Login extends Component {
   _login = async data => {
     const {
       token,
-      user: { id, username, avatar }
+      user
     } = data.login;
-    this.context.login(token, { id, username, avatar });
+    this.context.login(token, user);
     this.props.history.push(`/`);
   };
 }

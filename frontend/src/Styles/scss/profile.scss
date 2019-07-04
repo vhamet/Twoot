@@ -9,6 +9,7 @@
   .profile__header {
     position: relative;
     border: 1px solid $border-color;
+    border-top: none;
     border-radius: 3px;
 
     .profile-cover {
@@ -44,6 +45,27 @@
       color: white;
       font-size: 1.5rem;
       font-weight: 700;
+    }
+
+    .profile-follow__button {
+      position: absolute;
+      bottom: 3.5rem;
+      right: 1.5rem;
+      color: $grey-label-dark;
+      font-weight: 700;
+      font-size: .8rem;
+      background: $background-color-light;
+      border: 1px solid $grey-label-darker;
+      padding: .3rem .6rem;
+      cursor: pointer;
+
+      &:hover {
+        background: $background-color;
+      }
+
+      .fa-user-plus {
+        margin-right: .5rem;
+      }
     }
 
     ul {

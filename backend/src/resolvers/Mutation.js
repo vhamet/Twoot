@@ -75,17 +75,35 @@ async function createComment(parent, args, context) {
   });
 }
 
-async function addFriend(parent, args, context) {
+async function follow(parent, args, context) {
   const userId = context.request.isAuthenticated && context.request.userId;
   if (!userId) throw new UnauthenticatedError();
 
   await context.prisma.updateUser({
     where: { id: userId },
-    data: { friends: { connect: { id: args.friendId }} },
+    data: { following: { connect: { id: args.followId }} },
   });
+
   await context.prisma.updateUser({
-    where: { id: args.friendId },
-    data: { friends: { connect: { id: userId }} },
+    where: { id: args.followId },
+    data: { followers: { connect: { id:  userId }} },
+  });
+
+  return true;
+}
+
+async function unfollow(parent, args, context) {
+  const userId = context.request.isAuthenticated && context.request.userId;
+  if (!userId) throw new UnauthenticatedError();
+
+  await context.prisma.updateUser({
+    where: { id: userId },
+    data: { following: { disconnect: { id: args.followId }} },
+  });
+
+  await context.prisma.updateUser({
+    where: { id: args.followId },
+    data: { followers: { disconnect: { id:  userId }} },
   });
 
   return true;
@@ -96,5 +114,6 @@ module.exports = {
   login: ErrorHandlerWrapper(login),
   createPost: ErrorHandlerWrapper(createPost),
   createComment: ErrorHandlerWrapper(createComment),
-  addFriend: ErrorHandlerWrapper(addFriend)
+  follow: ErrorHandlerWrapper(follow),
+  unfollow: ErrorHandlerWrapper(unfollow)
 };

@@ -6,12 +6,17 @@ function comments(parent, args, context) {
   return context.prisma.user({ id: parent.id }).comments();
 }
 
-function friends(parent, args, context) {
-  return context.prisma.user({ id: parent.id }).friends();
+function following(parent, args, context) {
+  return context.prisma.user({ id: parent.id }).following();
+}
+
+function followers(parent, args, context) {
+  return context.prisma.user({ id: parent.id }).followers();
 }
 
 module.exports = {
   posts,
   comments,
-  friends
+  following,
+  followers
 };

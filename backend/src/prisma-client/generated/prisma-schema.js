@@ -571,7 +571,8 @@ type User {
   avatar: String
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
-  friends(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  following(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
 type UserConnection {
@@ -588,11 +589,17 @@ input UserCreateInput {
   avatar: String
   posts: PostCreateManyWithoutPostedByInput
   comments: CommentCreateManyWithoutPostedByInput
-  friends: UserCreateManyInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
 }
 
-input UserCreateManyInput {
-  create: [UserCreateInput!]
+input UserCreateManyWithoutFollowersInput {
+  create: [UserCreateWithoutFollowersInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutFollowingInput {
+  create: [UserCreateWithoutFollowingInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -613,7 +620,30 @@ input UserCreateWithoutCommentsInput {
   password: String!
   avatar: String
   posts: PostCreateManyWithoutPostedByInput
-  friends: UserCreateManyInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+}
+
+input UserCreateWithoutFollowersInput {
+  id: ID
+  username: String!
+  email: String!
+  password: String!
+  avatar: String
+  posts: PostCreateManyWithoutPostedByInput
+  comments: CommentCreateManyWithoutPostedByInput
+  following: UserCreateManyWithoutFollowingInput
+}
+
+input UserCreateWithoutFollowingInput {
+  id: ID
+  username: String!
+  email: String!
+  password: String!
+  avatar: String
+  posts: PostCreateManyWithoutPostedByInput
+  comments: CommentCreateManyWithoutPostedByInput
+  followers: UserCreateManyWithoutFollowersInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -623,7 +653,8 @@ input UserCreateWithoutPostsInput {
   password: String!
   avatar: String
   comments: CommentCreateManyWithoutPostedByInput
-  friends: UserCreateManyInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
 }
 
 type UserEdge {
@@ -746,16 +777,6 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  username: String
-  email: String
-  password: String
-  avatar: String
-  posts: PostUpdateManyWithoutPostedByInput
-  comments: CommentUpdateManyWithoutPostedByInput
-  friends: UserUpdateManyInput
-}
-
 input UserUpdateInput {
   username: String
   email: String
@@ -763,7 +784,8 @@ input UserUpdateInput {
   avatar: String
   posts: PostUpdateManyWithoutPostedByInput
   comments: CommentUpdateManyWithoutPostedByInput
-  friends: UserUpdateManyInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
 }
 
 input UserUpdateManyDataInput {
@@ -773,23 +795,35 @@ input UserUpdateManyDataInput {
   avatar: String
 }
 
-input UserUpdateManyInput {
-  create: [UserCreateInput!]
-  update: [UserUpdateWithWhereUniqueNestedInput!]
-  upsert: [UserUpsertWithWhereUniqueNestedInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
 input UserUpdateManyMutationInput {
   username: String
   email: String
   password: String
   avatar: String
+}
+
+input UserUpdateManyWithoutFollowersInput {
+  create: [UserCreateWithoutFollowersInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutFollowersInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutFollowersInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutFollowingInput {
+  create: [UserCreateWithoutFollowingInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutFollowingInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutFollowingInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
 input UserUpdateManyWithWhereNestedInput {
@@ -817,7 +851,28 @@ input UserUpdateWithoutCommentsDataInput {
   password: String
   avatar: String
   posts: PostUpdateManyWithoutPostedByInput
-  friends: UserUpdateManyInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+}
+
+input UserUpdateWithoutFollowersDataInput {
+  username: String
+  email: String
+  password: String
+  avatar: String
+  posts: PostUpdateManyWithoutPostedByInput
+  comments: CommentUpdateManyWithoutPostedByInput
+  following: UserUpdateManyWithoutFollowingInput
+}
+
+input UserUpdateWithoutFollowingDataInput {
+  username: String
+  email: String
+  password: String
+  avatar: String
+  posts: PostUpdateManyWithoutPostedByInput
+  comments: CommentUpdateManyWithoutPostedByInput
+  followers: UserUpdateManyWithoutFollowersInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -826,12 +881,18 @@ input UserUpdateWithoutPostsDataInput {
   password: String
   avatar: String
   comments: CommentUpdateManyWithoutPostedByInput
-  friends: UserUpdateManyInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
 }
 
-input UserUpdateWithWhereUniqueNestedInput {
+input UserUpdateWithWhereUniqueWithoutFollowersInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateDataInput!
+  data: UserUpdateWithoutFollowersDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutFollowingInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutFollowingDataInput!
 }
 
 input UserUpsertWithoutCommentsInput {
@@ -844,10 +905,16 @@ input UserUpsertWithoutPostsInput {
   create: UserCreateWithoutPostsInput!
 }
 
-input UserUpsertWithWhereUniqueNestedInput {
+input UserUpsertWithWhereUniqueWithoutFollowersInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+  update: UserUpdateWithoutFollowersDataInput!
+  create: UserCreateWithoutFollowersInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutFollowingInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutFollowingDataInput!
+  create: UserCreateWithoutFollowingInput!
 }
 
 input UserWhereInput {
@@ -927,9 +994,12 @@ input UserWhereInput {
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
-  friends_every: UserWhereInput
-  friends_some: UserWhereInput
-  friends_none: UserWhereInput
+  following_every: UserWhereInput
+  following_some: UserWhereInput
+  following_none: UserWhereInput
+  followers_every: UserWhereInput
+  followers_some: UserWhereInput
+  followers_none: UserWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

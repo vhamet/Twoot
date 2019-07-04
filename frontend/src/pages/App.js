@@ -29,10 +29,9 @@ class App extends Component {
     loggedUser: null
   };
 
-  login = (token, { id, username, avatar }) => {
-    console.log(avatar);
-    cookie.save(AUTH_COOKIE, { token, userId: id }, { path: '/' });
-    this.setState({ token, loggedUser: { id, username, avatar } });
+  login = (token, user) => {
+    cookie.save(AUTH_COOKIE, { token, userId: user.id }, { path: '/' });
+    this.setState({ token, loggedUser: user});
   };
 
   logout = () => {

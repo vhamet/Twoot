@@ -6,7 +6,8 @@ type User {
   avatar: String
   posts: [Post!]!
   comments: [Comment!]!
-  friends: [User!]!
+  following: [User!]! @relation(name: "Following")
+  followers: [User!]! @relation(name: "Followers")
 }
 
 type Post {
