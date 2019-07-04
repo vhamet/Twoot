@@ -1,0 +1,40 @@
+@import 'utilities/variables.scss';
+
+.searchbar {
+  margin: 0 1rem;
+  max-width: 100%;
+  width: 25rem;
+  position: relative;
+
+  input {
+    border-radius: 3px;
+    border: 1px solid $border-color;
+    padding-left: 0.5rem;
+    height: 1.3rem;
+    width: calc(100% - 0.5rem);
+    outline: none;
+  }
+}
+
+.search-result__container {
+  background: white;
+  color: black;
+  position: absolute;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid $border-color;
+}
+
+.search-result {
+  cursor: pointer;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  &:hover {
+    background-color: $background-color;
+  }
+}

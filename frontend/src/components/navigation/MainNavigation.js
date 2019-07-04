@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import SearchBar from 'components/navigation/SearchBar';
 import DropDown from 'components/form/DropDown';
 import Avatar from 'components/avatar/Avatar';
 
@@ -15,6 +16,7 @@ const MainNavigation = ({ token, loggedUser, logout }) => (
           <h1>Twoot</h1>
         </Link>
       </div>
+      <SearchBar />
       <nav className="main-navigation__items">
         {token ? (
           <ul>
