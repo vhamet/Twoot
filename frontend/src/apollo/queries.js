@@ -98,39 +98,46 @@ export const MORE_COMMENTS_QUERY = gql`
   }
 `;
 
-export const USER_QUERY = gql`
-  query UserQUery($id: ID!) {
-    user(id: $id) {
+const USER_CONTENT_FRAGMENT = gql`
+  fragment UserContent on User {
+    id
+    username
+    email
+    avatar
+    following {
       id
       username
       email
       avatar
       following {
         id
-        username
-        email
-        avatar
-        following {
-          id
-        }
-        followers {
-          id
-        }
       }
       followers {
         id
-        username
-        email
-        avatar
-        following {
-          id
-        }
-        followers {
-          id
-        }
+      }
+    }
+    followers {
+      id
+      username
+      email
+      avatar
+      following {
+        id
+      }
+      followers {
+        id
       }
     }
   }
+`;
+
+export const USER_QUERY = gql`
+  query UserQUery($id: ID!) {
+    user(id: $id) {
+      ...UserContent
+    }
+  }
+  ${USER_CONTENT_FRAGMENT}
 `;
 
 export const CREATEPOST_MUTATION = gql`
@@ -164,13 +171,11 @@ export const LOGIN_MUTATION = gql`
     login(login: $login, password: $password) {
       token
       user {
-        id
-        username
-        email
-        avatar
+        ...UserContent
       }
     }
   }
+  ${USER_CONTENT_FRAGMENT}
 `;
 
 export const SIGNUP_MUTATION = gql`
@@ -182,12 +187,11 @@ export const SIGNUP_MUTATION = gql`
     signup(email: $email, password: $password, username: $username) {
       token
       user {
-        id
-        username
-        avatar
+        ...UserContent
       }
     }
   }
+  ${USER_CONTENT_FRAGMENT}
 `;
 
 export const FOLLOW_MUTATION = gql`

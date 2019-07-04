@@ -258,5 +258,11 @@
       margin-right: 1rem;
 
     }
+
+    label {
+      color: $grey-label-light;
+      font-size: .6rem;
+      display: block;
+    }
   }
 }

@@ -16,7 +16,7 @@ const FollowButton = ({ user }) => {
   const context = useContext(AuthenticationContext);
   const loggedUser = context.loggedUser;
 
-  if (loggedUser.id === user.id) return <></>;
+  if (!loggedUser || loggedUser.id === user.id) return <></>;
 
   return loggedUser.following && 
     loggedUser.following.some(follow => follow.id === user.id) ? (
