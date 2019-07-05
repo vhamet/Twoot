@@ -60,6 +60,7 @@ async function createPost(parent, args, context) {
 
   return await context.prisma.createPost({
     content: args.content,
+    isPrivate: args.isPrivate,
     postedBy: { connect: { id: userId } }
   });
 }
@@ -81,12 +82,12 @@ async function follow(parent, args, context) {
 
   await context.prisma.updateUser({
     where: { id: userId },
-    data: { following: { connect: { id: args.followId }} },
+    data: { following: { connect: { id: args.followId } } }
   });
 
   await context.prisma.updateUser({
     where: { id: args.followId },
-    data: { followers: { connect: { id:  userId }} },
+    data: { followers: { connect: { id: userId } } }
   });
 
   return true;
@@ -98,12 +99,12 @@ async function unfollow(parent, args, context) {
 
   await context.prisma.updateUser({
     where: { id: userId },
-    data: { following: { disconnect: { id: args.followId }} },
+    data: { following: { disconnect: { id: args.followId } } }
   });
 
   await context.prisma.updateUser({
     where: { id: args.followId },
-    data: { followers: { disconnect: { id:  userId }} },
+    data: { followers: { disconnect: { id: userId } } }
   });
 
   return true;

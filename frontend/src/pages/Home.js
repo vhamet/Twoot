@@ -21,7 +21,10 @@ const Home = props => {
           )}
           <Query
             query={INIT_FEED_QUERY}
-            variables={{ first: FEED_PAGINATION }}
+            variables={{
+              first: FEED_PAGINATION,
+              logged: context.loggedUser && context.loggedUser.id
+            }}
             notifyOnNetworkStatusChange={true}
           >
             {({ data: { feed }, loading, fetchMore }) => {
@@ -30,10 +33,15 @@ const Home = props => {
                 <PostList
                   loading={loading}
                   posts={posts}
-                  onLoadMore={() =>
-                    fetchMore({
+                  onLoadMore={() => {
+                    if (!feed) return;
+                    return fetchMore({
                       query: MORE_FEED_QUERY,
-                      variables: { first: FEED_PAGINATION, after: feed.cursor },
+                      variables: {
+                        first: FEED_PAGINATION,
+                        after: feed.cursor,
+                        logged: context.loggedUser && context.loggedUser.id
+                      },
                       updateQuery: (previousResult, { fetchMoreResult }) => {
                         return {
                           feed: {
@@ -46,8 +54,8 @@ const Home = props => {
                           }
                         };
                       }
-                    })
-                  }
+                    });
+                  }}
                 />
               );
             }}

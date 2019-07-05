@@ -31,10 +31,27 @@
     }
   }
 
+  .create-post-actions {
+    display: flex;
+    margin: 0.3rem 0.5rem;
+  }
+
+  select,
+  option {
+    color: $grey-label-dark;
+    font-weight: 700;
+    font-size: 0.8rem;
+    background: $background-color-light;
+    border: 1px solid $border-color;
+    border-radius: 3px;
+    outline: none;
+    padding: 0.3rem;
+    cursor: pointer;
+    margin-right: 0.5rem;
+  }
+
   button {
-    width: 80%;
-    margin: 0 auto 0.5rem auto;
-    display: block;
+    flex: 1;
   }
 }
 
@@ -101,13 +118,13 @@
     margin-top: 0.5rem;
 
     pre {
-      white-space: pre-wrap; 
+      white-space: pre-wrap;
     }
   }
 
   .post-comments__link {
     color: $grey-label-light;
-    font-size: .9rem;
+    font-size: 0.9rem;
     cursor: pointer;
     user-select: none;
     position: relative;
@@ -122,8 +139,8 @@
       position: absolute;
       background: $background-dark;
       color: white;
-      padding: .4rem;
-      font-size: .8rem;
+      padding: 0.4rem;
+      font-size: 0.8rem;
       border-radius: 3px;
     }
   }

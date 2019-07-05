@@ -9,6 +9,7 @@ import 'styles/css/post.css';
 
 const CreatePost = props => {
   const [content, setContent] = useState('');
+  const [isPrivate, setIsPrivate] = useState(false);
 
   const handleError = err => {
     alert(err.graphQLErrors[0].message);
@@ -18,7 +19,7 @@ const CreatePost = props => {
     <div className="create-post__container">
       <div className="create-post__title">Create Post</div>
       <div className="create-post__content">
-        <Avatar size="3rem" src={props.avatar}/>
+        <Avatar size="3rem" src={props.avatar} />
         <textarea
           value={content}
           onChange={e => setContent(e.target.value)}
@@ -26,32 +27,42 @@ const CreatePost = props => {
           placeholder="What's on your mind ?"
         />
       </div>
-      <Mutation
-        mutation={CREATEPOST_MUTATION}
-        variables={{ content }}
-        onError={err => handleError(err)}
-        onCompleted={() => {
-          setContent('');
-        }}
-        update={(cache, { data: { createPost } }) => {
-          const data = cache.readQuery({
-            query: INIT_FEED_QUERY,
-            variables: { first: 5 }
-          });
-          data.feed.posts.unshift(createPost);
-          cache.writeQuery({
-            query: INIT_FEED_QUERY,
-            data,
-            variables: { first: 5 }
-          });
-        }}
-      >
-        {mutation => (
-          <button className="btn" disabled={!content.length} onClick={mutation}>
-            Share
-          </button>
-        )}
-      </Mutation>
+      <div className="create-post-actions">
+        <select className="privacy" onChange={e => setIsPrivate(!!e.target.value)}>
+          <option value="">Public</option>
+          <option value="1">Private</option>
+        </select>
+        <Mutation
+          mutation={CREATEPOST_MUTATION}
+          variables={{ content, isPrivate }}
+          onError={err => handleError(err)}
+          onCompleted={() => {
+            setContent('');
+          }}
+          update={(cache, { data: { createPost } }) => {
+            const data = cache.readQuery({
+              query: INIT_FEED_QUERY,
+              variables: { first: 5 }
+            });
+            data.feed.posts.unshift(createPost);
+            cache.writeQuery({
+              query: INIT_FEED_QUERY,
+              data,
+              variables: { first: 5 }
+            });
+          }}
+        >
+          {mutation => (
+            <button
+              className="btn"
+              disabled={!content.length}
+              onClick={mutation}
+            >
+              Share
+            </button>
+          )}
+        </Mutation>
+      </div>
     </div>
   );
 };

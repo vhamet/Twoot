@@ -17,7 +17,11 @@ const Timeline = ({ userId }) => {
           {context.token && <CreatePost />}
           <Query
             query={INIT_TIMELINE_QUERY}
-            variables={{ user: userId, first: FEED_PAGINATION }}
+            variables={{
+              user: userId,
+              first: FEED_PAGINATION,
+              logged: context.loggedUser && context.loggedUser.id
+            }}
             notifyOnNetworkStatusChange={true}
           >
             {({ data: { timeline }, loading, fetchMore }) => {
@@ -29,9 +33,15 @@ const Timeline = ({ userId }) => {
                   onLoadMore={() =>
                     fetchMore({
                       query: MORE_TIMELINE_QUERY,
-                      variables: { user: userId, first: FEED_PAGINATION, after: timeline.cursor },
+                      variables: {
+                        user: userId,
+                        first: FEED_PAGINATION,
+                        after: timeline.cursor,
+                        logged: context.loggedUser && context.loggedUser.id
+                      },
                       updateQuery: (previousResult, { fetchMoreResult }) => {
-                        if (!fetchMoreResult.timeline.posts.length) return previousResult;
+                        if (!fetchMoreResult.timeline.posts.length)
+                          return previousResult;
                         return {
                           timeline: {
                             cursor: fetchMoreResult.timeline.cursor,

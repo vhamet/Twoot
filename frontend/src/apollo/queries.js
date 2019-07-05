@@ -5,6 +5,7 @@ const POST_CONTENT_FRAGMENT = gql`
     id
     createdAt
     content
+    isPrivate
     postedBy {
       id
       username
@@ -37,8 +38,8 @@ const FEED_CONTENT_FRAGMENT = gql`
 `;
 
 export const INIT_FEED_QUERY = gql`
-  query InitFeedQuery($first: Int) {
-    feed(first: $first) {
+  query InitFeedQuery($first: Int, $logged: ID) {
+    feed(first: $first, logged: $logged) {
       ...FeedContent
     }
   }
@@ -46,8 +47,8 @@ export const INIT_FEED_QUERY = gql`
 `;
 
 export const MORE_FEED_QUERY = gql`
-  query MoreFeedQuery($first: Int, $after: ID) {
-    feed(first: $first, after: $after) {
+  query MoreFeedQuery($first: Int, $after: ID, $logged: ID) {
+    feed(first: $first, after: $after, logged: $logged) {
       ...FeedContent
     }
   }
@@ -55,8 +56,8 @@ export const MORE_FEED_QUERY = gql`
 `;
 
 export const INIT_TIMELINE_QUERY = gql`
-  query InitTimelineQuery($user: ID, $first: Int) {
-    timeline(user: $user, first: $first) {
+  query InitTimelineQuery($user: ID, $first: Int, $logged: ID) {
+    timeline(user: $user, first: $first, logged: $logged) {
       ...FeedContent
     }
   }
@@ -64,8 +65,8 @@ export const INIT_TIMELINE_QUERY = gql`
 `;
 
 export const MORE_TIMELINE_QUERY = gql`
-  query MoreTimelineQuery($user: ID, $first: Int, $after: ID) {
-    timeline(user: $user, first: $first, after: $after) {
+  query MoreTimelineQuery($user: ID, $first: Int, $after: ID, $logged: ID) {
+    timeline(user: $user, first: $first, after: $after, logged: $logged) {
       ...FeedContent
     }
   }
@@ -141,8 +142,8 @@ export const USER_QUERY = gql`
 `;
 
 export const CREATEPOST_MUTATION = gql`
-  mutation CreatePostMutation($content: String!) {
-    createPost(content: $content) {
+  mutation CreatePostMutation($content: String!, $isPrivate: Boolean!) {
+    createPost(content: $content, isPrivate: $isPrivate) {
       ...PostContent
     }
   }

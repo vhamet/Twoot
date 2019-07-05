@@ -2,8 +2,8 @@ scalar DateTime
 
 type Query {
   info: String!
-  feed(first: Int, after: ID): Feed!
-  timeline(user: ID, first: Int, after: ID): Feed!
+  feed(first: Int, after: ID, logged: ID): Feed!
+  timeline(user: ID, first: Int, after: ID, logged: ID): Feed!
   moreComments(postId: ID, last: Int, before: ID): [Comment!]!
   user(id: ID!): User
 }
@@ -11,7 +11,7 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!, username: String!): AuthPayload
   login(login: String!, password: String!): AuthPayload
-  createPost(content: String!): Post!
+  createPost(content: String!, isPrivate: Boolean!): Post!
   createComment(postId: ID!, content: String!): Comment!
   follow(followId: ID!): Boolean
   unfollow(followId: ID!): Boolean
@@ -49,6 +49,7 @@ type Post {
   postedBy: User!
   createdAt: DateTime!
   fetchedComments: FetchedComments
+  isPrivate: Boolean
 }
 
 type Comment {

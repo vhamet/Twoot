@@ -8,17 +8,16 @@ import 'styles/css/avatar.css';
 const Avatar = props => {
   const src = props.src || anon;
   const size = props.size || '3rem';
-  const containerStyle = { height: size, width: size };
-  const imgStyle = { borderRadius: props.square ? '' : '50%' };
+  const style = { borderRadius: props.square ? '' : '50%', height: size, width: size };
   return props.id ? (
-    <div className="avatar__container" style={containerStyle}>
+    <div className="avatar__container">
       <Link to={`/profile/${props.id}`}>
-        <img src={src} alt="avatar" style={imgStyle}/>
+        <img src={src} alt="avatar" style={style}/>
       </Link>
     </div>
   ) : (
-    <div className="avatar__container" style={containerStyle}>
-      <img src={src} alt="avatar" style={imgStyle}/>
+    <div className="avatar__container">
+      <img src={src} alt="avatar" style={style}/>
     </div>
   );
 };

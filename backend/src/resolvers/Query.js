@@ -1,11 +1,22 @@
 async function feed(parent, args, context) {
   const posts = await context.prisma.posts({
+    where: {
+      OR: [
+        { isPrivate: null },
+        { isPrivate: false },
+        { postedBy: { id: args.logged } },
+        { postedBy: { followers_some: { id: args.logged } } }
+      ]
+    },
     after: args.after,
     first: args.first,
     orderBy: 'createdAt_DESC'
   });
   const cursor =
-    (posts.length && posts.length === args.first && posts[posts.length - 1].id) || '';
+    (posts.length &&
+      posts.length === args.first &&
+      posts[posts.length - 1].id) ||
+    '';
 
   return {
     posts,
@@ -15,13 +26,28 @@ async function feed(parent, args, context) {
 
 async function timeline(parent, args, context) {
   const posts = await context.prisma.posts({
-    where: { postedBy: { id: args.user } },
+    where: {
+      AND: [
+        { postedBy: { id: args.user } },
+        {
+          OR: [
+            { isPrivate: null },
+            { isPrivate: false },
+            { postedBy: { id: args.logged } },
+            { postedBy: { followers_some: { id: args.logged } } }
+          ]
+        }
+      ]
+    },
     after: args.after,
     first: args.first,
     orderBy: 'createdAt_DESC'
   });
   const cursor =
-    (posts.length && posts.length === args.first && posts[posts.length - 1].id) || '';
+    (posts.length &&
+      posts.length === args.first &&
+      posts[posts.length - 1].id) ||
+    '';
 
   return {
     posts,
