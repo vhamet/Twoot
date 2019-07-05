@@ -87,6 +87,9 @@ export const GETPOST_FRAGMENT = gql`
     fetchedComments {
       comments {
         id
+        likes {
+          id
+        }
       }
       count
     }
@@ -100,6 +103,10 @@ export const MORE_COMMENTS_QUERY = gql`
       content
       createdAt
       postedBy {
+        id
+        username
+      }
+      likes {
         id
         username
       }
@@ -170,6 +177,9 @@ export const CREATECOMMENT_MUTATION = gql`
       postedBy {
         id
         username
+      }
+      likes {
+        id
       }
     }
   }
