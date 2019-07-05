@@ -15,7 +15,12 @@ async function fetchedComments(parent, args, context) {
   return { comments, count };
 }
 
+function likes(parent, args, context) {
+  return context.prisma.post({ id: parent.id }).likes();
+}
+
 module.exports = {
   postedBy,
-  fetchedComments
+  fetchedComments,
+  likes
 };

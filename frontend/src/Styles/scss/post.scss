@@ -125,25 +125,59 @@
     }
   }
 
-  .post-comments__link {
-    color: $grey-label-light;
-    font-size: 0.9rem;
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-    display: inline-block;
+  .post-infos {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
 
-    &:hover {
-      text-decoration: underline;
-      
-      .tooltip {
+    .post-likes__container {
+      display: flex;
+      align-items: flex-end;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+
+      &:hover .tooltip {
         display: block;
+      }
+
+      .post-likes {
+        background: $main-color;
+        border-radius: 50px;
+        color: white;
+        font-size: 0.6rem;
+        padding: 0.3rem;
+      }
+      
+      label {
+        color: $grey-label-light;
+        margin-left: 0.4rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    .post-comments__link {
+      color: $grey-label-light;
+      font-size: 0.9rem;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      display: inline-block;
+      margin-left: auto;
+  
+      &:hover {
+        text-decoration: underline;
+  
+        .tooltip {
+          display: block;
+        }
       }
     }
 
     .tooltip {
       display: none;
       position: absolute;
+      top: 1rem;
       background: $background-dark;
       color: white;
       padding: 0.4rem;
@@ -156,7 +190,6 @@
     display: flex;
     justify-content: space-evenly;
     border-top: 1px solid $border-color-light;
-    margin-top: 0.5rem;
 
     button {
       flex: 1;
@@ -170,6 +203,10 @@
       color: $grey-label;
       font-weight: 600;
       cursor: pointer;
+
+      &.liked {
+        color: $main-color-dark;
+      }
 
       &:hover {
         background: $background-color-light;

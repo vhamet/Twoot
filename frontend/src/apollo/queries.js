@@ -24,6 +24,10 @@ const POST_CONTENT_FRAGMENT = gql`
       }
       count
     }
+    likes {
+      id
+      username
+    }
   }
 `;
 
@@ -214,6 +218,28 @@ export const UPDATE_FOLLOW_FRAGMENT = gql`
       id
     }
     followers {
+      id
+    }
+  }
+`;
+
+export const LIKE_POST_MUTATION = gql`
+  mutation LikePostMutation($postId: ID!) {
+    likePost(postId: $postId)
+  }
+`;
+
+
+export const UNLIKE_POST_MUTATION = gql`
+  mutation UnikePostMutation($postId: ID!) {
+    unlikePost(postId: $postId)
+  }
+`;
+
+export const UPDATE_LIKES_POST_FRAGMENT = gql`
+  fragment updateLikesPost on Post {
+    id
+    likes {
       id
     }
   }

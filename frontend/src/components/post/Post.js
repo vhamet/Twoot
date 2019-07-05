@@ -5,16 +5,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPen,
   faTrashAlt,
-  faUserLock
+  faUserLock,
 } from '@fortawesome/free-solid-svg-icons';
-import { faThumbsUp, faCommentAlt } from '@fortawesome/free-regular-svg-icons';
+import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 
 import PostCommentsLink from 'components/post/PostCommentsLink';
+import PostLikes from 'components/post/PostLikes';
 import CreateComment from 'components/comment/CreateComment';
 import CommentList from 'components/comment/CommentList';
 import Avatar from 'components/avatar/Avatar';
 import TimeSince from 'components/form/TimeSince';
 import DropDown from 'components/form/DropDown';
+import LikeButton from 'components/form/LikeButton';
 
 import {
   MORE_COMMENTS_QUERY,
@@ -30,7 +32,8 @@ const Post = props => {
     date,
     postedBy: { id: postById, username, avatar },
     comments,
-    count
+    count,
+    likes
   } = props.post;
 
   const [displayComments, setDisplayComments] = useState(true);
@@ -94,19 +97,19 @@ const Post = props => {
             <div className="post__content">
               <pre>{content}</pre>
             </div>
-            {comments.length > 0 && (
-              <PostCommentsLink
-                count={count}
-                comments={comments}
-                onClick={() => setDisplayComments(!displayComments)}
-              />
-            )}
+            <div className="post-infos">
+              {likes.length > 0 && <PostLikes likes={likes} />}
+              {comments.length > 0 && (
+                <PostCommentsLink
+                  count={count}
+                  comments={comments}
+                  onClick={() => setDisplayComments(!displayComments)}
+                />
+              )}
+            </div>
             {props.loggedUser && (
               <div className="post-actions__container">
-                <button>
-                  <FontAwesomeIcon icon={faThumbsUp} />
-                  Like
-                </button>
+                <LikeButton postId={postId} likes={likes} />
                 <button
                   onClick={() => {
                     setDisplayComments(true);

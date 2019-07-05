@@ -15,10 +15,10 @@ type Mutation {
   createComment(postId: ID!, content: String!): Comment!
   follow(followId: ID!): Boolean
   unfollow(followId: ID!): Boolean
-  likePost(post: ID!):Boolean
-  unlikePost(post: ID!):Boolean
-  likeComment(post: ID!):Boolean
-  unlikeComment(post: ID!):Boolean
+  likePost(postId: ID!):Boolean
+  unlikePost(postId: ID!):Boolean
+  likeComment(commentId: ID!):Boolean
+  unlikeComment(commentId: ID!):Boolean
 }
 
 type FetchedComments {
