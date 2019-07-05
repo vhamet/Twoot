@@ -21,6 +21,10 @@ const POST_CONTENT_FRAGMENT = gql`
           username
           avatar
         }
+        likes {
+          id
+          username
+        }
       }
       count
     }
@@ -229,7 +233,6 @@ export const LIKE_POST_MUTATION = gql`
   }
 `;
 
-
 export const UNLIKE_POST_MUTATION = gql`
   mutation UnikePostMutation($postId: ID!) {
     unlikePost(postId: $postId)
@@ -238,6 +241,27 @@ export const UNLIKE_POST_MUTATION = gql`
 
 export const UPDATE_LIKES_POST_FRAGMENT = gql`
   fragment updateLikesPost on Post {
+    id
+    likes {
+      id
+    }
+  }
+`;
+
+export const LIKE_COMMENT_MUTATION = gql`
+  mutation LikeCommentMutation($commentId: ID!) {
+    likeComment(commentId: $commentId)
+  }
+`;
+
+export const UNLIKE_COMMENT_MUTATION = gql`
+  mutation UnikeCommentMutation($commentId: ID!) {
+    unlikeComment(commentId: $commentId)
+  }
+`;
+
+export const UPDATE_LIKES_COMMENT_FRAGMENT = gql`
+  fragment updateLikesComment on Comment {
     id
     likes {
       id

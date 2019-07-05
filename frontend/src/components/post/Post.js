@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPen,
   faTrashAlt,
-  faUserLock,
+  faUserLock
 } from '@fortawesome/free-solid-svg-icons';
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 
@@ -132,11 +132,7 @@ const Post = props => {
                   <label>{`${comments.length} of ${count}`}</label>
                 </div>
               )}
-              <CommentList
-                loggedUserId={props.loggedUser && props.loggedUser.id}
-                postById={postById}
-                comments={comments}
-              />
+              <CommentList comments={comments} />
               {props.loggedUser && (
                 <CreateComment
                   postId={postId}

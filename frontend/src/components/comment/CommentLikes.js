@@ -2,7 +2,7 @@ import React from 'react';
 
 import like from 'images/like.png';
 
-const PostLikes = ({ likes }) => {
+const CommentLikes = ({ likes }) => {
   const getUserList = users =>
     users
       .map(user => user.username)
@@ -16,7 +16,7 @@ const PostLikes = ({ likes }) => {
     .join('\n');
 
   return (
-    <div className="post-likes__container">
+    <div className="comment-likes__container">
       <img src={like} alt="like" />
       <label>{likes.length}</label>
       <pre className="tooltip">{tooltip}</pre>
@@ -24,4 +24,4 @@ const PostLikes = ({ likes }) => {
   );
 };
 
-export default PostLikes;
+export default CommentLikes;

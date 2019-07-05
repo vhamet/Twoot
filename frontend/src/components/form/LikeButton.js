@@ -16,7 +16,7 @@ const LikeButton = ({ postId, likes }) => {
   return likes.some(user => user.id === loggedUser.id) ? (
     <Mutation
       mutation={UNLIKE_POST_MUTATION}
-      variables={{ postId: postId }}
+      variables={{ postId }}
       update={(cache, { data: { unlikePost } }) => {
         const id = `Post:${postId}`;
         const post = cache.readFragment({ fragment, id });
@@ -38,7 +38,7 @@ const LikeButton = ({ postId, likes }) => {
   ) : (
     <Mutation
       mutation={LIKE_POST_MUTATION}
-      variables={{ postId: postId }}
+      variables={{ postId }}
       update={(cache, { data: { likePost } }) => {
         const id = `Post:${postId}`;
         const post = cache.readFragment({ fragment, id });
