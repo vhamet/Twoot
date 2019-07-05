@@ -4,25 +4,29 @@ type User {
   email: String! @unique
   password: String!
   avatar: String
-  posts: [Post!]!
-  comments: [Comment!]!
+  posts: [Post!]! @relation(name: "PostAuthor")
+  comments: [Comment!]! @relation(name: "CommentAuthor")
   following: [User!]! @relation(name: "Following")
   followers: [User!]! @relation(name: "Followers")
+  likedPosts: [Post!]! @relation(name: "LikedPosts")
+  likedComments: [Comment!]! @relation(name: "LikedComments")
 }
 
 type Post {
   id: ID! @id
   content: String!
-  postedBy: User!
+  postedBy: User! @relation(name: "PostAuthor")
   createdAt: DateTime! @createdAt
   comments: [Comment!]!
   isPrivate: Boolean
+  likes: [User!]! @relation(name: "LikedPosts")
 }
 
 type Comment {
   id: ID! @id
   content: String!
   postedOn: Post!
-  postedBy: User!
+  postedBy: User! @relation(name: "CommentAuthor")
   createdAt: DateTime! @createdAt
+  likes: [User!]! @relation(name: "LikedComments")
 }

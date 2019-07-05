@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Mutation } from 'react-apollo';
 import {
   CREATECOMMENT_MUTATION,
@@ -11,10 +11,18 @@ import 'styles/css/comment.css';
 
 const CreateComment = props => {
   const [content, setContent] = useState('');
+  const inputRef = useRef(null);
 
   const handleError = err => {
     alert(err.graphQLErrors[0].message);
   };
+
+  useEffect(() => {
+    if (props.focus) {
+      inputRef.current.focus();
+      props.unFocus();
+    }
+  });
 
   return (
     <div className="create-comment__container">
@@ -49,10 +57,12 @@ const CreateComment = props => {
             }}
           >
             <input
+              className="create-comment__input"
               type="text"
               placeholder="Write a comment..."
               value={content}
               onChange={e => setContent(e.target.value)}
+              ref={inputRef}
             />
           </form>
         )}

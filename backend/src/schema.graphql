@@ -15,6 +15,10 @@ type Mutation {
   createComment(postId: ID!, content: String!): Comment!
   follow(followId: ID!): Boolean
   unfollow(followId: ID!): Boolean
+  likePost(post: ID!):Boolean
+  unlikePost(post: ID!):Boolean
+  likeComment(post: ID!):Boolean
+  unlikeComment(post: ID!):Boolean
 }
 
 type FetchedComments {
@@ -50,6 +54,7 @@ type Post {
   createdAt: DateTime!
   fetchedComments: FetchedComments
   isPrivate: Boolean
+  likes: [User!]!
 }
 
 type Comment {
@@ -58,4 +63,5 @@ type Comment {
   postedOn: Post!
   postedBy: User!
   createdAt: DateTime!
+  likes: [User!]!
 }

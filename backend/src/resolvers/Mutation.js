@@ -11,6 +11,13 @@ const {
 } = require('./ErrorHandling/Errors');
 const { ErrorHandlerWrapper } = require('./ErrorHandling/ErrorHandlerWrapper');
 
+const getAuthenticatedUserId = context => {
+  const userId = context.request.isAuthenticated && context.request.userId;
+  if (!userId) throw new UnauthenticatedError();
+
+  return userId;
+};
+
 async function signup(parent, args, context) {
   try {
     const password = await bcrypt.hash(args.password, 10);
@@ -55,9 +62,7 @@ async function login(parent, args, context) {
 }
 
 async function createPost(parent, args, context) {
-  const userId = context.request.isAuthenticated && context.request.userId;
-  if (!userId) throw new UnauthenticatedError();
-
+  const userId = getAuthenticatedUserId(context);
   return await context.prisma.createPost({
     content: args.content,
     isPrivate: args.isPrivate,
@@ -66,9 +71,7 @@ async function createPost(parent, args, context) {
 }
 
 async function createComment(parent, args, context) {
-  const userId = context.request.isAuthenticated && context.request.userId;
-  if (!userId) throw new UnauthenticatedError();
-
+  const userId = getAuthenticatedUserId(context);
   return await context.prisma.createComment({
     content: args.content,
     postedOn: { connect: { id: args.postId } },
@@ -77,9 +80,7 @@ async function createComment(parent, args, context) {
 }
 
 async function follow(parent, args, context) {
-  const userId = context.request.isAuthenticated && context.request.userId;
-  if (!userId) throw new UnauthenticatedError();
-
+  const userId = getAuthenticatedUserId(context);
   await context.prisma.updateUser({
     where: { id: userId },
     data: { following: { connect: { id: args.followId } } }
@@ -94,9 +95,7 @@ async function follow(parent, args, context) {
 }
 
 async function unfollow(parent, args, context) {
-  const userId = context.request.isAuthenticated && context.request.userId;
-  if (!userId) throw new UnauthenticatedError();
-
+  const userId = getAuthenticatedUserId(context);
   await context.prisma.updateUser({
     where: { id: userId },
     data: { following: { disconnect: { id: args.followId } } }
@@ -110,11 +109,55 @@ async function unfollow(parent, args, context) {
   return true;
 }
 
+async function likePost(parent, args, context) {
+  const userId = getAuthenticatedUserId(context);
+  await context.prisma.updatePost({
+    where: { id: args.postId },
+    data: { likes: { connect: { id: userId } } }
+  });
+
+  return true;
+}
+
+async function unlikePost(parent, args, context) {
+  const userId = getAuthenticatedUserId(context);
+  await context.prisma.updatePost({
+    where: { id: args.postId },
+    data: { likes: { disconnect: { id: userId } } }
+  });
+
+  return true;
+}
+
+async function likeComment(parent, args, context) {
+  const userId = getAuthenticatedUserId(context);
+  await context.prisma.updateComment({
+    where: { id: args.commentId },
+    data: { likes: { connect: { id: userId } } }
+  });
+
+  return true;
+}
+
+async function unlikeComment(parent, args, context) {
+  const userId = getAuthenticatedUserId(context);
+  await context.prisma.updateComment({
+    where: { id: args.commentId },
+    data: { likes: { disconnect: { id: userId } } }
+  });
+
+  return true;
+}
+
 module.exports = {
   signup: ErrorHandlerWrapper(signup),
   login: ErrorHandlerWrapper(login),
   createPost: ErrorHandlerWrapper(createPost),
   createComment: ErrorHandlerWrapper(createComment),
   follow: ErrorHandlerWrapper(follow),
-  unfollow: ErrorHandlerWrapper(unfollow)
+  unfollow: ErrorHandlerWrapper(unfollow),
+  likePost: ErrorHandlerWrapper(likePost),
+  unlikePost: ErrorHandlerWrapper(unlikePost),
+  likeComment: ErrorHandlerWrapper(likeComment),
+  unlikeComment: ErrorHandlerWrapper(unlikeComment)
 };

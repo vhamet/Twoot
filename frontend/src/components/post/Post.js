@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApolloConsumer } from 'react-apollo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faTrashAlt, faUserLock } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPen,
+  faTrashAlt,
+  faUserLock
+} from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 
 import PostCommentsLink from 'components/post/PostCommentsLink';
 import CreateComment from 'components/comment/CreateComment';
@@ -30,6 +35,7 @@ const Post = props => {
 
   const [displayComments, setDisplayComments] = useState(true);
   const [cursor, setCursor] = useState(comments.length ? comments[0].id : '');
+  const [focusCreateComment, setFocusCreateComment] = useState(false);
 
   const loadMoreComments = async client => {
     const { data } = await client.query({
@@ -50,6 +56,8 @@ const Post = props => {
     client.writeFragment({ fragment, id, data: newPost });
     setCursor(data.moreComments[0].id);
   };
+
+  const unFocus = () => setFocusCreateComment(false);
 
   return (
     <ApolloConsumer>
@@ -93,6 +101,23 @@ const Post = props => {
                 onClick={() => setDisplayComments(!displayComments)}
               />
             )}
+            {props.loggedUser && (
+              <div className="post-actions__container">
+                <button>
+                  <FontAwesomeIcon icon={faThumbsUp} />
+                  Like
+                </button>
+                <button
+                  onClick={() => {
+                    setDisplayComments(true);
+                    setFocusCreateComment(true);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faCommentAlt} />
+                  Comment
+                </button>
+              </div>
+            )}
           </div>
           {displayComments && (comments.length || props.loggedUser) && (
             <div className="comments__container">
@@ -113,6 +138,8 @@ const Post = props => {
                 <CreateComment
                   postId={postId}
                   avatar={props.loggedUser.avatar}
+                  focus={focusCreateComment}
+                  unFocus={unFocus}
                 />
               )}
             </div>

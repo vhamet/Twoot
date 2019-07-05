@@ -60,7 +60,7 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   background: white;
-  padding: 1rem;
+  padding: 1rem 1rem 0 1rem;
   margin-top: 1rem;
 
   .dropdown__container {
@@ -91,8 +91,8 @@
     white-space: nowrap;
 
     svg {
-      font-size: .8rem;
-      margin-right: .3rem;
+      font-size: 0.8rem;
+      margin-right: 0.3rem;
       color: $grey-label-dark;
       width: 1.5rem;
     }
@@ -133,8 +133,12 @@
     position: relative;
     display: inline-block;
 
-    &:hover .tooltip {
-      display: block;
+    &:hover {
+      text-decoration: underline;
+      
+      .tooltip {
+        display: block;
+      }
     }
 
     .tooltip {
@@ -145,6 +149,36 @@
       padding: 0.4rem;
       font-size: 0.8rem;
       border-radius: 3px;
+    }
+  }
+
+  .post-actions__container {
+    display: flex;
+    justify-content: space-evenly;
+    border-top: 1px solid $border-color-light;
+    margin-top: 0.5rem;
+
+    button {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      outline: none;
+      background: white;
+      padding: 0.5rem;
+      color: $grey-label;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover {
+        background: $background-color-light;
+      }
+
+      svg {
+        margin-right: 0.5rem;
+        font-size: 1.3rem;
+      }
     }
   }
 }
