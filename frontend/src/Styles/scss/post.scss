@@ -173,6 +173,7 @@
     .tooltip {
       display: none;
       position: absolute;
+      z-index: 500;
       top: 1rem;
       background: $background-dark;
       color: white;

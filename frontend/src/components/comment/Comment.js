@@ -39,50 +39,59 @@ const Comment = props => {
           {likes.length > 0 && <CommentLikes likes={likes} />}
         </div>
         <div className="comment-actions">
-          {likes.some(user => user.id === loggedUser.id) ? (
-            <Mutation
-              mutation={UNLIKE_COMMENT_MUTATION}
-              variables={{ commentId }}
-              update={(cache, { data: { unlikePost } }) => {
-                const id = `Comment:${commentId}`;
-                const comment = cache.readFragment({ fragment, id });
-                const data = {
-                  ...comment,
-                  likes: comment.likes.filter(user => user.id !== loggedUser.id)
-                };
+          {loggedUser && (
+            <>
+              {likes.some(user => user.id === loggedUser.id) ? (
+                <Mutation
+                  mutation={UNLIKE_COMMENT_MUTATION}
+                  variables={{ commentId }}
+                  update={(cache, { data: { unlikePost } }) => {
+                    const id = `Comment:${commentId}`;
+                    const comment = cache.readFragment({ fragment, id });
+                    const data = {
+                      ...comment,
+                      likes: comment.likes.filter(
+                        user => user.id !== loggedUser.id
+                      )
+                    };
 
-                cache.writeFragment({ fragment, id, data });
-              }}
-            >
-              {mutation => (
-                <label className="comment-like__link liked" onClick={mutation}>
-                  Like
-                </label>
-              )}
-            </Mutation>
-          ) : (
-            <Mutation
-              mutation={LIKE_COMMENT_MUTATION}
-              variables={{ commentId }}
-              update={(cache, { data: { likeComment } }) => {
-                const id = `Comment:${commentId}`;
-                const comment = cache.readFragment({ fragment, id });
-                const data = {
-                  ...comment,
-                  likes: [...comment.likes, loggedUser]
-                };
+                    cache.writeFragment({ fragment, id, data });
+                  }}
+                >
+                  {mutation => (
+                    <label
+                      className="comment-like__link liked"
+                      onClick={mutation}
+                    >
+                      Like
+                    </label>
+                  )}
+                </Mutation>
+              ) : (
+                <Mutation
+                  mutation={LIKE_COMMENT_MUTATION}
+                  variables={{ commentId }}
+                  update={(cache, { data: { likeComment } }) => {
+                    const id = `Comment:${commentId}`;
+                    const comment = cache.readFragment({ fragment, id });
+                    const data = {
+                      ...comment,
+                      likes: [...comment.likes, loggedUser]
+                    };
 
-                cache.writeFragment({ fragment, id, data });
-              }}
-            >
-              {mutation => (
-                <label className="comment-like__link" onClick={mutation}>
-                  Like
-                </label>
+                    cache.writeFragment({ fragment, id, data });
+                  }}
+                >
+                  {mutation => (
+                    <label className="comment-like__link" onClick={mutation}>
+                      Like
+                    </label>
+                  )}
+                </Mutation>
               )}
-            </Mutation>
+              <label className="comment-actions-separator">·</label>
+            </>
           )}
-          <label className="comment-actions-separator">·</label>
           <TimeSince timespan={timespan} date={date} />
         </div>
       </div>
