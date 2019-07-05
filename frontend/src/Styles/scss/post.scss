@@ -81,8 +81,16 @@
   .dropdown__content {
     top: 1.2rem;
     right: 0;
+    z-index: 500;
 
     @include menu__listitem;
+  }
+
+  .dropdown__content::before {
+    @include triangle(top, white, 0.3rem);
+    position: absolute;
+    right: 5%;
+    bottom: 100%;
   }
 
   .post__dropdownmenu {
@@ -140,15 +148,22 @@
       &:hover .tooltip {
         display: block;
       }
-      
+
       img {
         height: 1.3rem;
       }
-      
+
       label {
         color: $grey-label-light;
         margin-left: 0.4rem;
         font-size: 0.9rem;
+      }
+
+      .tooltip::before {
+        @include triangle(top, $background-dark, .3rem);
+        position: absolute;
+        left: 10%;
+        bottom:100%;
       }
     }
 
@@ -160,13 +175,20 @@
       position: relative;
       display: inline-block;
       margin-left: auto;
-  
+
       &:hover {
         text-decoration: underline;
-  
+
         .tooltip {
           display: block;
         }
+      }
+
+      .tooltip::before {
+        @include triangle(top, $background-dark, 0.3rem);
+        position: absolute;
+        left: calc(50% - .15rem);
+        bottom: 100%;
       }
     }
 

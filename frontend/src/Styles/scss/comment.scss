@@ -118,6 +118,13 @@
       border-radius: 3px;
     }
 
+    .tooltip::before {
+      @include triangle(top, $background-dark, 0.3rem);
+      position: absolute;
+      left: 10%;
+      bottom: 100%;
+    }
+
     .comment-actions {
       display: flex;
       align-items: baseline;
