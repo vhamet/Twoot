@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApolloConsumer } from 'react-apollo';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faTrashAlt, faUserLock } from '@fortawesome/free-solid-svg-icons';
 
 import PostCommentsLink from 'components/post/PostCommentsLink';
 import CreateComment from 'components/comment/CreateComment';
@@ -66,10 +68,16 @@ const Post = props => {
                 <DropDown menu={<div>•••</div>}>
                   <ul className="post__dropdownmenu">
                     <li>
-                      <label>✎ Update post</label>
+                      <FontAwesomeIcon icon={faUserLock} />
+                      <label>Set privacy</label>
                     </li>
                     <li>
-                      <label>⌦ Delete post</label>
+                      <FontAwesomeIcon icon={faPen} />
+                      <label>Update post</label>
+                    </li>
+                    <li>
+                      <FontAwesomeIcon icon={faTrashAlt} />
+                      <label>Delete post</label>
                     </li>
                   </ul>
                 </DropDown>
@@ -101,7 +109,12 @@ const Post = props => {
                 postById={postById}
                 comments={comments}
               />
-              {props.loggedUser && <CreateComment postId={postId} avatar={props.loggedUser.avatar} />}
+              {props.loggedUser && (
+                <CreateComment
+                  postId={postId}
+                  avatar={props.loggedUser.avatar}
+                />
+              )}
             </div>
           )}
         </>

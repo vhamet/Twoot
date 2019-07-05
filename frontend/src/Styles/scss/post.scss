@@ -90,8 +90,11 @@
     padding: 0;
     white-space: nowrap;
 
-    label {
-      font-weight: 600 !important;
+    svg {
+      font-size: .8rem;
+      margin-right: .3rem;
+      color: $grey-label-dark;
+      width: 1.5rem;
     }
   }
 
