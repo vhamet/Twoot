@@ -13,11 +13,13 @@
     height: 1.3rem;
     width: calc(100% - 0.5rem);
     outline: none;
+    background: $background-white;
+    color: $color-black;
   }
 }
 
 .search-result__container {
-  background: white;
+  background: $background-white;
   color: black;
   position: absolute;
   width: 100%;
@@ -28,10 +30,11 @@
 .search-result {
   cursor: pointer;
   padding: 0.5rem 0 0.5rem 0.5rem;
+  color: $color-black;
 
   a {
     text-decoration: none;
-    color: black;
+    color: $color-black;
   }
 
   &:hover {

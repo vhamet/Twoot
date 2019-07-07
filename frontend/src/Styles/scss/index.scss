@@ -1,5 +1,32 @@
 @import 'utilities/variables.scss';
 
+:root {
+--main-color: #4267b2;
+--main-color-light: #5383e2;
+--main-color-dark: #3b5ca0;
+--main-color-disabled: #9cb4d8;
+--background-color-light: #f5f6f7;
+--background-color: #e9ebee;
+--background-dark: #242424;
+--border-color-light: #dddfe2;
+--border-color: #ccd0d5;
+--border-color-dark: #28477b;
+--invalid-color: #a94442;
+--invalid-background-color: #f2dede;
+--invalid-border-color: #ebccd1;
+--placeholder: #8d949e;
+--placeholder-focus: #ccd0d5;
+--grey-label-lighter: #c7cbcf;
+--grey-label-light: #8d949e;
+--grey-label: #616770;
+--grey-label-dark: #4b4f56;
+--grey-label-darker:#444950;
+--grey-label-darkest: #1d2129;
+--background-white: #ffffff;
+--color-white: #ffffff;
+--color-black: #000000;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -16,6 +43,7 @@ body {
 
 .form-control label {
   margin-bottom: 0.5rem;
+  color: $color-black;
 }
 
 .form-control {

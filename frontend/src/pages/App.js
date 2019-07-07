@@ -26,7 +26,7 @@ import 'styles/css/app.css';
 class App extends Component {
   state = {
     token: null,
-    loggedUser: null
+    loggedUser: null,
   };
 
   login = (token, user) => {
