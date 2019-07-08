@@ -95,7 +95,7 @@ const Comment = props => {
           <TimeSince timespan={timespan} date={date} />
         </div>
       </div>
-      {loggedUser === commentById && (
+      {loggedUser && loggedUser.id === commentById && (
         <DropDown menu={<div>•••</div>}>
           <ul className="comment__dropdownmenu">
             <li>

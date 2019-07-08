@@ -11,6 +11,8 @@ import {
   faBirthdayCake
 } from '@fortawesome/free-solid-svg-icons';
 
+import 'styles/css/about.css';
+
 const About = ({ user }) => {
   const [tab, setTab] = useState(0);
   return (
@@ -44,8 +46,8 @@ const About = ({ user }) => {
           {
             {
               0: (
-                <div className="infos-overview">
-                  <div className="info__container">
+                <div className="about-infos-overview">
+                  <div className="about-infos__container">
                     <div className="icon">
                       <FontAwesomeIcon icon={faBriefcase} />
                     </div>
@@ -55,7 +57,7 @@ const About = ({ user }) => {
                       <div className="unknown">No workplaces to show</div>
                     )}
                   </div>
-                  <div className="info__container">
+                  <div className="about-infos__container">
                     <div className="icon">
                       <FontAwesomeIcon icon={faUniversity} />
                     </div>
@@ -65,7 +67,7 @@ const About = ({ user }) => {
                       <div className="unknown">No schools to show</div>
                     )}
                   </div>
-                  <div className="info__container">
+                  <div className="about-infos__container">
                     <div className="icon">
                       <FontAwesomeIcon icon={faMapMarkerAlt} />
                     </div>
@@ -75,7 +77,7 @@ const About = ({ user }) => {
                       <div className="unknown">No places to show</div>
                     )}
                   </div>
-                  <div className="info__container">
+                  <div className="about-infos__container">
                     <div className="icon">
                       <FontAwesomeIcon icon={faHeart} />
                     </div>
@@ -92,9 +94,9 @@ const About = ({ user }) => {
                 </div>
               ),
               1: (
-                <div className="infos-work">
-                  <div className="infos_title">WORK</div>
-                  <div className="info__container">
+                <div>
+                  <div className="about-infos-title">WORK</div>
+                  <div className="about-infos__container">
                     <div className="icon">
                       <FontAwesomeIcon icon={faBriefcase} />
                     </div>
@@ -104,8 +106,8 @@ const About = ({ user }) => {
                       <div className="unknown">No workplaces to show</div>
                     )}
                   </div>
-                  <div className="infos_title">EDUCATION</div>
-                  <div className="info__container">
+                  <div className="about-infos-title">EDUCATION</div>
+                  <div className="about-infos__container">
                     <div className="icon">
                       <FontAwesomeIcon icon={faUniversity} />
                     </div>
@@ -118,9 +120,9 @@ const About = ({ user }) => {
                 </div>
               ),
               2: (
-                <div className="infos-places">
-                  <div className="infos_title">PLACES</div>
-                  <div className="info__container">
+                <div>
+                  <div className="about-infos-title">PLACES</div>
+                  <div className="about-infos__container">
                     <div className="icon">
                       <FontAwesomeIcon icon={faMapMarkerAlt} />
                     </div>
@@ -133,16 +135,16 @@ const About = ({ user }) => {
                 </div>
               ),
               3: (
-                <div className="infos-contact">
-                  <div className="infos_title">Contact</div>
-                  <div className="info__container">
+                <div >
+                  <div className="about-infos-title">Contact</div>
+                  <div className="about-infos__container">
                     <div className="icon">
                       <FontAwesomeIcon icon={faAddressBook} />
                     </div>
                     <div className="info">{user.email}</div>
                   </div>
-                  <div className="infos_title">BASIC INFORMATIONS</div>
-                  <div className="info__container">
+                  <div className="about-infos-title">BASIC INFORMATIONS</div>
+                  <div className="about-infos__container">
                     <div className="icon">
                       <FontAwesomeIcon icon={faTransgenderAlt} />
                     </div>
@@ -163,9 +165,9 @@ const About = ({ user }) => {
                 </div>
               ),
               4: (
-                <div className="infos-family">
-                  <div className="infos_title">RELATIONSHIP</div>
-                  <div className="info__container">
+                <div>
+                  <div className="about-infos-title">RELATIONSHIP</div>
+                  <div className="about-infos__container">
                     <div className="icon">
                       <FontAwesomeIcon icon={faBriefcase} />
                     </div>
@@ -175,8 +177,8 @@ const About = ({ user }) => {
                       <div className="unknown">No relationship to show</div>
                     )}
                   </div>
-                  <div className="infos_title">FAMILY</div>
-                  <div className="info__container">
+                  <div className="about-infos-title">FAMILY</div>
+                  <div className="about-infos__container">
                     <div className="icon">
                       <FontAwesomeIcon icon={faUniversity} />
                     </div>
@@ -188,17 +190,17 @@ const About = ({ user }) => {
                   </div>
                 </div>
               ),
-              5: <div className="infos-details">
-                  <div className="infos_title">{`ABOUT ${user.username.toUpperCase()}`}</div>
-                  <div className="info__container">
+              5: <div>
+                  <div className="about-infos-title">{`ABOUT ${user.username.toUpperCase()}`}</div>
+                  <div className="about-infos__container">
                     {user.about ? (
                       <div className="info">{user.about}</div>
                     ) : (
                       <div className="unknown">No additional details to show</div>
                     )}
                   </div>
-                  <div className="infos_title">FAVORITE QUOTES</div>
-                  <div className="info__container">
+                  <div className="about-infos-title">FAVORITE QUOTES</div>
+                  <div className="about-infos__container">
                     {user.quote ? (
                       <div className="info">{user.quote}</div>
                     ) : (

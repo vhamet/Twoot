@@ -1,0 +1,1 @@
+.usercard__container{border:1px solid var(--border-color-light);background:var(--background-white);display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;color:var(--main-color-dark) !important}.usercard__container .follow__button{margin-left:auto;margin-right:1rem}.usercard__container label{color:var(--grey-label-light);font-size:0.6rem;display:block}

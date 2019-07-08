@@ -9,6 +9,8 @@ import AuthenticationContext from 'context/AuthenticationContext';
 import { FEED_PAGINATION } from 'constants.js';
 import { INIT_TIMELINE_QUERY, MORE_TIMELINE_QUERY } from 'apollo/queries';
 
+import 'styles/css/timeline.css';
+
 const Timeline = ({ userId, username }) => {
   const loggedUser = useContext(AuthenticationContext).loggedUser;
   const postToTimeline = (cache, post) => {

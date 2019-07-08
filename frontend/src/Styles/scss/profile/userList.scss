@@ -1,0 +1,36 @@
+@import 'utilities/variables.scss';
+
+.userlist__container {
+  margin-top: 1rem;
+}
+
+.usercards_container {
+  display: grid;
+  grid-gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+  background: $background-white;
+  border: 1px solid $border-color;
+  border-top: none;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  padding: 1rem;
+}
+
+.usercards-empty {
+  color: $grey-label-light;
+}
+
+.userlist-title {
+  background: $background-color-light;
+  border: 1px solid $border-color;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  color: $grey-label-dark;
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 1rem;
+
+  label {
+    margin-left: 1rem;
+  }
+}

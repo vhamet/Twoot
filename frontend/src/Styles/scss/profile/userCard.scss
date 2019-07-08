@@ -1,0 +1,20 @@
+@import 'utilities/variables.scss';
+
+.usercard__container {
+  border: 1px solid $border-color-light;
+  background: $background-white;
+  display: flex;
+  align-items: center;
+  color: $main-color-dark !important;
+
+  .follow__button {
+    margin-left: auto;
+    margin-right: 1rem;
+  }
+
+  label {
+    color: $grey-label-light;
+    font-size: 0.6rem;
+    display: block;
+  }
+}

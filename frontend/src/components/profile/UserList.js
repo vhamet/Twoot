@@ -4,6 +4,8 @@ import { faUsers } from '@fortawesome/free-solid-svg-icons';
 
 import UserCard from 'components/profile/UserCard';
 
+import 'styles/css/userList.css';
+
 const UserList = ({ title, users }) => {
   return (
     <div className="userlist__container">

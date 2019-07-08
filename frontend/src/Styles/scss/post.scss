@@ -7,37 +7,6 @@
   background: $background-white;
   padding: 0;
 
-  .create-post__title {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: $grey-label-dark;
-    background: $background-color-light;
-    margin: 0;
-    padding: 0.5rem 0.5rem;
-    border-bottom: 1px solid $border-color-light;
-  }
-
-  .create-post__content {
-    display: flex;
-    margin-top: 1rem;
-    margin-left: 1rem;
-
-    textarea {
-      border: none;
-      resize: none;
-      outline: none;
-      width: calc(100% - 1rem);
-      padding: 0.5rem;
-      background: $background-white;
-      color: $color-white;
-    }
-  }
-
-  .create-post-actions {
-    display: flex;
-    margin: 0.3rem 0.5rem;
-  }
-
   select,
   option {
     color: $grey-label-dark;
@@ -55,6 +24,37 @@
   button {
     flex: 1;
   }
+}
+
+.create-post__title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $grey-label-dark;
+  background: $background-color-light;
+  margin: 0;
+  padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid $border-color-light;
+}
+
+.create-post__content {
+  display: flex;
+  margin-top: 1rem;
+  margin-left: 1rem;
+
+  textarea {
+    border: none;
+    resize: none;
+    outline: none;
+    width: calc(100% - 1rem);
+    padding: 0.5rem;
+    background: $background-white;
+    color: $color-white;
+  }
+}
+
+.create-post-actions {
+  display: flex;
+  margin: 0.3rem 0.5rem;
 }
 
 .post__container {
@@ -95,159 +95,159 @@
     bottom: 100%;
   }
 
-  .post__dropdownmenu {
-    margin: 0;
-    padding: 0;
-    white-space: nowrap;
-
-    svg {
-      font-size: 0.8rem;
-      margin-right: 0.3rem;
-      color: $grey-label-dark;
-      width: 1.5rem;
-    }
-  }
-
   pre {
     font-family: inherit;
     color: $color-white;
   }
+}
 
-  .post-info__container {
-    display: flex;
-    align-items: center;
+.post__dropdownmenu {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
 
-    a {
-      display: block;
-    }
+  svg {
+    font-size: 0.8rem;
+    margin-right: 0.3rem;
+    color: $grey-label-dark;
+    width: 1.5rem;
+  }
+}
 
-    label {
-      color: $grey-label;
-      font-size: 0.7rem;
-      font-weight: 200;
-    }
+.post-info__container {
+  display: flex;
+  align-items: center;
+
+  a {
+    display: block;
   }
 
-  .post-postedOn {
-    display: flex;
-    align-items: center;
+  label {
+    color: $grey-label;
+    font-size: 0.7rem;
+    font-weight: 200;
+  }
+}
 
-    label {
-      margin: 0 .5rem;
-    }
+.post-postedOn {
+  display: flex;
+  align-items: center;
+
+  label {
+    margin: 0 0.5rem;
+  }
+}
+
+.post__content {
+  margin-top: 0.5rem;
+
+  pre {
+    white-space: pre-wrap;
+    color: $color-black;
+  }
+}
+
+.post-infos {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+
+  .tooltip {
+    display: none;
+    position: absolute;
+    z-index: 500;
+    top: 1rem;
+    background: $background-dark;
+    color: white;
+    padding: 0.4rem;
+    font-size: 0.8rem;
+    border-radius: 3px;
+  }
+}
+
+.post-likes__container {
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+
+  &:hover .tooltip {
+    display: block;
   }
 
-  .post__content {
-    margin-top: 0.5rem;
-
-    pre {
-      white-space: pre-wrap;
-      color: $color-black;
-    }
+  img {
+    height: 1.3rem;
   }
 
-  .post-infos {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
+  label {
+    color: $grey-label-light;
+    margin-left: 0.4rem;
+    font-size: 0.9rem;
+  }
 
-    .post-likes__container {
-      display: flex;
-      align-items: flex-end;
-      cursor: pointer;
-      user-select: none;
-      position: relative;
+  .tooltip::before {
+    @include triangle(top, $background-dark, 0.3rem);
+    position: absolute;
+    left: 10%;
+    bottom: 100%;
+  }
+}
 
-      &:hover .tooltip {
-        display: block;
-      }
+.post-comments__link {
+  color: $grey-label-light;
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  display: inline-block;
+  margin-left: auto;
 
-      img {
-        height: 1.3rem;
-      }
-
-      label {
-        color: $grey-label-light;
-        margin-left: 0.4rem;
-        font-size: 0.9rem;
-      }
-
-      .tooltip::before {
-        @include triangle(top, $background-dark, .3rem);
-        position: absolute;
-        left: 10%;
-        bottom:100%;
-      }
-    }
-
-    .post-comments__link {
-      color: $grey-label-light;
-      font-size: 0.9rem;
-      cursor: pointer;
-      user-select: none;
-      position: relative;
-      display: inline-block;
-      margin-left: auto;
-
-      &:hover {
-        text-decoration: underline;
-
-        .tooltip {
-          display: block;
-        }
-      }
-
-      .tooltip::before {
-        @include triangle(top, $background-dark, 0.3rem);
-        position: absolute;
-        left: calc(50% - .15rem);
-        bottom: 100%;
-      }
-    }
+  &:hover {
+    text-decoration: underline;
 
     .tooltip {
-      display: none;
-      position: absolute;
-      z-index: 500;
-      top: 1rem;
-      background: $background-dark;
-      color: white;
-      padding: 0.4rem;
-      font-size: 0.8rem;
-      border-radius: 3px;
+      display: block;
     }
   }
 
-  .post-actions__container {
-    display: flex;
-    justify-content: space-evenly;
-    border-top: 1px solid $border-color-light;
+  .tooltip::before {
+    @include triangle(top, $background-dark, 0.3rem);
+    position: absolute;
+    left: calc(50% - 0.15rem);
+    bottom: 100%;
+  }
+}
 
-    button {
-      flex: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      outline: none;
-      background: $background-white;
-      padding: 0.5rem;
-      color: $grey-label;
-      font-weight: 600;
-      cursor: pointer;
+.post-actions__container {
+  display: flex;
+  justify-content: space-evenly;
+  border-top: 1px solid $border-color-light;
 
-      &.liked {
-        color: $main-color;
-      }
+  button {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    background: $background-white;
+    padding: 0.5rem;
+    color: $grey-label;
+    font-weight: 600;
+    cursor: pointer;
 
-      &:hover {
-        background: $background-color-light;
-      }
+    &.liked {
+      color: $main-color;
+    }
 
-      svg {
-        margin-right: 0.5rem;
-        font-size: 1.3rem;
-      }
+    &:hover {
+      background: $background-color-light;
+    }
+
+    svg {
+      margin-right: 0.5rem;
+      font-size: 1.3rem;
     }
   }
 }

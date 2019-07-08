@@ -47,63 +47,11 @@
     margin: 0;
     align-items: center;
 
-    
     .dropdown__content::before {
       @include triangle(top, white, 0.3rem);
       position: absolute;
-      right: 30%;
+      left: 25%;
       bottom: 100%;
-    }
-
-    .main-navigation__item {
-      margin: 0;
-
-      &:hover {
-        background: $main-color-dark;
-        border-radius: 1px;
-      }
-
-      > a,
-      > button,
-      > label {
-        padding: 0.45rem 1.3rem;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        border: none;
-        background: transparent;
-        color: $color-white;
-        text-decoration: none;
-        outline: none;
-        font: inherit;
-        font-size: 0.8rem;
-        font-weight: 700;
-        cursor: pointer;
-      }
-    }
-  }
-
-  .main-navigation__linkmenu label {
-    padding: 0.18rem 1.3rem !important;
-  }
-
-  .main-navigation__dropdownmenu {
-    margin: 0;
-    padding: 0;
-
-    @include menu__listitem;
-  }
-
-  .darkmode-switch_container {
-    display: flex;
-    align-items: center;
-
-    label {
-      margin-right: 1rem !important;
-    }
-
-    &:hover .toggleSwitch__container {
-      border-color: $color-white;
     }
   }
 
@@ -112,5 +60,56 @@
     height: 1rem;
     padding: 0;
     border-left: 1px solid $main-color-dark;
+  }
+}
+
+.main-navigation__item {
+  margin: 0;
+
+  &:hover {
+    background: $main-color-dark;
+    border-radius: 1px;
+  }
+
+  > a,
+  > button,
+  > label {
+    padding: 0.45rem 1.3rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    border: none;
+    background: transparent;
+    color: $color-white;
+    text-decoration: none;
+    outline: none;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+
+.main-navigation__linkmenu label {
+  padding: 0.18rem 1.3rem !important;
+}
+
+.main-navigation__dropdownmenu {
+  margin: 0;
+  padding: 0;
+
+  @include menu__listitem;
+}
+
+.darkmode-switch_container {
+  display: flex;
+  align-items: center;
+
+  label {
+    margin-right: 1rem !important;
+  }
+
+  &:hover .toggleSwitch__container {
+    border-color: $color-white;
   }
 }

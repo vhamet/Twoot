@@ -1,0 +1,116 @@
+@import 'utilities/variables.scss';
+
+.about__container {
+  margin-top: 1rem;
+}
+
+.about-title {
+  background: $background-color-light;
+  border: 1px solid $border-color;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  padding: 1rem;
+
+  .fa-user {
+    color: $grey-label-light;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+  }
+
+  label {
+    color: $grey-label-dark;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+}
+
+.about-content {
+  background: $background-white;
+  border: 1px solid $border-color;
+  border-top: none;
+  display: flex;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.about-menu {
+  color: $grey-label-light;
+  font-size: 0.9rem;
+  border-right: 1px solid $border-color;
+  min-width: 15rem;
+
+  div {
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-black;
+    }
+  }
+
+  .active {
+    border-left: 2px solid $main-color-dark;
+    font-weight: 800;
+    color: $color-black;
+  }
+}
+
+.about-infos {
+  display: flex;
+  flex: 1;
+
+  > div {
+    flex: 1;
+  }
+}
+
+.about-infos-overview {
+  align-self: center;
+
+  .about-infos__container {
+    border-bottom: 1px solid $grey-label-lighter;
+    margin-right: 1rem;
+  }
+
+  :last-child {
+    border: none;
+  }
+}
+
+.about-infos__container {
+  display: flex;
+  margin-left: 1rem;
+
+  div {
+    padding: 0.3rem;
+    margin: 0.7rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .icon {
+    border: 1px solid $grey-label-lighter;
+    border-radius: 3px;
+    color: $grey-label-lighter;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .info {
+    color: $color-black;
+  }
+
+  .unknown {
+    color: $grey-label-light;
+  }
+}
+
+.about-infos-title {
+  color: $grey-label-light;
+  margin: 1rem 1.5rem 0.5rem 1.5rem;
+  border-bottom: 1px solid $grey-label-lighter;
+}
