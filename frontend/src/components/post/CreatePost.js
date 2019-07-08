@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Mutation } from 'react-apollo';
 
 import Avatar from 'components/avatar/Avatar';
 
-import { CREATEPOST_MUTATION, INIT_FEED_QUERY } from 'apollo/queries';
+import { CREATEPOST_MUTATION } from 'apollo/queries';
+import AuthenticationContext from 'context/AuthenticationContext';
 
 import 'styles/css/post.css';
 
 const CreatePost = props => {
   const [content, setContent] = useState('');
   const [isPrivate, setIsPrivate] = useState(false);
+  const loggedUser = useContext(AuthenticationContext).loggedUser;
 
   const handleError = err => {
     alert(err.graphQLErrors[0].message);
@@ -17,9 +19,9 @@ const CreatePost = props => {
 
   return (
     <div className="create-post__container">
-      <div className="create-post__title">Create Post</div>
+      <div className="create-post__title">{props.title || 'Create Post'}</div>
       <div className="create-post__content">
-        <Avatar size="3rem" src={props.avatar} />
+        <Avatar size="3rem" src={loggedUser.avatar} />
         <textarea
           value={content}
           onChange={e => setContent(e.target.value)}
@@ -28,29 +30,23 @@ const CreatePost = props => {
         />
       </div>
       <div className="create-post-actions">
-        <select className="privacy" onChange={e => setIsPrivate(!!e.target.value)}>
+        <select
+          className="privacy"
+          onChange={e => setIsPrivate(!!e.target.value)}
+        >
           <option value="">Public</option>
           <option value="1">Private</option>
         </select>
         <Mutation
           mutation={CREATEPOST_MUTATION}
-          variables={{ content, isPrivate }}
+          variables={{ content, isPrivate, postedOn: props.postedOn }}
           onError={err => handleError(err)}
           onCompleted={() => {
             setContent('');
           }}
-          update={(cache, { data: { createPost } }) => {
-            const data = cache.readQuery({
-              query: INIT_FEED_QUERY,
-              variables: { first: 5 }
-            });
-            data.feed.posts.unshift(createPost);
-            cache.writeQuery({
-              query: INIT_FEED_QUERY,
-              data,
-              variables: { first: 5 }
-            });
-          }}
+          update={(cache, { data: { createPost } }) =>
+            props.update(cache, createPost)
+          }
         >
           {mutation => (
             <button

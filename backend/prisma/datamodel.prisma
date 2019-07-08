@@ -10,6 +10,7 @@ type User {
   followers: [User!]! @relation(name: "Followers")
   likedPosts: [Post!]! @relation(name: "LikedPosts")
   likedComments: [Comment!]! @relation(name: "LikedComments")
+  timelinePosts: [Post!] @relation(name: "TimelinePosts")
 }
 
 type Post {
@@ -20,6 +21,7 @@ type Post {
   comments: [Comment!]!
   isPrivate: Boolean
   likes: [User!]! @relation(name: "LikedPosts")
+  postedOn: User @relation(name: "TimelinePosts")
 }
 
 type Comment {

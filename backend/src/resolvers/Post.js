@@ -19,8 +19,13 @@ function likes(parent, args, context) {
   return context.prisma.post({ id: parent.id }).likes();
 }
 
+function postedOn(parent, args, context) {
+  return context.prisma.post({ id: parent.id }).postedOn();
+}
+
 module.exports = {
   postedBy,
   fetchedComments,
-  likes
+  likes,
+  postedOn
 };

@@ -30,11 +30,16 @@ const Post = props => {
     content,
     timespan,
     date,
-    postedBy: { id: postById, username, avatar },
+    postedBy: { id: postById, username: byUsername, avatar },
     comments,
     count,
     likes
   } = props.post;
+  let postOnId, onUsername;
+  if (props.post.postedOn) {
+    postOnId = props.post.postedOn.id;
+    onUsername = props.post.postedOn.username;
+  }
 
   const [displayComments, setDisplayComments] = useState(true);
   const [cursor, setCursor] = useState(comments.length ? comments[0].id : '');
@@ -70,9 +75,22 @@ const Post = props => {
             <div className="post-info__container">
               <Avatar id={postById} size="2.5rem" src={avatar} />
               <div>
-                <Link className="profile-link" to={`/profile/${postById}`}>
-                  {username}
-                </Link>
+                <div className="post-postedOn">
+                  <Link className="profile-link" to={`/profile/${postById}`}>
+                    {byUsername}
+                  </Link>
+                  {postOnId && (
+                    <>
+                      <label>►</label>
+                      <Link
+                        className="profile-link"
+                        to={`/profile/${postOnId}`}
+                      >
+                        {onUsername}
+                      </Link>
+                    </>
+                  )}
+                </div>
                 <TimeSince timespan={timespan} date={date} />
               </div>
               {props.loggedUser && props.loggedUser.id === postById && (

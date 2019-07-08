@@ -32,6 +32,10 @@ const POST_CONTENT_FRAGMENT = gql`
       id
       username
     }
+    postedOn {
+      id
+      username
+    }
   }
 `;
 
@@ -157,8 +161,8 @@ export const USER_QUERY = gql`
 `;
 
 export const CREATEPOST_MUTATION = gql`
-  mutation CreatePostMutation($content: String!, $isPrivate: Boolean!) {
-    createPost(content: $content, isPrivate: $isPrivate) {
+  mutation CreatePostMutation($content: String!, $isPrivate: Boolean!, $postedOn: ID) {
+    createPost(content: $content, isPrivate: $isPrivate, postedOn: $postedOn) {
       ...PostContent
     }
   }

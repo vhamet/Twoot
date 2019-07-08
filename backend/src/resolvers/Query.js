@@ -28,7 +28,9 @@ async function timeline(parent, args, context) {
   const posts = await context.prisma.posts({
     where: {
       AND: [
-        { postedBy: { id: args.user } },
+        {
+          OR: [{ postedBy: { id: args.user } }, { postedOn: { id: args.user } }]
+        },
         {
           OR: [
             { isPrivate: null },

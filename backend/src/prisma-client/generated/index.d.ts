@@ -217,27 +217,18 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserUpdateWithoutLikedCommentsDataInput {
-  username?: String;
-  email?: String;
-  password?: String;
-  avatar?: String;
-  posts?: PostUpdateManyWithoutPostedByInput;
-  comments?: CommentUpdateManyWithoutPostedByInput;
-  following?: UserUpdateManyWithoutFollowingInput;
-  followers?: UserUpdateManyWithoutFollowersInput;
-  likedPosts?: PostUpdateManyWithoutLikesInput;
+export interface PostUpdateWithWhereUniqueWithoutPostedByInput {
+  where: PostWhereUniqueInput;
+  data: PostUpdateWithoutPostedByDataInput;
 }
 
 export type CommentWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface PostUpdateWithoutPostedByDataInput {
-  content?: String;
-  comments?: CommentUpdateManyWithoutPostedOnInput;
-  isPrivate?: Boolean;
-  likes?: UserUpdateManyWithoutLikedPostsInput;
+export interface CommentUpdateWithWhereUniqueWithoutPostedOnInput {
+  where: CommentWhereUniqueInput;
+  data: CommentUpdateWithoutPostedOnDataInput;
 }
 
 export interface PostWhereInput {
@@ -286,28 +277,16 @@ export interface PostWhereInput {
   likes_every?: UserWhereInput;
   likes_some?: UserWhereInput;
   likes_none?: UserWhereInput;
+  postedOn?: UserWhereInput;
   AND?: PostWhereInput[] | PostWhereInput;
   OR?: PostWhereInput[] | PostWhereInput;
   NOT?: PostWhereInput[] | PostWhereInput;
 }
 
-export interface CommentUpdateManyWithoutPostedOnInput {
-  create?:
-    | CommentCreateWithoutPostedOnInput[]
-    | CommentCreateWithoutPostedOnInput;
-  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  update?:
-    | CommentUpdateWithWhereUniqueWithoutPostedOnInput[]
-    | CommentUpdateWithWhereUniqueWithoutPostedOnInput;
-  upsert?:
-    | CommentUpsertWithWhereUniqueWithoutPostedOnInput[]
-    | CommentUpsertWithWhereUniqueWithoutPostedOnInput;
-  deleteMany?: CommentScalarWhereInput[] | CommentScalarWhereInput;
-  updateMany?:
-    | CommentUpdateManyWithWhereNestedInput[]
-    | CommentUpdateManyWithWhereNestedInput;
+export interface CommentUpdateWithoutPostedOnDataInput {
+  content?: String;
+  postedBy?: UserUpdateOneRequiredWithoutCommentsInput;
+  likes?: UserUpdateManyWithoutLikedCommentsInput;
 }
 
 export interface CommentWhereInput {
@@ -357,42 +336,6 @@ export interface CommentWhereInput {
   NOT?: CommentWhereInput[] | CommentWhereInput;
 }
 
-export interface UserUpdateOneRequiredWithoutPostsInput {
-  create?: UserCreateWithoutPostsInput;
-  update?: UserUpdateWithoutPostsDataInput;
-  upsert?: UserUpsertWithoutPostsInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserUpdateWithoutLikedPostsDataInput {
-  username?: String;
-  email?: String;
-  password?: String;
-  avatar?: String;
-  posts?: PostUpdateManyWithoutPostedByInput;
-  comments?: CommentUpdateManyWithoutPostedByInput;
-  following?: UserUpdateManyWithoutFollowingInput;
-  followers?: UserUpdateManyWithoutFollowersInput;
-  likedComments?: CommentUpdateManyWithoutLikesInput;
-}
-
-export interface UserUpdateWithoutPostsDataInput {
-  username?: String;
-  email?: String;
-  password?: String;
-  avatar?: String;
-  comments?: CommentUpdateManyWithoutPostedByInput;
-  following?: UserUpdateManyWithoutFollowingInput;
-  followers?: UserUpdateManyWithoutFollowersInput;
-  likedPosts?: PostUpdateManyWithoutLikesInput;
-  likedComments?: CommentUpdateManyWithoutLikesInput;
-}
-
-export interface CommentUpdateWithWhereUniqueWithoutPostedOnInput {
-  where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutPostedOnDataInput;
-}
-
 export interface CommentUpdateManyWithoutPostedByInput {
   create?:
     | CommentCreateWithoutPostedByInput[]
@@ -412,6 +355,29 @@ export interface CommentUpdateManyWithoutPostedByInput {
     | CommentUpdateManyWithWhereNestedInput;
 }
 
+export interface UserUpsertWithoutCommentsInput {
+  update: UserUpdateWithoutCommentsDataInput;
+  create: UserCreateWithoutCommentsInput;
+}
+
+export interface CommentUpdateWithWhereUniqueWithoutPostedByInput {
+  where: CommentWhereUniqueInput;
+  data: CommentUpdateWithoutPostedByDataInput;
+}
+
+export interface UserUpdateOneRequiredWithoutCommentsInput {
+  create?: UserCreateWithoutCommentsInput;
+  update?: UserUpdateWithoutCommentsDataInput;
+  upsert?: UserUpsertWithoutCommentsInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface CommentUpdateWithoutPostedByDataInput {
+  content?: String;
+  postedOn?: PostUpdateOneRequiredWithoutCommentsInput;
+  likes?: UserUpdateManyWithoutLikedCommentsInput;
+}
+
 export interface PostSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -421,37 +387,6 @@ export interface PostSubscriptionWhereInput {
   AND?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
   OR?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
   NOT?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput;
-}
-
-export interface CommentUpdateWithWhereUniqueWithoutPostedByInput {
-  where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutPostedByDataInput;
-}
-
-export interface UserUpdateManyMutationInput {
-  username?: String;
-  email?: String;
-  password?: String;
-  avatar?: String;
-}
-
-export interface CommentUpdateWithoutPostedByDataInput {
-  content?: String;
-  postedOn?: PostUpdateOneRequiredWithoutCommentsInput;
-  likes?: UserUpdateManyWithoutLikedCommentsInput;
-}
-
-export interface UserCreateInput {
-  username: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  posts?: PostCreateManyWithoutPostedByInput;
-  comments?: CommentCreateManyWithoutPostedByInput;
-  following?: UserCreateManyWithoutFollowingInput;
-  followers?: UserCreateManyWithoutFollowersInput;
-  likedPosts?: PostCreateManyWithoutLikesInput;
-  likedComments?: CommentCreateManyWithoutLikesInput;
 }
 
 export interface UserUpdateManyWithoutLikedCommentsInput {
@@ -473,33 +408,47 @@ export interface UserUpdateManyWithoutLikedCommentsInput {
     | UserUpdateManyWithWhereNestedInput;
 }
 
-export type PostWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface UserUpdateManyMutationInput {
+  username?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+}
 
 export interface UserUpdateWithWhereUniqueWithoutLikedCommentsInput {
   where: UserWhereUniqueInput;
   data: UserUpdateWithoutLikedCommentsDataInput;
 }
 
-export interface PostCreateInput {
-  content: String;
-  postedBy: UserCreateOneWithoutPostsInput;
-  comments?: CommentCreateManyWithoutPostedOnInput;
-  isPrivate?: Boolean;
-  likes?: UserCreateManyWithoutLikedPostsInput;
+export interface UserCreateInput {
+  username: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  posts?: PostCreateManyWithoutPostedByInput;
+  comments?: CommentCreateManyWithoutPostedByInput;
+  following?: UserCreateManyWithoutFollowingInput;
+  followers?: UserCreateManyWithoutFollowersInput;
+  likedPosts?: PostCreateManyWithoutLikesInput;
+  likedComments?: CommentCreateManyWithoutLikesInput;
+  timelinePosts?: PostCreateManyWithoutPostedOnInput;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutLikedCommentsDataInput;
-  create: UserCreateWithoutLikedCommentsInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
+export interface UserUpdateWithoutLikedCommentsDataInput {
   username?: String;
   email?: String;
+  password?: String;
+  avatar?: String;
+  posts?: PostUpdateManyWithoutPostedByInput;
+  comments?: CommentUpdateManyWithoutPostedByInput;
+  following?: UserUpdateManyWithoutFollowingInput;
+  followers?: UserUpdateManyWithoutFollowersInput;
+  likedPosts?: PostUpdateManyWithoutLikesInput;
+  timelinePosts?: PostUpdateManyWithoutPostedOnInput;
+}
+
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
 }>;
 
 export interface PostUpdateManyWithoutPostedByInput {
@@ -519,14 +468,57 @@ export interface PostUpdateManyWithoutPostedByInput {
     | PostUpdateManyWithWhereNestedInput;
 }
 
+export interface PostCreateInput {
+  content: String;
+  postedBy: UserCreateOneWithoutPostsInput;
+  comments?: CommentCreateManyWithoutPostedOnInput;
+  isPrivate?: Boolean;
+  likes?: UserCreateManyWithoutLikedPostsInput;
+  postedOn?: UserCreateOneWithoutTimelinePostsInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutLikedCommentsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutLikedCommentsDataInput;
+  create: UserCreateWithoutLikedCommentsInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  username?: String;
+  email?: String;
+}>;
+
+export interface PostUpdateWithoutPostedByDataInput {
+  content?: String;
+  comments?: CommentUpdateManyWithoutPostedOnInput;
+  isPrivate?: Boolean;
+  likes?: UserUpdateManyWithoutLikedPostsInput;
+  postedOn?: UserUpdateOneWithoutTimelinePostsInput;
+}
+
 export interface UserUpsertWithoutPostsInput {
   update: UserUpdateWithoutPostsDataInput;
   create: UserCreateWithoutPostsInput;
 }
 
-export interface PostUpdateWithWhereUniqueWithoutPostedByInput {
-  where: PostWhereUniqueInput;
-  data: PostUpdateWithoutPostedByDataInput;
+export interface CommentUpdateManyWithoutPostedOnInput {
+  create?:
+    | CommentCreateWithoutPostedOnInput[]
+    | CommentCreateWithoutPostedOnInput;
+  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  update?:
+    | CommentUpdateWithWhereUniqueWithoutPostedOnInput[]
+    | CommentUpdateWithWhereUniqueWithoutPostedOnInput;
+  upsert?:
+    | CommentUpsertWithWhereUniqueWithoutPostedOnInput[]
+    | CommentUpsertWithWhereUniqueWithoutPostedOnInput;
+  deleteMany?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+  updateMany?:
+    | CommentUpdateManyWithWhereNestedInput[]
+    | CommentUpdateManyWithWhereNestedInput;
 }
 
 export interface PostCreateOneWithoutCommentsInput {
@@ -623,6 +615,9 @@ export interface UserWhereInput {
   likedComments_every?: CommentWhereInput;
   likedComments_some?: CommentWhereInput;
   likedComments_none?: CommentWhereInput;
+  timelinePosts_every?: PostWhereInput;
+  timelinePosts_some?: PostWhereInput;
+  timelinePosts_none?: PostWhereInput;
   AND?: UserWhereInput[] | UserWhereInput;
   OR?: UserWhereInput[] | UserWhereInput;
   NOT?: UserWhereInput[] | UserWhereInput;
@@ -646,10 +641,10 @@ export interface CommentCreateManyWithoutPostedByInput {
   connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutLikedPostsInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutLikedPostsDataInput;
-  create: UserCreateWithoutLikedPostsInput;
+export interface CommentUpsertWithWhereUniqueWithoutPostedOnInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutPostedOnDataInput;
+  create: CommentCreateWithoutPostedOnInput;
 }
 
 export interface UserCreateManyWithoutLikedCommentsInput {
@@ -657,31 +652,6 @@ export interface UserCreateManyWithoutLikedCommentsInput {
     | UserCreateWithoutLikedCommentsInput[]
     | UserCreateWithoutLikedCommentsInput;
   connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-}
-
-export interface CommentUpdateWithoutPostedOnDataInput {
-  content?: String;
-  postedBy?: UserUpdateOneRequiredWithoutCommentsInput;
-  likes?: UserUpdateManyWithoutLikedCommentsInput;
-}
-
-export interface PostCreateManyWithoutPostedByInput {
-  create?: PostCreateWithoutPostedByInput[] | PostCreateWithoutPostedByInput;
-  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
-}
-
-export interface UserUpdateOneRequiredWithoutCommentsInput {
-  create?: UserCreateWithoutCommentsInput;
-  update?: UserUpdateWithoutCommentsDataInput;
-  upsert?: UserUpsertWithoutCommentsInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface CommentCreateManyWithoutPostedOnInput {
-  create?:
-    | CommentCreateWithoutPostedOnInput[]
-    | CommentCreateWithoutPostedOnInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutCommentsDataInput {
@@ -694,11 +664,12 @@ export interface UserUpdateWithoutCommentsDataInput {
   followers?: UserUpdateManyWithoutFollowersInput;
   likedPosts?: PostUpdateManyWithoutLikesInput;
   likedComments?: CommentUpdateManyWithoutLikesInput;
+  timelinePosts?: PostUpdateManyWithoutPostedOnInput;
 }
 
-export interface UserCreateOneWithoutCommentsInput {
-  create?: UserCreateWithoutCommentsInput;
-  connect?: UserWhereUniqueInput;
+export interface PostCreateManyWithoutPostedByInput {
+  create?: PostCreateWithoutPostedByInput[] | PostCreateWithoutPostedByInput;
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
 }
 
 export interface UserUpdateManyWithoutFollowingInput {
@@ -718,9 +689,11 @@ export interface UserUpdateManyWithoutFollowingInput {
     | UserUpdateManyWithWhereNestedInput;
 }
 
-export interface UserCreateManyWithoutFollowingInput {
-  create?: UserCreateWithoutFollowingInput[] | UserCreateWithoutFollowingInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface CommentCreateManyWithoutPostedOnInput {
+  create?:
+    | CommentCreateWithoutPostedOnInput[]
+    | CommentCreateWithoutPostedOnInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutFollowingInput {
@@ -728,9 +701,9 @@ export interface UserUpdateWithWhereUniqueWithoutFollowingInput {
   data: UserUpdateWithoutFollowingDataInput;
 }
 
-export interface UserCreateManyWithoutFollowersInput {
-  create?: UserCreateWithoutFollowersInput[] | UserCreateWithoutFollowersInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface UserCreateOneWithoutCommentsInput {
+  create?: UserCreateWithoutCommentsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutFollowingDataInput {
@@ -743,11 +716,12 @@ export interface UserUpdateWithoutFollowingDataInput {
   followers?: UserUpdateManyWithoutFollowersInput;
   likedPosts?: PostUpdateManyWithoutLikesInput;
   likedComments?: CommentUpdateManyWithoutLikesInput;
+  timelinePosts?: PostUpdateManyWithoutPostedOnInput;
 }
 
-export interface PostCreateManyWithoutLikesInput {
-  create?: PostCreateWithoutLikesInput[] | PostCreateWithoutLikesInput;
-  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+export interface UserCreateManyWithoutFollowingInput {
+  create?: UserCreateWithoutFollowingInput[] | UserCreateWithoutFollowingInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
 }
 
 export interface UserUpdateManyWithoutFollowersInput {
@@ -767,9 +741,9 @@ export interface UserUpdateManyWithoutFollowersInput {
     | UserUpdateManyWithWhereNestedInput;
 }
 
-export interface CommentCreateManyWithoutLikesInput {
-  create?: CommentCreateWithoutLikesInput[] | CommentCreateWithoutLikesInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+export interface UserCreateManyWithoutFollowersInput {
+  create?: UserCreateWithoutFollowersInput[] | UserCreateWithoutFollowersInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutFollowersInput {
@@ -777,11 +751,9 @@ export interface UserUpdateWithWhereUniqueWithoutFollowersInput {
   data: UserUpdateWithoutFollowersDataInput;
 }
 
-export interface UserCreateManyWithoutLikedPostsInput {
-  create?:
-    | UserCreateWithoutLikedPostsInput[]
-    | UserCreateWithoutLikedPostsInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface PostCreateManyWithoutLikesInput {
+  create?: PostCreateWithoutLikesInput[] | PostCreateWithoutLikesInput;
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutFollowersDataInput {
@@ -794,13 +766,12 @@ export interface UserUpdateWithoutFollowersDataInput {
   following?: UserUpdateManyWithoutFollowingInput;
   likedPosts?: PostUpdateManyWithoutLikesInput;
   likedComments?: CommentUpdateManyWithoutLikesInput;
+  timelinePosts?: PostUpdateManyWithoutPostedOnInput;
 }
 
-export interface CommentUpdateInput {
-  content?: String;
-  postedOn?: PostUpdateOneRequiredWithoutCommentsInput;
-  postedBy?: UserUpdateOneRequiredWithoutCommentsInput;
-  likes?: UserUpdateManyWithoutLikedCommentsInput;
+export interface UserCreateOneWithoutTimelinePostsInput {
+  create?: UserCreateWithoutTimelinePostsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface PostUpdateManyWithoutLikesInput {
@@ -820,16 +791,106 @@ export interface PostUpdateManyWithoutLikesInput {
     | PostUpdateManyWithWhereNestedInput;
 }
 
-export interface PostUpdateWithoutCommentsDataInput {
-  content?: String;
-  postedBy?: UserUpdateOneRequiredWithoutPostsInput;
-  isPrivate?: Boolean;
-  likes?: UserUpdateManyWithoutLikedPostsInput;
+export interface CommentCreateManyWithoutLikesInput {
+  create?: CommentCreateWithoutLikesInput[] | CommentCreateWithoutLikesInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
 }
 
 export interface PostUpdateWithWhereUniqueWithoutLikesInput {
   where: PostWhereUniqueInput;
   data: PostUpdateWithoutLikesDataInput;
+}
+
+export interface PostCreateManyWithoutPostedOnInput {
+  create?: PostCreateWithoutPostedOnInput[] | PostCreateWithoutPostedOnInput;
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+}
+
+export interface PostUpdateWithoutLikesDataInput {
+  content?: String;
+  postedBy?: UserUpdateOneRequiredWithoutPostsInput;
+  comments?: CommentUpdateManyWithoutPostedOnInput;
+  isPrivate?: Boolean;
+  postedOn?: UserUpdateOneWithoutTimelinePostsInput;
+}
+
+export interface UserCreateManyWithoutLikedPostsInput {
+  create?:
+    | UserCreateWithoutLikedPostsInput[]
+    | UserCreateWithoutLikedPostsInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface UserUpdateOneWithoutTimelinePostsInput {
+  create?: UserCreateWithoutTimelinePostsInput;
+  update?: UserUpdateWithoutTimelinePostsDataInput;
+  upsert?: UserUpsertWithoutTimelinePostsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface CommentUpdateInput {
+  content?: String;
+  postedOn?: PostUpdateOneRequiredWithoutCommentsInput;
+  postedBy?: UserUpdateOneRequiredWithoutCommentsInput;
+  likes?: UserUpdateManyWithoutLikedCommentsInput;
+}
+
+export interface UserUpdateWithoutTimelinePostsDataInput {
+  username?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  posts?: PostUpdateManyWithoutPostedByInput;
+  comments?: CommentUpdateManyWithoutPostedByInput;
+  following?: UserUpdateManyWithoutFollowingInput;
+  followers?: UserUpdateManyWithoutFollowersInput;
+  likedPosts?: PostUpdateManyWithoutLikesInput;
+  likedComments?: CommentUpdateManyWithoutLikesInput;
+}
+
+export interface PostUpdateWithoutCommentsDataInput {
+  content?: String;
+  postedBy?: UserUpdateOneRequiredWithoutPostsInput;
+  isPrivate?: Boolean;
+  likes?: UserUpdateManyWithoutLikedPostsInput;
+  postedOn?: UserUpdateOneWithoutTimelinePostsInput;
+}
+
+export interface CommentUpdateManyWithoutLikesInput {
+  create?: CommentCreateWithoutLikesInput[] | CommentCreateWithoutLikesInput;
+  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
+  update?:
+    | CommentUpdateWithWhereUniqueWithoutLikesInput[]
+    | CommentUpdateWithWhereUniqueWithoutLikesInput;
+  upsert?:
+    | CommentUpsertWithWhereUniqueWithoutLikesInput[]
+    | CommentUpsertWithWhereUniqueWithoutLikesInput;
+  deleteMany?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+  updateMany?:
+    | CommentUpdateManyWithWhereNestedInput[]
+    | CommentUpdateManyWithWhereNestedInput;
+}
+
+export interface UserUpdateWithoutPostsDataInput {
+  username?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  comments?: CommentUpdateManyWithoutPostedByInput;
+  following?: UserUpdateManyWithoutFollowingInput;
+  followers?: UserUpdateManyWithoutFollowersInput;
+  likedPosts?: PostUpdateManyWithoutLikesInput;
+  likedComments?: CommentUpdateManyWithoutLikesInput;
+  timelinePosts?: PostUpdateManyWithoutPostedOnInput;
+}
+
+export interface CommentUpdateWithWhereUniqueWithoutLikesInput {
+  where: CommentWhereUniqueInput;
+  data: CommentUpdateWithoutLikesDataInput;
 }
 
 export interface CommentSubscriptionWhereInput {
@@ -843,16 +904,109 @@ export interface CommentSubscriptionWhereInput {
   NOT?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
 }
 
-export interface PostUpdateWithoutLikesDataInput {
+export interface CommentUpdateWithoutLikesDataInput {
   content?: String;
-  postedBy?: UserUpdateOneRequiredWithoutPostsInput;
-  comments?: CommentUpdateManyWithoutPostedOnInput;
-  isPrivate?: Boolean;
+  postedOn?: PostUpdateOneRequiredWithoutCommentsInput;
+  postedBy?: UserUpdateOneRequiredWithoutCommentsInput;
 }
 
 export interface PostUpdateManyMutationInput {
   content?: String;
   isPrivate?: Boolean;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutLikesInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutLikesDataInput;
+  create: CommentCreateWithoutLikesInput;
+}
+
+export interface CommentUpdateManyMutationInput {
+  content?: String;
+}
+
+export interface CommentScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  content?: String;
+  content_not?: String;
+  content_in?: String[] | String;
+  content_not_in?: String[] | String;
+  content_lt?: String;
+  content_lte?: String;
+  content_gt?: String;
+  content_gte?: String;
+  content_contains?: String;
+  content_not_contains?: String;
+  content_starts_with?: String;
+  content_not_starts_with?: String;
+  content_ends_with?: String;
+  content_not_ends_with?: String;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  AND?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+  OR?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+  NOT?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutPostedByInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutPostedByDataInput;
+  create: CommentCreateWithoutPostedByInput;
+}
+
+export interface CommentUpdateManyWithWhereNestedInput {
+  where: CommentScalarWhereInput;
+  data: CommentUpdateManyDataInput;
+}
+
+export interface PostCreateWithoutCommentsInput {
+  content: String;
+  postedBy: UserCreateOneWithoutPostsInput;
+  isPrivate?: Boolean;
+  likes?: UserCreateManyWithoutLikedPostsInput;
+  postedOn?: UserCreateOneWithoutTimelinePostsInput;
+}
+
+export interface CommentUpdateManyDataInput {
+  content?: String;
+}
+
+export interface CommentCreateWithoutPostedByInput {
+  content: String;
+  postedOn: PostCreateOneWithoutCommentsInput;
+  likes?: UserCreateManyWithoutLikedCommentsInput;
+}
+
+export interface UserUpsertWithoutTimelinePostsInput {
+  update: UserUpdateWithoutTimelinePostsDataInput;
+  create: UserCreateWithoutTimelinePostsInput;
+}
+
+export interface PostCreateWithoutPostedByInput {
+  content: String;
+  comments?: CommentCreateManyWithoutPostedOnInput;
+  isPrivate?: Boolean;
+  likes?: UserCreateManyWithoutLikedPostsInput;
+  postedOn?: UserCreateOneWithoutTimelinePostsInput;
 }
 
 export interface PostUpsertWithWhereUniqueWithoutLikesInput {
@@ -861,8 +1015,17 @@ export interface PostUpsertWithWhereUniqueWithoutLikesInput {
   create: PostCreateWithoutLikesInput;
 }
 
-export interface CommentUpdateManyMutationInput {
-  content?: String;
+export interface UserCreateWithoutCommentsInput {
+  username: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  posts?: PostCreateManyWithoutPostedByInput;
+  following?: UserCreateManyWithoutFollowingInput;
+  followers?: UserCreateManyWithoutFollowersInput;
+  likedPosts?: PostCreateManyWithoutLikesInput;
+  likedComments?: CommentCreateManyWithoutLikesInput;
+  timelinePosts?: PostCreateManyWithoutPostedOnInput;
 }
 
 export interface PostScalarWhereInput {
@@ -909,82 +1072,6 @@ export interface PostScalarWhereInput {
   NOT?: PostScalarWhereInput[] | PostScalarWhereInput;
 }
 
-export interface CommentUpsertWithWhereUniqueWithoutPostedByInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutPostedByDataInput;
-  create: CommentCreateWithoutPostedByInput;
-}
-
-export interface PostUpdateManyWithWhereNestedInput {
-  where: PostScalarWhereInput;
-  data: PostUpdateManyDataInput;
-}
-
-export interface PostCreateWithoutCommentsInput {
-  content: String;
-  postedBy: UserCreateOneWithoutPostsInput;
-  isPrivate?: Boolean;
-  likes?: UserCreateManyWithoutLikedPostsInput;
-}
-
-export interface PostUpdateManyDataInput {
-  content?: String;
-  isPrivate?: Boolean;
-}
-
-export interface CommentCreateWithoutPostedByInput {
-  content: String;
-  postedOn: PostCreateOneWithoutCommentsInput;
-  likes?: UserCreateManyWithoutLikedCommentsInput;
-}
-
-export interface CommentUpdateManyWithoutLikesInput {
-  create?: CommentCreateWithoutLikesInput[] | CommentCreateWithoutLikesInput;
-  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput;
-  update?:
-    | CommentUpdateWithWhereUniqueWithoutLikesInput[]
-    | CommentUpdateWithWhereUniqueWithoutLikesInput;
-  upsert?:
-    | CommentUpsertWithWhereUniqueWithoutLikesInput[]
-    | CommentUpsertWithWhereUniqueWithoutLikesInput;
-  deleteMany?: CommentScalarWhereInput[] | CommentScalarWhereInput;
-  updateMany?:
-    | CommentUpdateManyWithWhereNestedInput[]
-    | CommentUpdateManyWithWhereNestedInput;
-}
-
-export interface PostCreateWithoutPostedByInput {
-  content: String;
-  comments?: CommentCreateManyWithoutPostedOnInput;
-  isPrivate?: Boolean;
-  likes?: UserCreateManyWithoutLikedPostsInput;
-}
-
-export interface CommentUpdateWithWhereUniqueWithoutLikesInput {
-  where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutLikesDataInput;
-}
-
-export interface UserCreateWithoutCommentsInput {
-  username: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  posts?: PostCreateManyWithoutPostedByInput;
-  following?: UserCreateManyWithoutFollowingInput;
-  followers?: UserCreateManyWithoutFollowersInput;
-  likedPosts?: PostCreateManyWithoutLikesInput;
-  likedComments?: CommentCreateManyWithoutLikesInput;
-}
-
-export interface CommentUpdateWithoutLikesDataInput {
-  content?: String;
-  postedOn?: PostUpdateOneRequiredWithoutCommentsInput;
-  postedBy?: UserUpdateOneRequiredWithoutCommentsInput;
-}
-
 export interface UserCreateWithoutFollowersInput {
   username: String;
   email: String;
@@ -995,60 +1082,55 @@ export interface UserCreateWithoutFollowersInput {
   following?: UserCreateManyWithoutFollowingInput;
   likedPosts?: PostCreateManyWithoutLikesInput;
   likedComments?: CommentCreateManyWithoutLikesInput;
+  timelinePosts?: PostCreateManyWithoutPostedOnInput;
 }
 
-export interface CommentUpsertWithWhereUniqueWithoutLikesInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutLikesDataInput;
-  create: CommentCreateWithoutLikesInput;
+export interface PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput;
+  data: PostUpdateManyDataInput;
 }
 
-export interface CommentCreateWithoutLikesInput {
-  content: String;
-  postedOn: PostCreateOneWithoutCommentsInput;
-  postedBy: UserCreateOneWithoutCommentsInput;
+export interface UserCreateWithoutTimelinePostsInput {
+  username: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  posts?: PostCreateManyWithoutPostedByInput;
+  comments?: CommentCreateManyWithoutPostedByInput;
+  following?: UserCreateManyWithoutFollowingInput;
+  followers?: UserCreateManyWithoutFollowersInput;
+  likedPosts?: PostCreateManyWithoutLikesInput;
+  likedComments?: CommentCreateManyWithoutLikesInput;
 }
 
-export interface CommentScalarWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
+export interface PostUpdateManyDataInput {
   content?: String;
-  content_not?: String;
-  content_in?: String[] | String;
-  content_not_in?: String[] | String;
-  content_lt?: String;
-  content_lte?: String;
-  content_gt?: String;
-  content_gte?: String;
-  content_contains?: String;
-  content_not_contains?: String;
-  content_starts_with?: String;
-  content_not_starts_with?: String;
-  content_ends_with?: String;
-  content_not_ends_with?: String;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  AND?: CommentScalarWhereInput[] | CommentScalarWhereInput;
-  OR?: CommentScalarWhereInput[] | CommentScalarWhereInput;
-  NOT?: CommentScalarWhereInput[] | CommentScalarWhereInput;
+  isPrivate?: Boolean;
+}
+
+export interface PostCreateWithoutPostedOnInput {
+  content: String;
+  postedBy: UserCreateOneWithoutPostsInput;
+  comments?: CommentCreateManyWithoutPostedOnInput;
+  isPrivate?: Boolean;
+  likes?: UserCreateManyWithoutLikedPostsInput;
+}
+
+export interface PostUpdateManyWithoutPostedOnInput {
+  create?: PostCreateWithoutPostedOnInput[] | PostCreateWithoutPostedOnInput;
+  delete?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+  disconnect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+  update?:
+    | PostUpdateWithWhereUniqueWithoutPostedOnInput[]
+    | PostUpdateWithWhereUniqueWithoutPostedOnInput;
+  upsert?:
+    | PostUpsertWithWhereUniqueWithoutPostedOnInput[]
+    | PostUpsertWithWhereUniqueWithoutPostedOnInput;
+  deleteMany?: PostScalarWhereInput[] | PostScalarWhereInput;
+  updateMany?:
+    | PostUpdateManyWithWhereNestedInput[]
+    | PostUpdateManyWithWhereNestedInput;
 }
 
 export interface PostUpdateOneRequiredWithoutCommentsInput {
@@ -1058,12 +1140,84 @@ export interface PostUpdateOneRequiredWithoutCommentsInput {
   connect?: PostWhereUniqueInput;
 }
 
-export interface CommentUpdateManyWithWhereNestedInput {
-  where: CommentScalarWhereInput;
-  data: CommentUpdateManyDataInput;
+export interface PostUpdateWithWhereUniqueWithoutPostedOnInput {
+  where: PostWhereUniqueInput;
+  data: PostUpdateWithoutPostedOnDataInput;
 }
 
-export interface UserUpdateInput {
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface PostUpdateWithoutPostedOnDataInput {
+  content?: String;
+  postedBy?: UserUpdateOneRequiredWithoutPostsInput;
+  comments?: CommentUpdateManyWithoutPostedOnInput;
+  isPrivate?: Boolean;
+  likes?: UserUpdateManyWithoutLikedPostsInput;
+}
+
+export interface PostUpdateInput {
+  content?: String;
+  postedBy?: UserUpdateOneRequiredWithoutPostsInput;
+  comments?: CommentUpdateManyWithoutPostedOnInput;
+  isPrivate?: Boolean;
+  likes?: UserUpdateManyWithoutLikedPostsInput;
+  postedOn?: UserUpdateOneWithoutTimelinePostsInput;
+}
+
+export interface UserUpdateManyWithoutLikedPostsInput {
+  create?:
+    | UserCreateWithoutLikedPostsInput[]
+    | UserCreateWithoutLikedPostsInput;
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+  update?:
+    | UserUpdateWithWhereUniqueWithoutLikedPostsInput[]
+    | UserUpdateWithWhereUniqueWithoutLikedPostsInput;
+  upsert?:
+    | UserUpsertWithWhereUniqueWithoutLikedPostsInput[]
+    | UserUpsertWithWhereUniqueWithoutLikedPostsInput;
+  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
+  updateMany?:
+    | UserUpdateManyWithWhereNestedInput[]
+    | UserUpdateManyWithWhereNestedInput;
+}
+
+export interface CommentCreateInput {
+  content: String;
+  postedOn: PostCreateOneWithoutCommentsInput;
+  postedBy: UserCreateOneWithoutCommentsInput;
+  likes?: UserCreateManyWithoutLikedCommentsInput;
+}
+
+export interface UserUpdateWithWhereUniqueWithoutLikedPostsInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutLikedPostsDataInput;
+}
+
+export interface UserCreateWithoutLikedCommentsInput {
+  username: String;
+  email: String;
+  password: String;
+  avatar?: String;
+  posts?: PostCreateManyWithoutPostedByInput;
+  comments?: CommentCreateManyWithoutPostedByInput;
+  following?: UserCreateManyWithoutFollowingInput;
+  followers?: UserCreateManyWithoutFollowersInput;
+  likedPosts?: PostCreateManyWithoutLikesInput;
+  timelinePosts?: PostCreateManyWithoutPostedOnInput;
+}
+
+export interface UserUpdateWithoutLikedPostsDataInput {
   username?: String;
   email?: String;
   password?: String;
@@ -1072,35 +1226,33 @@ export interface UserUpdateInput {
   comments?: CommentUpdateManyWithoutPostedByInput;
   following?: UserUpdateManyWithoutFollowingInput;
   followers?: UserUpdateManyWithoutFollowersInput;
-  likedPosts?: PostUpdateManyWithoutLikesInput;
   likedComments?: CommentUpdateManyWithoutLikesInput;
+  timelinePosts?: PostUpdateManyWithoutPostedOnInput;
 }
 
-export interface CommentUpdateManyDataInput {
-  content?: String;
-}
-
-export interface PostUpsertWithoutCommentsInput {
-  update: PostUpdateWithoutCommentsDataInput;
-  create: PostCreateWithoutCommentsInput;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutFollowersInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutFollowersDataInput;
-  create: UserCreateWithoutFollowersInput;
-}
-
-export interface UserCreateWithoutPostsInput {
+export interface UserCreateWithoutFollowingInput {
   username: String;
   email: String;
   password: String;
   avatar?: String;
+  posts?: PostCreateManyWithoutPostedByInput;
   comments?: CommentCreateManyWithoutPostedByInput;
-  following?: UserCreateManyWithoutFollowingInput;
   followers?: UserCreateManyWithoutFollowersInput;
   likedPosts?: PostCreateManyWithoutLikesInput;
   likedComments?: CommentCreateManyWithoutLikesInput;
+  timelinePosts?: PostCreateManyWithoutPostedOnInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutLikedPostsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutLikedPostsDataInput;
+  create: UserCreateWithoutLikedPostsInput;
+}
+
+export interface CommentCreateWithoutLikesInput {
+  content: String;
+  postedOn: PostCreateOneWithoutCommentsInput;
+  postedBy: UserCreateOneWithoutCommentsInput;
 }
 
 export interface UserScalarWhereInput {
@@ -1179,10 +1331,11 @@ export interface UserScalarWhereInput {
   NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
 }
 
-export interface CommentCreateWithoutPostedOnInput {
-  content: String;
-  postedBy: UserCreateOneWithoutCommentsInput;
-  likes?: UserCreateManyWithoutLikedCommentsInput;
+export interface UserUpdateOneRequiredWithoutPostsInput {
+  create?: UserCreateWithoutPostsInput;
+  update?: UserUpdateWithoutPostsDataInput;
+  upsert?: UserUpsertWithoutPostsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface UserUpdateManyWithWhereNestedInput {
@@ -1190,11 +1343,27 @@ export interface UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput;
 }
 
-export interface PostCreateWithoutLikesInput {
-  content: String;
-  postedBy: UserCreateOneWithoutPostsInput;
-  comments?: CommentCreateManyWithoutPostedOnInput;
-  isPrivate?: Boolean;
+export interface PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput;
+  create: PostCreateWithoutCommentsInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutFollowingInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutFollowingDataInput;
+  create: UserCreateWithoutFollowingInput;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutFollowersInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutFollowersDataInput;
+  create: UserCreateWithoutFollowersInput;
+}
+
+export interface PostUpsertWithWhereUniqueWithoutPostedOnInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutPostedOnDataInput;
+  create: PostCreateWithoutPostedOnInput;
 }
 
 export interface UserUpdateManyDataInput {
@@ -1204,83 +1373,31 @@ export interface UserUpdateManyDataInput {
   avatar?: String;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutFollowingInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutFollowingDataInput;
-  create: UserCreateWithoutFollowingInput;
-}
-
-export interface CommentCreateInput {
-  content: String;
-  postedOn: PostCreateOneWithoutCommentsInput;
-  postedBy: UserCreateOneWithoutCommentsInput;
-  likes?: UserCreateManyWithoutLikedCommentsInput;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutLikedPostsInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutLikedPostsDataInput;
-}
-
-export interface UserUpdateManyWithoutLikedPostsInput {
-  create?:
-    | UserCreateWithoutLikedPostsInput[]
-    | UserCreateWithoutLikedPostsInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  update?:
-    | UserUpdateWithWhereUniqueWithoutLikedPostsInput[]
-    | UserUpdateWithWhereUniqueWithoutLikedPostsInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueWithoutLikedPostsInput[]
-    | UserUpsertWithWhereUniqueWithoutLikedPostsInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
-}
-
-export interface CommentUpsertWithWhereUniqueWithoutPostedOnInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutPostedOnDataInput;
-  create: CommentCreateWithoutPostedOnInput;
-}
-
-export interface UserUpsertWithoutCommentsInput {
-  update: UserUpdateWithoutCommentsDataInput;
-  create: UserCreateWithoutCommentsInput;
-}
-
-export interface UserCreateWithoutLikedCommentsInput {
+export interface UserCreateWithoutPostsInput {
   username: String;
   email: String;
   password: String;
   avatar?: String;
-  posts?: PostCreateManyWithoutPostedByInput;
   comments?: CommentCreateManyWithoutPostedByInput;
   following?: UserCreateManyWithoutFollowingInput;
   followers?: UserCreateManyWithoutFollowersInput;
   likedPosts?: PostCreateManyWithoutLikesInput;
+  likedComments?: CommentCreateManyWithoutLikesInput;
+  timelinePosts?: PostCreateManyWithoutPostedOnInput;
 }
 
-export interface PostUpdateInput {
-  content?: String;
-  postedBy?: UserUpdateOneRequiredWithoutPostsInput;
-  comments?: CommentUpdateManyWithoutPostedOnInput;
-  isPrivate?: Boolean;
-  likes?: UserUpdateManyWithoutLikedPostsInput;
+export interface UserUpdateInput {
+  username?: String;
+  email?: String;
+  password?: String;
+  avatar?: String;
+  posts?: PostUpdateManyWithoutPostedByInput;
+  comments?: CommentUpdateManyWithoutPostedByInput;
+  following?: UserUpdateManyWithoutFollowingInput;
+  followers?: UserUpdateManyWithoutFollowersInput;
+  likedPosts?: PostUpdateManyWithoutLikesInput;
+  likedComments?: CommentUpdateManyWithoutLikesInput;
+  timelinePosts?: PostUpdateManyWithoutPostedOnInput;
 }
 
 export interface UserCreateWithoutLikedPostsInput {
@@ -1293,18 +1410,21 @@ export interface UserCreateWithoutLikedPostsInput {
   following?: UserCreateManyWithoutFollowingInput;
   followers?: UserCreateManyWithoutFollowersInput;
   likedComments?: CommentCreateManyWithoutLikesInput;
+  timelinePosts?: PostCreateManyWithoutPostedOnInput;
 }
 
-export interface UserCreateWithoutFollowingInput {
-  username: String;
-  email: String;
-  password: String;
-  avatar?: String;
-  posts?: PostCreateManyWithoutPostedByInput;
-  comments?: CommentCreateManyWithoutPostedByInput;
-  followers?: UserCreateManyWithoutFollowersInput;
-  likedPosts?: PostCreateManyWithoutLikesInput;
-  likedComments?: CommentCreateManyWithoutLikesInput;
+export interface PostCreateWithoutLikesInput {
+  content: String;
+  postedBy: UserCreateOneWithoutPostsInput;
+  comments?: CommentCreateManyWithoutPostedOnInput;
+  isPrivate?: Boolean;
+  postedOn?: UserCreateOneWithoutTimelinePostsInput;
+}
+
+export interface CommentCreateWithoutPostedOnInput {
+  content: String;
+  postedBy: UserCreateOneWithoutCommentsInput;
+  likes?: UserCreateManyWithoutLikedCommentsInput;
 }
 
 export interface NodeNode {
@@ -1424,6 +1544,15 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  timelinePosts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserSubscription
@@ -1488,6 +1617,15 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  timelinePosts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface AggregateComment {
@@ -1537,6 +1675,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  postedOn: <T = UserPromise>() => T;
 }
 
 export interface PostSubscription
@@ -1565,6 +1704,7 @@ export interface PostSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  postedOn: <T = UserSubscription>() => T;
 }
 
 export interface PostPreviousValues {

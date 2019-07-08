@@ -62,12 +62,18 @@ async function login(parent, args, context) {
 }
 
 async function createPost(parent, args, context) {
+  console.log(args);
   const userId = getAuthenticatedUserId(context);
-  return await context.prisma.createPost({
-    content: args.content,
-    isPrivate: args.isPrivate,
-    postedBy: { connect: { id: userId } }
-  });
+  return await context.prisma.createPost(
+    Object.assign(
+      {
+        content: args.content,
+        isPrivate: args.isPrivate,
+        postedBy: { connect: { id: userId } }
+      },
+      args.postedOn ? { postedOn: { connect: { id: args.postedOn } } } : null
+    )
+  );
 }
 
 async function createComment(parent, args, context) {

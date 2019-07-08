@@ -81,7 +81,7 @@ const Profile = props => {
                     <FollowButton user={user} />
                   )}
                 </div>
-                {page === 0 && <Timeline userId={user.id} />}
+                {page === 0 && <Timeline userId={user.id} username={user.username} />}
                 {page === 1 && <About user={user} />}
                 {page === 2 && (
                   <UserList title="Following" users={user.following} />

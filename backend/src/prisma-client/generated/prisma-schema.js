@@ -357,6 +357,7 @@ type Post {
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   isPrivate: Boolean
   likes(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  postedOn: User
 }
 
 type PostConnection {
@@ -371,6 +372,7 @@ input PostCreateInput {
   comments: CommentCreateManyWithoutPostedOnInput
   isPrivate: Boolean
   likes: UserCreateManyWithoutLikedPostsInput
+  postedOn: UserCreateOneWithoutTimelinePostsInput
 }
 
 input PostCreateManyWithoutLikesInput {
@@ -380,6 +382,11 @@ input PostCreateManyWithoutLikesInput {
 
 input PostCreateManyWithoutPostedByInput {
   create: [PostCreateWithoutPostedByInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
+input PostCreateManyWithoutPostedOnInput {
+  create: [PostCreateWithoutPostedOnInput!]
   connect: [PostWhereUniqueInput!]
 }
 
@@ -393,6 +400,7 @@ input PostCreateWithoutCommentsInput {
   postedBy: UserCreateOneWithoutPostsInput!
   isPrivate: Boolean
   likes: UserCreateManyWithoutLikedPostsInput
+  postedOn: UserCreateOneWithoutTimelinePostsInput
 }
 
 input PostCreateWithoutLikesInput {
@@ -400,10 +408,20 @@ input PostCreateWithoutLikesInput {
   postedBy: UserCreateOneWithoutPostsInput!
   comments: CommentCreateManyWithoutPostedOnInput
   isPrivate: Boolean
+  postedOn: UserCreateOneWithoutTimelinePostsInput
 }
 
 input PostCreateWithoutPostedByInput {
   content: String!
+  comments: CommentCreateManyWithoutPostedOnInput
+  isPrivate: Boolean
+  likes: UserCreateManyWithoutLikedPostsInput
+  postedOn: UserCreateOneWithoutTimelinePostsInput
+}
+
+input PostCreateWithoutPostedOnInput {
+  content: String!
+  postedBy: UserCreateOneWithoutPostsInput!
   comments: CommentCreateManyWithoutPostedOnInput
   isPrivate: Boolean
   likes: UserCreateManyWithoutLikedPostsInput
@@ -502,6 +520,7 @@ input PostUpdateInput {
   comments: CommentUpdateManyWithoutPostedOnInput
   isPrivate: Boolean
   likes: UserUpdateManyWithoutLikedPostsInput
+  postedOn: UserUpdateOneWithoutTimelinePostsInput
 }
 
 input PostUpdateManyDataInput {
@@ -536,6 +555,17 @@ input PostUpdateManyWithoutPostedByInput {
   updateMany: [PostUpdateManyWithWhereNestedInput!]
 }
 
+input PostUpdateManyWithoutPostedOnInput {
+  create: [PostCreateWithoutPostedOnInput!]
+  delete: [PostWhereUniqueInput!]
+  connect: [PostWhereUniqueInput!]
+  disconnect: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutPostedOnInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutPostedOnInput!]
+  deleteMany: [PostScalarWhereInput!]
+  updateMany: [PostUpdateManyWithWhereNestedInput!]
+}
+
 input PostUpdateManyWithWhereNestedInput {
   where: PostScalarWhereInput!
   data: PostUpdateManyDataInput!
@@ -553,6 +583,7 @@ input PostUpdateWithoutCommentsDataInput {
   postedBy: UserUpdateOneRequiredWithoutPostsInput
   isPrivate: Boolean
   likes: UserUpdateManyWithoutLikedPostsInput
+  postedOn: UserUpdateOneWithoutTimelinePostsInput
 }
 
 input PostUpdateWithoutLikesDataInput {
@@ -560,10 +591,20 @@ input PostUpdateWithoutLikesDataInput {
   postedBy: UserUpdateOneRequiredWithoutPostsInput
   comments: CommentUpdateManyWithoutPostedOnInput
   isPrivate: Boolean
+  postedOn: UserUpdateOneWithoutTimelinePostsInput
 }
 
 input PostUpdateWithoutPostedByDataInput {
   content: String
+  comments: CommentUpdateManyWithoutPostedOnInput
+  isPrivate: Boolean
+  likes: UserUpdateManyWithoutLikedPostsInput
+  postedOn: UserUpdateOneWithoutTimelinePostsInput
+}
+
+input PostUpdateWithoutPostedOnDataInput {
+  content: String
+  postedBy: UserUpdateOneRequiredWithoutPostsInput
   comments: CommentUpdateManyWithoutPostedOnInput
   isPrivate: Boolean
   likes: UserUpdateManyWithoutLikedPostsInput
@@ -577,6 +618,11 @@ input PostUpdateWithWhereUniqueWithoutLikesInput {
 input PostUpdateWithWhereUniqueWithoutPostedByInput {
   where: PostWhereUniqueInput!
   data: PostUpdateWithoutPostedByDataInput!
+}
+
+input PostUpdateWithWhereUniqueWithoutPostedOnInput {
+  where: PostWhereUniqueInput!
+  data: PostUpdateWithoutPostedOnDataInput!
 }
 
 input PostUpsertWithoutCommentsInput {
@@ -594,6 +640,12 @@ input PostUpsertWithWhereUniqueWithoutPostedByInput {
   where: PostWhereUniqueInput!
   update: PostUpdateWithoutPostedByDataInput!
   create: PostCreateWithoutPostedByInput!
+}
+
+input PostUpsertWithWhereUniqueWithoutPostedOnInput {
+  where: PostWhereUniqueInput!
+  update: PostUpdateWithoutPostedOnDataInput!
+  create: PostCreateWithoutPostedOnInput!
 }
 
 input PostWhereInput {
@@ -642,6 +694,7 @@ input PostWhereInput {
   likes_every: UserWhereInput
   likes_some: UserWhereInput
   likes_none: UserWhereInput
+  postedOn: UserWhereInput
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]
@@ -682,6 +735,7 @@ type User {
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   likedPosts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   likedComments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  timelinePosts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
 }
 
 type UserConnection {
@@ -701,6 +755,7 @@ input UserCreateInput {
   followers: UserCreateManyWithoutFollowersInput
   likedPosts: PostCreateManyWithoutLikesInput
   likedComments: CommentCreateManyWithoutLikesInput
+  timelinePosts: PostCreateManyWithoutPostedOnInput
 }
 
 input UserCreateManyWithoutFollowersInput {
@@ -733,6 +788,11 @@ input UserCreateOneWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutTimelinePostsInput {
+  create: UserCreateWithoutTimelinePostsInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutCommentsInput {
   username: String!
   email: String!
@@ -743,6 +803,7 @@ input UserCreateWithoutCommentsInput {
   followers: UserCreateManyWithoutFollowersInput
   likedPosts: PostCreateManyWithoutLikesInput
   likedComments: CommentCreateManyWithoutLikesInput
+  timelinePosts: PostCreateManyWithoutPostedOnInput
 }
 
 input UserCreateWithoutFollowersInput {
@@ -755,6 +816,7 @@ input UserCreateWithoutFollowersInput {
   following: UserCreateManyWithoutFollowingInput
   likedPosts: PostCreateManyWithoutLikesInput
   likedComments: CommentCreateManyWithoutLikesInput
+  timelinePosts: PostCreateManyWithoutPostedOnInput
 }
 
 input UserCreateWithoutFollowingInput {
@@ -767,6 +829,7 @@ input UserCreateWithoutFollowingInput {
   followers: UserCreateManyWithoutFollowersInput
   likedPosts: PostCreateManyWithoutLikesInput
   likedComments: CommentCreateManyWithoutLikesInput
+  timelinePosts: PostCreateManyWithoutPostedOnInput
 }
 
 input UserCreateWithoutLikedCommentsInput {
@@ -779,6 +842,7 @@ input UserCreateWithoutLikedCommentsInput {
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
   likedPosts: PostCreateManyWithoutLikesInput
+  timelinePosts: PostCreateManyWithoutPostedOnInput
 }
 
 input UserCreateWithoutLikedPostsInput {
@@ -791,6 +855,7 @@ input UserCreateWithoutLikedPostsInput {
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
   likedComments: CommentCreateManyWithoutLikesInput
+  timelinePosts: PostCreateManyWithoutPostedOnInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -798,6 +863,20 @@ input UserCreateWithoutPostsInput {
   email: String!
   password: String!
   avatar: String
+  comments: CommentCreateManyWithoutPostedByInput
+  following: UserCreateManyWithoutFollowingInput
+  followers: UserCreateManyWithoutFollowersInput
+  likedPosts: PostCreateManyWithoutLikesInput
+  likedComments: CommentCreateManyWithoutLikesInput
+  timelinePosts: PostCreateManyWithoutPostedOnInput
+}
+
+input UserCreateWithoutTimelinePostsInput {
+  username: String!
+  email: String!
+  password: String!
+  avatar: String
+  posts: PostCreateManyWithoutPostedByInput
   comments: CommentCreateManyWithoutPostedByInput
   following: UserCreateManyWithoutFollowingInput
   followers: UserCreateManyWithoutFollowersInput
@@ -940,6 +1019,7 @@ input UserUpdateInput {
   followers: UserUpdateManyWithoutFollowersInput
   likedPosts: PostUpdateManyWithoutLikesInput
   likedComments: CommentUpdateManyWithoutLikesInput
+  timelinePosts: PostUpdateManyWithoutPostedOnInput
 }
 
 input UserUpdateManyDataInput {
@@ -1019,6 +1099,15 @@ input UserUpdateOneRequiredWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneWithoutTimelinePostsInput {
+  create: UserCreateWithoutTimelinePostsInput
+  update: UserUpdateWithoutTimelinePostsDataInput
+  upsert: UserUpsertWithoutTimelinePostsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutCommentsDataInput {
   username: String
   email: String
@@ -1029,6 +1118,7 @@ input UserUpdateWithoutCommentsDataInput {
   followers: UserUpdateManyWithoutFollowersInput
   likedPosts: PostUpdateManyWithoutLikesInput
   likedComments: CommentUpdateManyWithoutLikesInput
+  timelinePosts: PostUpdateManyWithoutPostedOnInput
 }
 
 input UserUpdateWithoutFollowersDataInput {
@@ -1041,6 +1131,7 @@ input UserUpdateWithoutFollowersDataInput {
   following: UserUpdateManyWithoutFollowingInput
   likedPosts: PostUpdateManyWithoutLikesInput
   likedComments: CommentUpdateManyWithoutLikesInput
+  timelinePosts: PostUpdateManyWithoutPostedOnInput
 }
 
 input UserUpdateWithoutFollowingDataInput {
@@ -1053,6 +1144,7 @@ input UserUpdateWithoutFollowingDataInput {
   followers: UserUpdateManyWithoutFollowersInput
   likedPosts: PostUpdateManyWithoutLikesInput
   likedComments: CommentUpdateManyWithoutLikesInput
+  timelinePosts: PostUpdateManyWithoutPostedOnInput
 }
 
 input UserUpdateWithoutLikedCommentsDataInput {
@@ -1065,6 +1157,7 @@ input UserUpdateWithoutLikedCommentsDataInput {
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
   likedPosts: PostUpdateManyWithoutLikesInput
+  timelinePosts: PostUpdateManyWithoutPostedOnInput
 }
 
 input UserUpdateWithoutLikedPostsDataInput {
@@ -1077,6 +1170,7 @@ input UserUpdateWithoutLikedPostsDataInput {
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
   likedComments: CommentUpdateManyWithoutLikesInput
+  timelinePosts: PostUpdateManyWithoutPostedOnInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -1084,6 +1178,20 @@ input UserUpdateWithoutPostsDataInput {
   email: String
   password: String
   avatar: String
+  comments: CommentUpdateManyWithoutPostedByInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  likedPosts: PostUpdateManyWithoutLikesInput
+  likedComments: CommentUpdateManyWithoutLikesInput
+  timelinePosts: PostUpdateManyWithoutPostedOnInput
+}
+
+input UserUpdateWithoutTimelinePostsDataInput {
+  username: String
+  email: String
+  password: String
+  avatar: String
+  posts: PostUpdateManyWithoutPostedByInput
   comments: CommentUpdateManyWithoutPostedByInput
   following: UserUpdateManyWithoutFollowingInput
   followers: UserUpdateManyWithoutFollowersInput
@@ -1119,6 +1227,11 @@ input UserUpsertWithoutCommentsInput {
 input UserUpsertWithoutPostsInput {
   update: UserUpdateWithoutPostsDataInput!
   create: UserCreateWithoutPostsInput!
+}
+
+input UserUpsertWithoutTimelinePostsInput {
+  update: UserUpdateWithoutTimelinePostsDataInput!
+  create: UserCreateWithoutTimelinePostsInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutFollowersInput {
@@ -1234,6 +1347,9 @@ input UserWhereInput {
   likedComments_every: CommentWhereInput
   likedComments_some: CommentWhereInput
   likedComments_none: CommentWhereInput
+  timelinePosts_every: PostWhereInput
+  timelinePosts_some: PostWhereInput
+  timelinePosts_none: PostWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

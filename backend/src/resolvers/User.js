@@ -14,9 +14,14 @@ function followers(parent, args, context) {
   return context.prisma.user({ id: parent.id }).followers();
 }
 
+function timelinePosts(parent, args, context) {
+  return context.prisma.user({ id: parent.id }).timelinePosts();
+}
+
 module.exports = {
   posts,
   comments,
   following,
-  followers
+  followers,
+  timelinePosts
 };

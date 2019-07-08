@@ -11,7 +11,7 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!, username: String!): AuthPayload
   login(login: String!, password: String!): AuthPayload
-  createPost(content: String!, isPrivate: Boolean!): Post!
+  createPost(content: String!, isPrivate: Boolean!, postedOn: ID): Post!
   createComment(postId: ID!, content: String!): Comment!
   follow(followId: ID!): Boolean
   unfollow(followId: ID!): Boolean
@@ -45,6 +45,7 @@ type User {
   comments: [Comment!]!
   following: [User!]!
   followers: [User!]!
+  timelinePosts: [Post!]
 }
 
 type Post {
@@ -55,6 +56,7 @@ type Post {
   fetchedComments: FetchedComments
   isPrivate: Boolean
   likes: [User!]!
+  postedOn: User
 }
 
 type Comment {
