@@ -1,4 +1,5 @@
 @import '../utilities/variables.scss';
+@import '../utilities/mixins.scss';
 
 .userlist__container {
   margin-top: 1rem;
@@ -8,6 +9,9 @@
   display: grid;
   grid-gap: 0.5rem;
   grid-template-columns: 1fr 1fr;
+  @include for-size(phone-only) {
+    grid-template-columns: 1fr;
+  }
   background: $background-white;
   border: 1px solid $border-color;
   border-top: none;

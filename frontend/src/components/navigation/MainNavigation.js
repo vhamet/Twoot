@@ -92,14 +92,20 @@ const MainNavigation = ({ loggedUser, logout }) => {
         {showNavigation && (
           <>
             <div className="searchbar">
-              <SearchBar />
+              <SearchBar onclickResult={() => setShowNavigation(false)}/>
             </div>
-            <div className="main-navigation__item">
+            <div
+              className="main-navigation__item"
+              onClick={() => setShowNavigation(false)}
+            >
               <Link to="/home">Home</Link>
             </div>
             {loggedUser && (
               <>
-                <div className="main-navigation__item">
+                <div
+                  className="main-navigation__item"
+                  onClick={() => setShowNavigation(false)}
+                >
                   <Link to={`/profile/${loggedUser.id}`}>Profile</Link>
                 </div>
                 <div className="main-navigation__item darkmode-switch_container">
@@ -109,17 +115,29 @@ const MainNavigation = ({ loggedUser, logout }) => {
                     onChange={toggleTheme}
                   />
                 </div>
-                <div className="main-navigation__item" onClick={logout}>
+                <div
+                  className="main-navigation__item"
+                  onClick={() => {
+                    setShowNavigation(false);
+                    logout();
+                  }}
+                >
                   <label>Log Out</label>
                 </div>
               </>
             )}
             {!loggedUser && (
               <>
-                <div className="main-navigation__item">
+                <div
+                  className="main-navigation__item"
+                  onClick={() => setShowNavigation(false)}
+                >
                   <Link to="/login">Login</Link>
                 </div>
-                <div className="main-navigation__item">
+                <div
+                  className="main-navigation__item"
+                  onClick={() => setShowNavigation(false)}
+                >
                   <Link to="/signup">Signup</Link>
                 </div>
               </>

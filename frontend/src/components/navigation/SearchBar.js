@@ -34,6 +34,8 @@ const SearchBar = props => {
     setSearchResult(searchUsers());
   }, [search]);
 
+  useEffect(() => () => document.removeEventListener('click', removeFocus));
+
   const removeFocus = e => {
     if (!e.target.closest('searchbar')) {
       document.removeEventListener('click', removeFocus);
@@ -58,7 +60,7 @@ const SearchBar = props => {
       {visible && search && (
         <div className="search-result__container">
           {searchResult.map(({ user, index }) => (
-            <div className="search-result" key={user.id}>
+            <div className="search-result" key={user.id} onClick={props.onclickResult}>
               <Link to={`/profile/${user.id}`}>
                 {user.username.slice(0, index)}
                 <b>{user.username.slice(index, index + search.length)}</b>
@@ -66,7 +68,7 @@ const SearchBar = props => {
               </Link>
             </div>
           ))}
-          <div className="search-result">
+          <div className="search-result" onClick={props.onclickResult}>
             See all results for <b>{search}</b>
           </div>
         </div>

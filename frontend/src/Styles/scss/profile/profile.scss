@@ -99,3 +99,39 @@
   font-size: 1.5rem;
   font-weight: 700;
 }
+
+@media screen and (max-width: 700px) {
+  .profile-avatar {
+    bottom: 3rem;
+    left: .5rem;
+
+    div,
+    img {
+      height: 5rem !important;
+      width: 5rem !important;
+    }
+  }
+
+  .profile-username__label {
+    left: 6rem;
+  }
+
+  .profile__header li:first-child {
+    margin-left: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .profile__header li {
+    padding: .5rem;
+    font-size: .7rem;
+  }
+
+  .follow__button {
+    font-size: .7rem;
+  }
+
+  .profile-username__label {
+    font-size: 1rem;
+  }
+}

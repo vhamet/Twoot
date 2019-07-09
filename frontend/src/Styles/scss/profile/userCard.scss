@@ -7,6 +7,11 @@
   align-items: center;
   color: $main-color-dark !important;
 
+  > div {
+    display: flex;
+    width: 100%;
+  }
+
   .follow__button {
     margin-left: auto;
     margin-right: 1rem;
@@ -16,5 +21,18 @@
     color: $grey-label-light;
     font-size: 0.6rem;
     display: block;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .usercard__container {
+    > div {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .follow__button {
+      margin: .5rem 0;
+    }
   }
 }

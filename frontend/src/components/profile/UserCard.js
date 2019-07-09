@@ -10,12 +10,14 @@ const UserCard = ({ user }) => (
   <div className="usercard__container">
     <Avatar src={user.avatar} size="6rem" square={true} />
     <div>
-      <Link to={`/profile/${user.id}`} className="profile-link">
-        {user.username}
-      </Link>
-      <label>{user.followers.length} followers</label>
+      <div>
+        <Link to={`/profile/${user.id}`} className="profile-link">
+          {user.username}
+        </Link>
+        <label>{user.followers.length} followers</label>
+      </div>
+      <FollowButton user={user} />
     </div>
-    <FollowButton user={user} />
   </div>
 );
 
