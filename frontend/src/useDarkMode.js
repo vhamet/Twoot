@@ -46,7 +46,7 @@ export default () => {
       document.documentElement.style.cssText = `
     --main-color: #3f5d99;
     --main-color-light: #5383e2;
-    --main-color-dark: #3b5ca0;
+    --main-color-dark: #2c477c;
     --main-color-disabled: #72839c;
     --background-color-light: #1e1e1e;
     --background-color: #1c1c1c;

@@ -47,9 +47,10 @@ const SearchBar = props => {
   };
 
   return (
-    <div className="searchbar">
+    <>
       <input
         type="text"
+        className="searchbar"
         placeholder="Search..."
         onChange={e => setSearch(e.target.value)}
         onClick={handleClick}
@@ -70,7 +71,7 @@ const SearchBar = props => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

@@ -1,3 +1,9 @@
+@import 'utilities/mixins.scss';
+
 .main-content {
   margin: 4rem 2.5rem;
+
+  @include for-size(phone-only) {
+    margin: 4rem .5rem;
+  }
 }

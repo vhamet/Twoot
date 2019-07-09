@@ -26,12 +26,12 @@ import 'styles/css/app.css';
 class App extends Component {
   state = {
     token: null,
-    loggedUser: null,
+    loggedUser: null
   };
 
   login = (token, user) => {
     cookie.save(AUTH_COOKIE, { token, userId: user.id }, { path: '/' });
-    this.setState({ token, loggedUser: user});
+    this.setState({ token, loggedUser: user });
   };
 
   logout = () => {
@@ -119,7 +119,6 @@ class App extends Component {
       >
         <ApolloProvider client={this.client}>
           <MainNavigation
-            token={this.state.token}
             loggedUser={this.state.loggedUser}
             logout={this.logout}
           />

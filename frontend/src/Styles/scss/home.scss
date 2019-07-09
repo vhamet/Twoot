@@ -1,6 +1,12 @@
+@import 'utilities/mixins.scss';
+
 .home {
   width: 35rem;
   max-width: 100%;
   margin: 5rem auto;
   padding: 0;
+
+  @include for-size(phone-only) {
+    width: 100%;
+  }
 }
