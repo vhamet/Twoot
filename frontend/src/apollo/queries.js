@@ -100,6 +100,15 @@ export const GETPOST_FRAGMENT = gql`
   }
 `;
 
+export const POST_QUERY = gql`
+  query PostQUery($id: ID!) {
+    post(id: $id) {
+      ...PostContent
+    }
+  }
+  ${POST_CONTENT_FRAGMENT}
+`;
+
 export const MORE_COMMENTS_QUERY = gql`
   query MoreCommentsQuery($postId: ID, $last: Int, $before: ID) {
     moreComments(postId: $postId, last: $last, before: $before) {
@@ -314,6 +323,11 @@ const ALERT_CONTENT_FRAGMENT = gql`
         username
         avatar
       }
+    }
+    onFollower {
+      id
+      username
+      avatar
     }
   }
 `;

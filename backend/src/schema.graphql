@@ -6,6 +6,7 @@ type Query {
   timeline(user: ID, first: Int, after: ID, logged: ID): Feed!
   moreComments(postId: ID, last: Int, before: ID): [Comment!]!
   user(id: ID!): User
+  post(id: ID!): Post
   alerts(first: Int, after: ID): [Alert!]!
 }
 
@@ -78,6 +79,8 @@ type Alert {
   id: ID!
   onPost: Post
   onComment: Comment
+  onFollower: User
+  onFollowed: User
   seen: Boolean!
   createdAt: DateTime!
 }

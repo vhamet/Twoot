@@ -23,7 +23,7 @@ const FollowButton = ({ user }) => {
     <Mutation
       mutation={UNFOLLOW_MUTATION}
       variables={{ followId: user.id }}
-      onError={err => this._handleError(err)}
+      onError={err => alert(err.graphQLErrors[0].message)}
       update={(cache, { data: { success } }) => {
         const followerId = `User:${loggedUser.id}`;
         const updateFollowingUser = cache.readFragment({
@@ -73,7 +73,7 @@ const FollowButton = ({ user }) => {
     <Mutation
       mutation={FOLLOW_MUTATION}
       variables={{ followId: user.id }}
-      onError={err => this._handleError(err)}
+      onError={err => alert(err.graphQLErrors[0].message)}
       update={(cache, { data: { success } }) => {
         const followerId = `User:${loggedUser.id}`;
         const updateFollowingUser = cache.readFragment({

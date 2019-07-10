@@ -19,6 +19,8 @@ type Alert {
   id: ID!
   onPost: Post
   onComment: Comment
+  onFollower: User
+  onFollowed: User
   seen: Boolean!
   createdAt: DateTime!
 }
@@ -32,6 +34,8 @@ type AlertConnection {
 input AlertCreateInput {
   onPost: PostCreateOneInput
   onComment: CommentCreateOneInput
+  onFollower: UserCreateOneInput
+  onFollowed: UserCreateOneInput
   seen: Boolean!
 }
 
@@ -78,6 +82,8 @@ input AlertSubscriptionWhereInput {
 input AlertUpdateInput {
   onPost: PostUpdateOneInput
   onComment: CommentUpdateOneInput
+  onFollower: UserUpdateOneInput
+  onFollowed: UserUpdateOneInput
   seen: Boolean
 }
 
@@ -102,6 +108,8 @@ input AlertWhereInput {
   id_not_ends_with: ID
   onPost: PostWhereInput
   onComment: CommentWhereInput
+  onFollower: UserWhereInput
+  onFollowed: UserWhereInput
   seen: Boolean
   seen_not: Boolean
   createdAt: DateTime
@@ -952,6 +960,11 @@ input UserCreateManyWithoutLikedPostsInput {
   connect: [UserWhereUniqueInput!]
 }
 
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateOneWithoutCommentsInput {
   create: UserCreateWithoutCommentsInput
   connect: UserWhereUniqueInput
@@ -1182,6 +1195,20 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
+input UserUpdateDataInput {
+  username: String
+  email: String
+  password: String
+  avatar: String
+  posts: PostUpdateManyWithoutPostedByInput
+  comments: CommentUpdateManyWithoutPostedByInput
+  following: UserUpdateManyWithoutFollowingInput
+  followers: UserUpdateManyWithoutFollowersInput
+  likedPosts: PostUpdateManyWithoutLikesInput
+  likedComments: CommentUpdateManyWithoutLikesInput
+  timelinePosts: PostUpdateManyWithoutPostedOnInput
+}
+
 input UserUpdateInput {
   username: String
   email: String
@@ -1257,6 +1284,15 @@ input UserUpdateManyWithoutLikedPostsInput {
 input UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput!
   data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneRequiredWithoutCommentsInput {
@@ -1391,6 +1427,11 @@ input UserUpdateWithWhereUniqueWithoutLikedCommentsInput {
 input UserUpdateWithWhereUniqueWithoutLikedPostsInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutLikedPostsDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithoutCommentsInput {

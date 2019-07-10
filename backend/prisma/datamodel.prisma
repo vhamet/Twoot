@@ -37,6 +37,8 @@ type Alert {
   id: ID! @id
   onPost: Post
   onComment: Comment
+  onFollower: User @relation(name: "AlertFollower")
+  onFollowed: User @relation(name: "AlertFollowed")
   seen: Boolean!
   createdAt: DateTime! @createdAt
 }

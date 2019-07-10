@@ -99,6 +99,12 @@ async function follow(parent, args, context) {
     data: { followers: { connect: { id: userId } } }
   });
 
+  await context.prisma.createAlert({
+    onFollower: { connect: { id: userId } },
+    onFollowed: { connect: { id: args.followId } },
+    seen: false
+  });
+
   return true;
 }
 
@@ -177,5 +183,5 @@ module.exports = {
   unlikePost: ErrorHandlerWrapper(unlikePost),
   likeComment: ErrorHandlerWrapper(likeComment),
   unlikeComment: ErrorHandlerWrapper(unlikeComment),
-  updateReadAlert: ErrorHandlerWrapper(updateReadAlert),
+  updateReadAlert: ErrorHandlerWrapper(updateReadAlert)
 };

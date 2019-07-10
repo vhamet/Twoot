@@ -20,6 +20,7 @@ import LoginPage from 'pages/Authentication/Login';
 import SignupPage from 'pages/Authentication/Signup';
 import Home from 'pages/Home';
 import Profile from 'pages/Profile';
+import ConsultPost from 'pages/ConsultPost';
 
 import 'styles/css/app.css';
 
@@ -129,6 +130,7 @@ class App extends Component {
               <Route path="/profile/:userId" component={Profile} />
               <Route path="/login" component={LoginPage} />
               <Route path="/signup" component={SignupPage} />
+              <Route path="/post/:postId" component={ConsultPost} />
             </Switch>
           </main>
         </ApolloProvider>

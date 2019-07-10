@@ -51,6 +51,14 @@
   border: 1px solid $border-color;
 }
 
+.empty-alert {
+  color: $color-black;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: .5rem 0;
+}
+
 .alert {
   display: flex;
   align-items: center;

@@ -50,15 +50,15 @@ const AlertMenu = props => {
             }
           >
             <div className="alerts__container">
-              {loading && <Loader />}
-              {error && <div>Error</div>}
-              {!error && !loading && (
-                <div>
-                  {data.alerts.map(alert => (
-                    <Alert key={alert.id} alert={alert} />
-                  ))}
-                </div>
-              )}
+              {(error && <div>Error</div>) ||
+                (loading && <Loader />) ||
+                (!data.alerts.length && <div className="empty-alert">No alert to show</div>) || (
+                  <div>
+                    {data.alerts.map(alert => (
+                      <Alert key={alert.id} alert={alert} />
+                    ))}
+                  </div>
+                )}
             </div>
           </DropDown>
         );

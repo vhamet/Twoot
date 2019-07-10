@@ -77,6 +77,12 @@ async function user(parent, args, context) {
   return { ...user, id: args.id };
 }
 
+async function post(parent, args, context) {
+  return await context.prisma.post({
+    id: args.id
+  });
+}
+
 async function alerts(parent, args, context) {
   const userId = getAuthenticatedUserId(context);
 
@@ -84,7 +90,8 @@ async function alerts(parent, args, context) {
     where: {
       OR: [
         { onComment: { postedOn: { postedBy: { id: userId } } } },
-        { onPost: { postedOn: { id: userId } } }
+        { onPost: { postedOn: { id: userId } } },
+        { onFollowed: { id: userId } }
       ]
     },
     after: args.after,
@@ -98,5 +105,6 @@ module.exports = {
   timeline,
   moreComments,
   user,
+  post,
   alerts
 };
