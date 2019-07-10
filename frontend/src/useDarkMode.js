@@ -59,7 +59,7 @@ export default () => {
     --invalid-border-color: #ebccd1;
     --placeholder: #8d949e;
     --placeholder-focus: #54585e;
-    --grey-label-lighter: #c7cbcf;
+    --grey-label-lighter: #e6e8eb;
     --grey-label-light: #b1bbc9;
     --grey-label: #7b838f;
     --grey-label-dark: #88909c;

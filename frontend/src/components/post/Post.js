@@ -154,6 +154,7 @@ const Post = props => {
               {props.loggedUser && (
                 <CreateComment
                   postId={postId}
+                  postById={postById}
                   avatar={props.loggedUser.avatar}
                   focus={focusCreateComment}
                   unFocus={unFocus}

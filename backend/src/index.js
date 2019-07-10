@@ -5,18 +5,22 @@ const { prisma } = require('./prisma-client/generated');
 
 const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
+const Subscription = require('./resolvers/Subscription');
 const User = require('./resolvers/User');
 const Post = require('./resolvers/Post');
 const Comment = require('./resolvers/Comment');
+const Alert = require('./resolvers/Alert');
 
 const isAuthenticatedMiddleware = require('./middleware/isAuthenticated');
 
 const resolvers = {
   Query,
   Mutation,
+  Subscription,
   User,
   Post,
-  Comment
+  Comment,
+  Alert,
 };
 
 const server = new GraphQLServer({
@@ -34,4 +38,6 @@ const options = {
   formatError
 };
 
-server.start(options, () => console.log(`Server is running on http://localhost:4000`));
+server.start(options, () =>
+  console.log(`Server is running on http://localhost:4000`)
+);

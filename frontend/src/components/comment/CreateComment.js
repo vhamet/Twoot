@@ -29,7 +29,7 @@ const CreateComment = props => {
       <Avatar size="2.2rem" src={props.avatar} />
       <Mutation
         mutation={CREATECOMMENT_MUTATION}
-        variables={{ content, postId: props.postId }}
+        variables={{ content, postId: props.postId, postById: props.postById }}
         onError={err => handleError(err)}
         onCompleted={() => {
           setContent('');

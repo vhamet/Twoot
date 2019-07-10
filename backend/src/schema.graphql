@@ -6,19 +6,25 @@ type Query {
   timeline(user: ID, first: Int, after: ID, logged: ID): Feed!
   moreComments(postId: ID, last: Int, before: ID): [Comment!]!
   user(id: ID!): User
+  alerts(first: Int, after: ID): [Alert!]!
 }
 
 type Mutation {
   signup(email: String!, password: String!, username: String!): AuthPayload
   login(login: String!, password: String!): AuthPayload
   createPost(content: String!, isPrivate: Boolean!, postedOn: ID): Post!
-  createComment(postId: ID!, content: String!): Comment!
+  createComment(postId: ID!, postById: ID!, content: String!): Comment!
   follow(followId: ID!): Boolean
   unfollow(followId: ID!): Boolean
   likePost(postId: ID!):Boolean
   unlikePost(postId: ID!):Boolean
   likeComment(commentId: ID!):Boolean
   unlikeComment(commentId: ID!):Boolean
+  updateReadAlert(alertId: ID!, seen: Boolean):Boolean
+}
+
+type Subscription {
+  newAlert: Alert
 }
 
 type FetchedComments {
@@ -66,4 +72,12 @@ type Comment {
   postedBy: User!
   createdAt: DateTime!
   likes: [User!]!
+}
+
+type Alert {
+  id: ID!
+  onPost: Post
+  onComment: Comment
+  seen: Boolean!
+  createdAt: DateTime!
 }

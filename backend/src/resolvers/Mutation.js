@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const { APP_SECRET } = require('../secret');
+const { getAuthenticatedUserId } = require('../utils');
 
 const {
   WrongCredentialsError,
@@ -10,13 +11,6 @@ const {
   UnauthenticatedError
 } = require('./ErrorHandling/Errors');
 const { ErrorHandlerWrapper } = require('./ErrorHandling/ErrorHandlerWrapper');
-
-const getAuthenticatedUserId = context => {
-  const userId = context.request.isAuthenticated && context.request.userId;
-  if (!userId) throw new UnauthenticatedError();
-
-  return userId;
-};
 
 async function signup(parent, args, context) {
   try {
@@ -62,7 +56,6 @@ async function login(parent, args, context) {
 }
 
 async function createPost(parent, args, context) {
-  console.log(args);
   const userId = getAuthenticatedUserId(context);
   return await context.prisma.createPost(
     Object.assign(
@@ -78,11 +71,20 @@ async function createPost(parent, args, context) {
 
 async function createComment(parent, args, context) {
   const userId = getAuthenticatedUserId(context);
-  return await context.prisma.createComment({
+  const comment = await context.prisma.createComment({
     content: args.content,
     postedOn: { connect: { id: args.postId } },
     postedBy: { connect: { id: userId } }
   });
+
+  if (args.postById !== userId) {
+    await context.prisma.createAlert({
+      onComment: { connect: { id: comment.id } },
+      seen: false
+    });
+  }
+
+  return comment;
 }
 
 async function follow(parent, args, context) {
@@ -155,6 +157,15 @@ async function unlikeComment(parent, args, context) {
   return true;
 }
 
+async function updateReadAlert(parent, args, context) {
+  await context.prisma.updateAlert({
+    where: { id: args.alertId },
+    data: { seen: args.seen }
+  });
+
+  return true;
+}
+
 module.exports = {
   signup: ErrorHandlerWrapper(signup),
   login: ErrorHandlerWrapper(login),
@@ -165,5 +176,6 @@ module.exports = {
   likePost: ErrorHandlerWrapper(likePost),
   unlikePost: ErrorHandlerWrapper(unlikePost),
   likeComment: ErrorHandlerWrapper(likeComment),
-  unlikeComment: ErrorHandlerWrapper(unlikeComment)
+  unlikeComment: ErrorHandlerWrapper(unlikeComment),
+  updateReadAlert: ErrorHandlerWrapper(updateReadAlert),
 };

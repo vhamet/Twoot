@@ -161,7 +161,11 @@ export const USER_QUERY = gql`
 `;
 
 export const CREATEPOST_MUTATION = gql`
-  mutation CreatePostMutation($content: String!, $isPrivate: Boolean!, $postedOn: ID) {
+  mutation CreatePostMutation(
+    $content: String!
+    $isPrivate: Boolean!
+    $postedOn: ID
+  ) {
     createPost(content: $content, isPrivate: $isPrivate, postedOn: $postedOn) {
       ...PostContent
     }
@@ -170,8 +174,12 @@ export const CREATEPOST_MUTATION = gql`
 `;
 
 export const CREATECOMMENT_MUTATION = gql`
-  mutation CreateCommentMutation($postId: ID!, $content: String!) {
-    createComment(postId: $postId, content: $content) {
+  mutation CreateCommentMutation(
+    $postId: ID!
+    $postById: ID!
+    $content: String!
+  ) {
+    createComment(postId: $postId, postById: $postById, content: $content) {
       id
       content
       createdAt
@@ -280,5 +288,63 @@ export const UPDATE_LIKES_COMMENT_FRAGMENT = gql`
     likes {
       id
     }
+  }
+`;
+
+const ALERT_CONTENT_FRAGMENT = gql`
+  fragment AlertContent on Alert {
+    id
+    seen
+    createdAt
+    onComment {
+      id
+      postedBy {
+        id
+        username
+        avatar
+      }
+      postedOn {
+        id
+      }
+    }
+    onPost {
+      id
+      postedBy {
+        id
+        username
+        avatar
+      }
+    }
+  }
+`;
+
+export const INIT_ALERT_QUERY = gql`
+  query InitAlertQuery($first: Int) {
+    alerts(first: $first) {
+      ...AlertContent
+    }
+  }
+  ${ALERT_CONTENT_FRAGMENT}
+`;
+
+export const NEW_ALERT_SUBSCRIPTION = gql`
+  subscription {
+    newAlert {
+      ...AlertContent
+    }
+  }
+  ${ALERT_CONTENT_FRAGMENT}
+`;
+
+export const UPDATE_READ_ALERT_MUTATION = gql`
+  mutation UpdateReadAlertMutation($alertId: ID!, $seen: Boolean) {
+    updateReadAlert(alertId: $alertId, seen: $seen)
+  }
+`;
+
+export const UPDATE_ALERT_FRAGMENT = gql`
+  fragment updateAlert on Alert {
+    id
+    seen
   }
 `;

@@ -1,5 +1,9 @@
 module.exports = {
-        typeDefs: /* GraphQL */ `type AggregateComment {
+        typeDefs: /* GraphQL */ `type AggregateAlert {
+  count: Int!
+}
+
+type AggregateComment {
   count: Int!
 }
 
@@ -9,6 +13,112 @@ type AggregatePost {
 
 type AggregateUser {
   count: Int!
+}
+
+type Alert {
+  id: ID!
+  onPost: Post
+  onComment: Comment
+  seen: Boolean!
+  createdAt: DateTime!
+}
+
+type AlertConnection {
+  pageInfo: PageInfo!
+  edges: [AlertEdge]!
+  aggregate: AggregateAlert!
+}
+
+input AlertCreateInput {
+  onPost: PostCreateOneInput
+  onComment: CommentCreateOneInput
+  seen: Boolean!
+}
+
+type AlertEdge {
+  node: Alert!
+  cursor: String!
+}
+
+enum AlertOrderByInput {
+  id_ASC
+  id_DESC
+  seen_ASC
+  seen_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AlertPreviousValues {
+  id: ID!
+  seen: Boolean!
+  createdAt: DateTime!
+}
+
+type AlertSubscriptionPayload {
+  mutation: MutationType!
+  node: Alert
+  updatedFields: [String!]
+  previousValues: AlertPreviousValues
+}
+
+input AlertSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AlertWhereInput
+  AND: [AlertSubscriptionWhereInput!]
+  OR: [AlertSubscriptionWhereInput!]
+  NOT: [AlertSubscriptionWhereInput!]
+}
+
+input AlertUpdateInput {
+  onPost: PostUpdateOneInput
+  onComment: CommentUpdateOneInput
+  seen: Boolean
+}
+
+input AlertUpdateManyMutationInput {
+  seen: Boolean
+}
+
+input AlertWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  onPost: PostWhereInput
+  onComment: CommentWhereInput
+  seen: Boolean
+  seen_not: Boolean
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [AlertWhereInput!]
+  OR: [AlertWhereInput!]
+  NOT: [AlertWhereInput!]
+}
+
+input AlertWhereUniqueInput {
+  id: ID
 }
 
 type BatchPayload {
@@ -50,6 +160,11 @@ input CommentCreateManyWithoutPostedByInput {
 input CommentCreateManyWithoutPostedOnInput {
   create: [CommentCreateWithoutPostedOnInput!]
   connect: [CommentWhereUniqueInput!]
+}
+
+input CommentCreateOneInput {
+  create: CommentCreateInput
+  connect: CommentWhereUniqueInput
 }
 
 input CommentCreateWithoutLikesInput {
@@ -152,6 +267,13 @@ input CommentSubscriptionWhereInput {
   NOT: [CommentSubscriptionWhereInput!]
 }
 
+input CommentUpdateDataInput {
+  content: String
+  postedOn: PostUpdateOneRequiredWithoutCommentsInput
+  postedBy: UserUpdateOneRequiredWithoutCommentsInput
+  likes: UserUpdateManyWithoutLikedCommentsInput
+}
+
 input CommentUpdateInput {
   content: String
   postedOn: PostUpdateOneRequiredWithoutCommentsInput
@@ -205,6 +327,15 @@ input CommentUpdateManyWithWhereNestedInput {
   data: CommentUpdateManyDataInput!
 }
 
+input CommentUpdateOneInput {
+  create: CommentCreateInput
+  update: CommentUpdateDataInput
+  upsert: CommentUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CommentWhereUniqueInput
+}
+
 input CommentUpdateWithoutLikesDataInput {
   content: String
   postedOn: PostUpdateOneRequiredWithoutCommentsInput
@@ -236,6 +367,11 @@ input CommentUpdateWithWhereUniqueWithoutPostedByInput {
 input CommentUpdateWithWhereUniqueWithoutPostedOnInput {
   where: CommentWhereUniqueInput!
   data: CommentUpdateWithoutPostedOnDataInput!
+}
+
+input CommentUpsertNestedInput {
+  update: CommentUpdateDataInput!
+  create: CommentCreateInput!
 }
 
 input CommentUpsertWithWhereUniqueWithoutLikesInput {
@@ -312,6 +448,12 @@ scalar DateTime
 scalar Long
 
 type Mutation {
+  createAlert(data: AlertCreateInput!): Alert!
+  updateAlert(data: AlertUpdateInput!, where: AlertWhereUniqueInput!): Alert
+  updateManyAlerts(data: AlertUpdateManyMutationInput!, where: AlertWhereInput): BatchPayload!
+  upsertAlert(where: AlertWhereUniqueInput!, create: AlertCreateInput!, update: AlertUpdateInput!): Alert!
+  deleteAlert(where: AlertWhereUniqueInput!): Alert
+  deleteManyAlerts(where: AlertWhereInput): BatchPayload!
   createComment(data: CommentCreateInput!): Comment!
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   updateManyComments(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): BatchPayload!
@@ -388,6 +530,11 @@ input PostCreateManyWithoutPostedByInput {
 input PostCreateManyWithoutPostedOnInput {
   create: [PostCreateWithoutPostedOnInput!]
   connect: [PostWhereUniqueInput!]
+}
+
+input PostCreateOneInput {
+  create: PostCreateInput
+  connect: PostWhereUniqueInput
 }
 
 input PostCreateOneWithoutCommentsInput {
@@ -514,6 +661,15 @@ input PostSubscriptionWhereInput {
   NOT: [PostSubscriptionWhereInput!]
 }
 
+input PostUpdateDataInput {
+  content: String
+  postedBy: UserUpdateOneRequiredWithoutPostsInput
+  comments: CommentUpdateManyWithoutPostedOnInput
+  isPrivate: Boolean
+  likes: UserUpdateManyWithoutLikedPostsInput
+  postedOn: UserUpdateOneWithoutTimelinePostsInput
+}
+
 input PostUpdateInput {
   content: String
   postedBy: UserUpdateOneRequiredWithoutPostsInput
@@ -571,6 +727,15 @@ input PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput!
 }
 
+input PostUpdateOneInput {
+  create: PostCreateInput
+  update: PostUpdateDataInput
+  upsert: PostUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PostWhereUniqueInput
+}
+
 input PostUpdateOneRequiredWithoutCommentsInput {
   create: PostCreateWithoutCommentsInput
   update: PostUpdateWithoutCommentsDataInput
@@ -623,6 +788,11 @@ input PostUpdateWithWhereUniqueWithoutPostedByInput {
 input PostUpdateWithWhereUniqueWithoutPostedOnInput {
   where: PostWhereUniqueInput!
   data: PostUpdateWithoutPostedOnDataInput!
+}
+
+input PostUpsertNestedInput {
+  update: PostUpdateDataInput!
+  create: PostCreateInput!
 }
 
 input PostUpsertWithoutCommentsInput {
@@ -705,6 +875,9 @@ input PostWhereUniqueInput {
 }
 
 type Query {
+  alert(where: AlertWhereUniqueInput!): Alert
+  alerts(where: AlertWhereInput, orderBy: AlertOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Alert]!
+  alertsConnection(where: AlertWhereInput, orderBy: AlertOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AlertConnection!
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
@@ -718,6 +891,7 @@ type Query {
 }
 
 type Subscription {
+  alert(where: AlertSubscriptionWhereInput): AlertSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload

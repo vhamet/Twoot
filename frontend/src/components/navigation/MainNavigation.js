@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 import SearchBar from 'components/navigation/SearchBar';
+import AlertMenu from 'components/navigation/AlertMenu';
 import DropDown from 'components/form/DropDown';
 import ToggleSwitch from 'components/form/ToggleSwitch';
 import Avatar from 'components/avatar/Avatar';
@@ -56,6 +57,10 @@ const MainNavigation = ({ loggedUser, logout }) => {
                 </ul>
               </DropDown>
               <div className="separator" />
+              <div className="main-navigation-alert">
+                <AlertMenu />
+              </div>
+              <div className="separator" />
             </>
           )}
           <div className="main-navigation__item">
@@ -92,7 +97,7 @@ const MainNavigation = ({ loggedUser, logout }) => {
         {showNavigation && (
           <>
             <div className="searchbar">
-              <SearchBar onclickResult={() => setShowNavigation(false)}/>
+              <SearchBar onclickResult={() => setShowNavigation(false)} />
             </div>
             <div
               className="main-navigation__item"

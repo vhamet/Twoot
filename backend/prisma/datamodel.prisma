@@ -32,3 +32,11 @@ type Comment {
   createdAt: DateTime! @createdAt
   likes: [User!]! @relation(name: "LikedComments")
 }
+
+type Alert {
+  id: ID! @id
+  onPost: Post
+  onComment: Comment
+  seen: Boolean!
+  createdAt: DateTime! @createdAt
+}

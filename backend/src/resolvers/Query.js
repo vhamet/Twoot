@@ -1,3 +1,5 @@
+const { getAuthenticatedUserId } = require('../utils');
+
 async function feed(parent, args, context) {
   const posts = await context.prisma.posts({
     where: {
@@ -75,9 +77,26 @@ async function user(parent, args, context) {
   return { ...user, id: args.id };
 }
 
+async function alerts(parent, args, context) {
+  const userId = getAuthenticatedUserId(context);
+
+  return await context.prisma.alerts({
+    where: {
+      OR: [
+        { onComment: { postedOn: { postedBy: { id: userId } } } },
+        { onPost: { postedOn: { id: userId } } }
+      ]
+    },
+    after: args.after,
+    first: args.first,
+    orderBy: 'createdAt_DESC'
+  });
+}
+
 module.exports = {
   feed,
   timeline,
   moreComments,
-  user
+  user,
+  alerts
 };
