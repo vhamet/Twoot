@@ -399,3 +399,12 @@ export const SENDMESSAGE_MUTATION = gql`
   }
   ${MESSAGE_CONTENT_FRAGMENT}
 `;
+
+export const NEW_MESSAGE_SUBSCRIPTION = gql`
+  subscription {
+    newMessage {
+      ...MessageContent
+    }
+  }
+  ${MESSAGE_CONTENT_FRAGMENT}
+`;
