@@ -10,6 +10,7 @@ const User = require('./resolvers/User');
 const Post = require('./resolvers/Post');
 const Comment = require('./resolvers/Comment');
 const Alert = require('./resolvers/Alert');
+const Message = require('./resolvers/Message');
 
 const isAuthenticatedMiddleware = require('./middleware/isAuthenticated');
 
@@ -21,6 +22,7 @@ const resolvers = {
   Post,
   Comment,
   Alert,
+  Message,
 };
 
 const server = new GraphQLServer({

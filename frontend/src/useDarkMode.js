@@ -21,6 +21,7 @@ export default () => {
         --main-color-light: #5383e2;
         --main-color-dark: #3b5ca0;
         --main-color-disabled: #9cb4d8;
+        --main-color-flash: #0084ff;
         --background-color-light: #f5f6f7;
         --background-color: #e9ebee;
         --background-dark: #242424;
@@ -48,6 +49,7 @@ export default () => {
     --main-color-light: #5383e2;
     --main-color-dark: #2c477c;
     --main-color-disabled: #72839c;
+    --main-color-flash: #0084ff;
     --background-color-light: #1e1e1e;
     --background-color: #1c1c1c;
     --background-dark: #242424;

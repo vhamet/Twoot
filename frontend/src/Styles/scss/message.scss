@@ -1,0 +1,117 @@
+@import 'utilities/variables.scss';
+
+.message-box__container {
+  height: 22rem;
+  width: 17rem;
+  border: 1px solid $border-color;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  &.collapsed {
+    width: 10rem;
+    height: 2rem;
+
+    .message-box__header {
+      height: 2rem;
+    }
+  }
+}
+
+.message-box__header {
+  height: 3rem;
+  background: $background-white;
+  cursor: pointer;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+
+  &:hover {
+    background: $background-color-light;
+  }
+
+  a {
+    user-select: none;
+    color: $color-black;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  label {
+    user-select: none;
+    cursor: pointer;
+    color: $main-color;
+    margin-left: auto;
+  }
+}
+
+.message-box__content {
+  padding: 1rem;
+  flex: 1;
+  background: $color-white;
+  overflow-y: scroll;
+  border-bottom: 1px solid $border-color;
+  background: $background-white;
+  color: $color-black;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .loader {
+    align-self:center; 
+  }
+}
+
+.message__container {
+  max-width: 80%;
+  display: flex;
+
+  &.right {
+    align-self: flex-end;
+  }
+}
+
+.message {
+  padding: 0.5rem;
+  border-radius: 10px;
+  margin-bottom: .5rem;
+  font-size: .8rem;
+}
+
+.message-from {
+  @extend .message;
+  align-self: flex-end;
+  background: $main-color-flash;
+  color: $color-white;
+}
+
+.message-to {
+  @extend .message;
+  background: $background-color;
+}
+
+.message-box__input {
+  padding: 0.5rem;
+  background: $background-white;
+
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: $background-white;
+    color: $color-black;
+  }
+}
+
+.hide {
+  display: none;
+}

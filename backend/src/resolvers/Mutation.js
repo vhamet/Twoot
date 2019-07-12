@@ -172,6 +172,18 @@ async function updateReadAlert(parent, args, context) {
   return true;
 }
 
+async function sendMessage(parent, args, context) {
+  const userId = getAuthenticatedUserId(context);
+  const message = await context.prisma.createMessage({
+    from: { connect: { id: userId } },
+    to: { connect: { id: args.toUser } },
+    content: args.content,
+    seen: false
+  });
+
+  return message;
+}
+
 module.exports = {
   signup: ErrorHandlerWrapper(signup),
   login: ErrorHandlerWrapper(login),
@@ -183,5 +195,6 @@ module.exports = {
   unlikePost: ErrorHandlerWrapper(unlikePost),
   likeComment: ErrorHandlerWrapper(likeComment),
   unlikeComment: ErrorHandlerWrapper(unlikeComment),
-  updateReadAlert: ErrorHandlerWrapper(updateReadAlert)
+  updateReadAlert: ErrorHandlerWrapper(updateReadAlert),
+  sendMessage: ErrorHandlerWrapper(sendMessage)
 };

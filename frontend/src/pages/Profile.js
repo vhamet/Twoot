@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, memo } from 'react';
 import { Query } from 'react-apollo';
 
 import Timeline from 'components/profile/Timeline';
 import About from 'components/profile/About';
 import UserList from 'components/profile/UserList';
 import FollowButton from 'components/form/FollowButton';
+import MessageButton from 'components/form/MessageButton';
 import Avatar from 'components/avatar/Avatar';
 import Spinner from 'components/loaders/Spinner';
 
@@ -22,7 +23,7 @@ const Profile = props => {
   useEffect(() => {
     setUserId(props.match.params.userId);
     setPage(0);
-  }, [props.match.params]);
+  }, [props.match.params.userId]);
 
   if (!userId) return <Spinner />;
 
@@ -78,10 +79,15 @@ const Profile = props => {
                     {user.username}
                   </label>
                   {context.loggedUser && context.loggedUser.id !== user.id && (
-                    <FollowButton user={user} />
+                    <div className="action-buttons">
+                      <MessageButton user={user} />
+                      <FollowButton user={user} />
+                    </div>
                   )}
                 </div>
-                {page === 0 && <Timeline userId={user.id} username={user.username} />}
+                {page === 0 && (
+                  <Timeline userId={user.id} username={user.username} />
+                )}
                 {page === 1 && <About user={user} />}
                 {page === 2 && (
                   <UserList title="Following" users={user.following} />
@@ -98,4 +104,4 @@ const Profile = props => {
   );
 };
 
-export default Profile;
+export default memo(Profile);

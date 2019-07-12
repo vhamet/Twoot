@@ -1,6 +1,6 @@
 @import '../utilities/variables.scss';
 
-.follow__button {
+.action__button {
   color: $grey-label-dark;
   font-weight: 700;
   font-size: 0.8rem;
@@ -13,7 +13,7 @@
     background: $background-color;
   }
 
-  .fa-user-plus {
-    margin-right: 0.5rem;
+  svg {
+    margin-right: 0.2rem;
   }
 }

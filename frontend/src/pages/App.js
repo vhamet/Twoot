@@ -16,6 +16,7 @@ import { USER_QUERY } from 'apollo/queries';
 import { AUTH_COOKIE } from 'constants.js';
 
 import MainNavigation from 'components/navigation/MainNavigation';
+import MessageBox from 'components/messaging/MessageBox';
 import LoginPage from 'pages/Authentication/Login';
 import SignupPage from 'pages/Authentication/Signup';
 import Home from 'pages/Home';
@@ -27,7 +28,8 @@ import 'styles/css/app.css';
 class App extends Component {
   state = {
     token: null,
-    loggedUser: null
+    loggedUser: null,
+    conversations: []
   };
 
   login = (token, user) => {
@@ -38,6 +40,22 @@ class App extends Component {
   logout = () => {
     cookie.remove(AUTH_COOKIE, { path: '/' });
     this.setState({ token: null, loggedUser: null });
+  };
+
+  addConversation = user => {
+    this.setState((prevState, props) => {
+      return prevState.conversations.some(u => u.id === user.id)
+        ? prevState
+        : { conversations: [...prevState.conversations, user] };
+    });
+  };
+
+  removeConversation = user => {
+    this.setState((prevState, props) => {
+      return {
+        conversations: prevState.conversations.filter(u => u.id !== user.id)
+      };
+    });
   };
 
   httpLink = createHttpLink({
@@ -115,7 +133,10 @@ class App extends Component {
           token: this.state.token,
           loggedUser: this.state.loggedUser,
           login: this.login,
-          logout: this.logout
+          logout: this.logout,
+          conversations: this.state.conversations,
+          addConversation: this.addConversation,
+          removeConversation: this.removeConversation
         }}
       >
         <ApolloProvider client={this.client}>
@@ -133,6 +154,11 @@ class App extends Component {
               <Route path="/post/:postId" component={ConsultPost} />
             </Switch>
           </main>
+          <div className="conversation">
+            {this.state.conversations.map(user => (
+              <MessageBox key={user.id} user={user} />
+            ))}
+          </div>
         </ApolloProvider>
       </AuthenticationContext.Provider>
     );

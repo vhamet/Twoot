@@ -8,6 +8,7 @@ type Query {
   user(id: ID!): User
   post(id: ID!): Post
   alerts(first: Int, after: ID): [Alert!]!
+  conversation(withUser: ID!, last: Int, before: ID): [Message!]!
 }
 
 type Mutation {
@@ -22,6 +23,7 @@ type Mutation {
   likeComment(commentId: ID!):Boolean
   unlikeComment(commentId: ID!):Boolean
   updateReadAlert(alertId: ID!, seen: Boolean):Boolean
+  sendMessage(toUser: ID!, content: String!): Message
 }
 
 type Subscription {
@@ -81,6 +83,15 @@ type Alert {
   onComment: Comment
   onFollower: User
   onFollowed: User
+  seen: Boolean!
+  createdAt: DateTime!
+}
+
+type Message {
+  id: ID!
+  from: User!
+  to: User!
+  content: String!
   seen: Boolean!
   createdAt: DateTime!
 }

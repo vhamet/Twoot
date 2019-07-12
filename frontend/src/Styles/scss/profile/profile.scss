@@ -14,10 +14,14 @@
   border-top: none;
   border-radius: 3px;
 
-  .follow__button {
+  .action-buttons {
     position: absolute;
     bottom: 3.5rem;
     right: 1.5rem;
+
+    :first-child {
+      margin-right: .3rem;
+    }
   }
 
   ul {

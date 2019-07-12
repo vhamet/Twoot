@@ -10,7 +10,7 @@ import {
   UPDATE_FOLLOW_FRAGMENT as fragment
 } from 'apollo/queries';
 
-import 'styles/css/followButton.css';
+import 'styles/css/actionButton.css';
 
 const FollowButton = ({ user }) => {
   const context = useContext(AuthenticationContext);
@@ -64,8 +64,8 @@ const FollowButton = ({ user }) => {
       }}
     >
       {mutation => (
-        <button className="follow__button" onClick={mutation}>
-          <FontAwesomeIcon icon={faUserSlash} /> Unfollow
+        <button className="follow__button action__button" onClick={mutation}>
+          <FontAwesomeIcon icon={faUserSlash} />Unfollow
         </button>
       )}
     </Mutation>
@@ -108,7 +108,7 @@ const FollowButton = ({ user }) => {
       }}
     >
       {mutation => (
-        <button className="follow__button" onClick={mutation}>
+        <button className="follow__button action__button" onClick={mutation}>
           <FontAwesomeIcon icon={faUserPlus} />
           Follow
         </button>

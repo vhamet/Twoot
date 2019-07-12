@@ -100,11 +100,34 @@ async function alerts(parent, args, context) {
   });
 }
 
+async function conversation(parent, args, context) {
+  const userId = getAuthenticatedUserId(context);
+
+  return await context.prisma.messages({
+    where: {
+      OR: [
+        { AND: [
+          { from: {id: userId}},
+          { to: {id: args.withUser}},
+        ]},
+        { AND: [
+          { from: {id: args.withUser}},
+          { to: {id: userId}},
+        ]},
+      ]
+    },
+    before: args.after,
+    last: args.last,
+    orderBy: 'createdAt_ASC'
+  });
+}
+
 module.exports = {
   feed,
   timeline,
   moreComments,
   user,
   post,
-  alerts
+  alerts,
+  conversation
 };

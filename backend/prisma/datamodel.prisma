@@ -42,3 +42,12 @@ type Alert {
   seen: Boolean!
   createdAt: DateTime! @createdAt
 }
+
+type Message {
+  id: ID! @id
+  from: User! @relation(name: "MessageFrom")
+  to: User! @relation(name: "MessageTo")
+  content: String!
+  seen: Boolean!
+  createdAt: DateTime! @createdAt
+}

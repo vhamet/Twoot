@@ -2,7 +2,9 @@ import React from 'react';
 
 export default React.createContext({
   token: null,
-  userid: null,
+  loggedUser: null,
   login: () =>{},
-  logout: () =>{}
+  logout: () =>{},
+  addConversation: () =>{},
+  removeConversation: () =>{},
 });

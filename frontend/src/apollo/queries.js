@@ -362,3 +362,40 @@ export const UPDATE_ALERT_FRAGMENT = gql`
     seen
   }
 `;
+
+const MESSAGE_CONTENT_FRAGMENT = gql`
+  fragment MessageContent on Message {
+    id
+    from {
+      id
+      username
+      avatar
+    }
+    to {
+      id
+      username
+      avatar
+    }
+    content
+    seen
+    createdAt
+  }
+`;
+
+export const INIT_CONVERSATION_QUERY = gql`
+  query InitConversationQuery($withUser: ID!, $last: Int) {
+    conversation(withUser: $withUser, last: $last) {
+      ...MessageContent
+    }
+  }
+  ${MESSAGE_CONTENT_FRAGMENT}
+`;
+
+export const SENDMESSAGE_MUTATION = gql`
+  mutation SendMessageMutation($toUser: ID!, $content: String!) {
+    sendMessage(toUser: $toUser, content: $content) {
+      ...MessageContent
+    }
+  }
+  ${MESSAGE_CONTENT_FRAGMENT}
+`;
